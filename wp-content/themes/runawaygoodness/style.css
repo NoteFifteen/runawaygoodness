@@ -480,12 +480,6 @@ input[type="search"]::-webkit-search-results-button {
 	color: #fff;
 }
 
-.signupblock {
-	width: 700px;
-	background-color: #000;
-	padding: 40px 80px;
-}
-
 /* Tables
 --------------------------------------------- */
 
@@ -1369,7 +1363,7 @@ Content Area
 
 .home-featured .wrap {
 	margin-top: -160px;
-	max-width: 768px;
+	max-width: 600px;
 	display: table;
 	text-align: center;
 }
@@ -2133,11 +2127,26 @@ Theme Colors
 }
 
 
+/* RAG add-ins
+---------------------------------------------------------------------------------------------------- */
+
 .singledeal {
 	float: left;
 	max-width: 250px;
 	padding: 0 5px 20px 5px;
 }
+
+.signupblock {
+	width: 600px;
+	background-color: #000;
+	padding: 40px 80px;
+}
+
+.home-widgets-3 .widget_text {
+	width: 24%;
+}
+
+
 
 
 /*
