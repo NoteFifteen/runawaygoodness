@@ -452,6 +452,10 @@ input[type="search"]::-webkit-search-results-button {
 	display: none;
 }
 
+.home-featured {
+	background: url('images/topbg.jpg');
+}
+
 .home-featured .more-link,
 .home-widgets .more-link {
 	background-color: #2e2f33;
@@ -474,6 +478,12 @@ input[type="search"]::-webkit-search-results-button {
 .home-widgets .more-link:hover {
 	background-color: #13afdf;
 	color: #fff;
+}
+
+.signupblock {
+	width: 700px;
+	background-color: #000;
+	padding: 40px 80px;
 }
 
 /* Tables
@@ -2127,6 +2137,7 @@ Theme Colors
 	float: left;
 	max-width: 250px;
 	padding: 0 5px 20px 5px;
+}
 
 
 /*
