@@ -315,3 +315,29 @@ function genesis_term_meta_delete( $term_id, $tt_id ) {
 	update_option( 'genesis-term-meta', (array) $term_meta );
 
 }
+
+add_action( 'split_shared_term', 'genesis_split_shared_term' );
+/**
+ * Create new term meta record for split terms.
+ *
+ * When WordPress splits terms, ensure that the term meta gets preserved for the newly created term.
+ *
+ * @since 2.1.3
+ *
+ * @param integer @old_term_id The ID of the term being split.
+ * @param integer @new_term_id The ID of the newly created term.
+ *
+ */
+function genesis_split_shared_term( $old_term_id, $new_term_id ) {
+
+	$term_meta = (array) get_option( 'genesis-term-meta' );
+
+	if ( ! isset( $term_meta[ $old_term_id ] ) ) {
+		return;
+	}
+
+	$term_meta[ $new_term_id ] = $term_meta[ $old_term_id ];
+
+	update_option( 'genesis-term-meta', $term_meta );
+
+}

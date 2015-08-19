@@ -95,10 +95,10 @@ function genesis_constants() {
 
 	//* Define Theme Info Constants
 	define( 'PARENT_THEME_NAME', 'Genesis' );
-	define( 'PARENT_THEME_VERSION', '2.1.2' );
+	define( 'PARENT_THEME_VERSION', '2.1.3' );
 	define( 'PARENT_THEME_BRANCH', '2.1' );
-	define( 'PARENT_DB_VERSION', '2104' );
-	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1405418400' ) );
+	define( 'PARENT_DB_VERSION', '2105' );
+	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1439251200' ) );
 #	define( 'PARENT_THEME_RELEASE_DATE', 'TBD' );
 
 	//* Define Directory Location Constants

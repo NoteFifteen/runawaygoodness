@@ -1,0 +1,17 @@
+Changelog
+
+>> 0.4.1
++ Replaced missing elipsis on blurbs over 250 characters
+
+>> 0.4
++ Rebuild html output for copy/pasting in to mailchimp
+
+>> 0.2
++ Add changelog
++ Add Original Price field
++ Add logic to display original price if included
++ Add logic to remove Amazon Affiliate link if book is free
++ Add logic to display "Free" instead of price if price = 0
+
+>> 0.1
++ Initial release

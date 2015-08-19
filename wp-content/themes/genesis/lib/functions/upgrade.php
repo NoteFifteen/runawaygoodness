@@ -132,19 +132,19 @@ function genesis_update_check() {
 }
 
 /**
- * Upgrade the database to version 2104.
+ * Upgrade the database to version 2105.
  *
- * @since 2.1.2
+ * @since 2.1.3
  *
  * @uses genesis_update_settings()  Merges new settings with old settings and pushes them into the database.
  * @uses genesis_get_option()       Get theme setting value.
  */
-function genesis_upgrade_2104() {
+function genesis_upgrade_2105() {
 
 	//* Update Settings
 	genesis_update_settings( array(
-		'theme_version'   => '2.1.2',
-		'db_version'      => '2104',
+		'theme_version'   => '2.1.3',
+		'db_version'      => '2105',
 	) );
 
 }
@@ -490,11 +490,11 @@ function genesis_upgrade() {
 		genesis_upgrade_2100();
 
 	###########################
-	# UPDATE DB TO VERSION 2104
+	# UPDATE DB TO VERSION 2105
 	###########################
 
-	if ( genesis_get_option( 'db_version', null, false ) < '2104' )
-		genesis_upgrade_2104();
+	if ( genesis_get_option( 'db_version', null, false ) < '2105' )
+		genesis_upgrade_2105();
 
 	do_action( 'genesis_upgrade' );
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       RunAwayGoodness Core Functionality
+ * Plugin Name:       RG - Core Functionality
  * Description:       Custom functionality for RAG
  * Version:           1.0
  * Author:            John Hawkins

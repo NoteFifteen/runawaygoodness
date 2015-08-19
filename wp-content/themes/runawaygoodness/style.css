@@ -2130,23 +2130,128 @@ Theme Colors
 /* RAG add-ins
 ---------------------------------------------------------------------------------------------------- */
 
-.singledeal {
-	float: left;
-	max-width: 250px;
-	padding: 0 5px 20px 5px;
-}
-
 .signupblock {
 	width: 600px;
 	background-color: #000;
 	padding: 40px 80px;
 }
 
-.home-widgets-3 .widget_text {
-	width: 24%;
+input#om-lightbox-bullseye-optin-submit {
+	margin-top: 35px;
+	background-color: #aa0000;
+	color: #FFF;
 }
 
+input#om-lightbox-bullseye-optin-submit:hover {
+	background-color: #987197;
+}
 
+.singledeal {
+	display: inline-block;
+	max-width: 250px;
+	padding: 40px 5px 20px 5px;
+}
+
+.home-widgets-5 #text-3,
+.home-widgets-5 #text-5,
+.home-widgets-5 #text-6,
+.home-widgets-5 #text-7,
+.home-widgets-5 #text-8 {
+	width: 20%;
+	margin: 0 10px;
+	display: inline-flex;
+}
+
+.home-widgets-5 #text-10 {
+	clear: both;
+}
+
+div.home-widgets-3.widget-area,
+div.home-widgets-5.widget-area {
+	text-align: center;
+}
+
+.home-widgets .home-widgets-5 .widget:last-child {
+	padding-bottom: 40px;
+}
+
+/*
+After Dark section
+---------------------------------------------------------------------------------------------------- */
+
+section#welcome {
+	min-height: 621px;
+}
+
+section#welcome > video {
+	bottom: 0;
+	position: absolute;
+	pointer-events: none;
+	right: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+	z-indeix: -100;
+	background-size: cover;
+	max-width: none;
+}
+
+.tint {
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+}
+
+.signup-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 4;
+}
+
+.signup-block {
+	display: block;
+	margin: 0 auto;
+	position: absolute;
+	top: 25%;
+	width: 100%;
+	transform: translate%(-50%);
+	text-align: center;
+}
+
+.signup-text {
+	background: #000;
+	width: 600px;
+	color: #fff;
+	margin: 0 auto;
+	padding: 40px 80px;
+}
+
+.signup-text h1 {
+	font-size: 45px;
+}
+
+.signup-text h2 {
+	font-size: 28px;
+}
+
+body.after-dark-home .site-container {
+	display: none;
+}
+
+body.rgad {
+	background-color: #000;
+}
+
+.rgad .site-header {
+	background-color: #000;
+}
 
 
 /*
@@ -2343,6 +2448,17 @@ Media Queries
 	.footer-widgets-4 {
 		width: 100%;
 	}
+
+	.home-widgets-5 #text-3,
+	.home-widgets-5 #text-5,
+	.home-widgets-5 #text-6,
+	.home-widgets-5 #text-7,
+	.home-widgets-5 #text-8 {
+		width: 40%;
+		margin: 0 10px;
+		display: inline-block;
+	}
+
 	
 
 }
@@ -2463,6 +2579,10 @@ Media Queries
 		font-size: 20px;
 		height: 20px;
 		width: 20px;
+	}
+
+	.signupblock {
+		width: 95%;
 	}
 
 }
