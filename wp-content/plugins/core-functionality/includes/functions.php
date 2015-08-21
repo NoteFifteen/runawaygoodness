@@ -11,7 +11,7 @@ add_filter( 'widget_text', 'do_shortcode' );
  * add image sizes
  */
 
-add_image_size( 'homedeal', 250, 375, true );
+add_image_size( 'homedeal', 210, 315, true );
 
 /**
  * Shortcode to display current deals
