@@ -12,6 +12,7 @@ add_filter( 'widget_text', 'do_shortcode' );
  */
 
 add_image_size( 'homedeal', 210, 315, true );
+add_image_size( 'columnthumb', 50, 75, true );
 
 /**
  * Shortcode to display current deals
@@ -90,3 +91,56 @@ function current_deals_shortcode() {
 }
 
 
+/**
+ * 
+ * Modifies the Deals CPT to display extra columns
+ * 
+ */
+
+add_filter( 'manage_edit-deal_columns', 'rg_edit_deal_columns' );
+
+function rg_edit_deal_columns( $columns ) {
+
+	unset( $columns['date'] );
+
+	$mycolumns = array(
+		'start_date'	=> __( 'Start Date', 'runawaygoodness' ),
+		'end_date'		=> __( 'End Date', 'runawaygoodness' ),
+		'thumb'			=> __( 'Thumbnail', 'runawaygoodness' )
+	);
+
+	$columns = array_merge( $columns, $mycolumns );
+
+	return $columns;
+}
+
+/**
+ *
+ * Grabs the data for our custom columns
+ * 
+ */
+
+add_action( 'manage_deal_posts_custom_column', 'rg_deal_columns', 10, 2 );
+
+function rg_deal_columns( $column, $post_id ) {
+	global $post;
+
+	switch( $column ) {
+
+		case 'start_date' :
+			echo date( 'm/d/y', strtotime( get_post_meta( get_the_ID(), 'start_date', true ) ) ) ;
+		break;
+
+		case 'end_date' :
+			echo date( 'm/d/y', strtotime( get_post_meta( get_the_ID(), 'end_date', true ) ) ) ;
+		break;
+
+		case 'thumb' :
+			echo get_the_post_thumbnail( get_the_ID(), 'columnthumb' );
+		break;
+
+		default :
+		break;
+			
+	}
+}
