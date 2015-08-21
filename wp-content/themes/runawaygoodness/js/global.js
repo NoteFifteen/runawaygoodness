@@ -29,7 +29,8 @@ jQuery(document).ready(function($) {
     $('#mc-embedded-subscribe-form').submit(function() {
         //do validation
         if ( ! document.getElementById('over18').checked ) {
-            alert('now not checked');
+            alert('The After Dark newsletter contains explicit material and is only intended for people over the age of 18. Please visit runawaygoodness.com to sign up for a more age appropriate newsletter.');
+            window.location.replace("http://runawaygoodness.com/");
             return false;
         }
         return true;
