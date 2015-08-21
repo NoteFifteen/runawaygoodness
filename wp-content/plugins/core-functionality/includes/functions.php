@@ -30,6 +30,11 @@ function current_deals_shortcode() {
 				'key'		=> 'end_date',
 				'value'		=> date( 'Ymd' ),
 				'compare'	=> '>=',
+			),
+			array(
+				'key'		=> 'start_date',
+				'value'		=> date( 'Ymd' ),
+				'compare'	=> '<=',
 			)
 		)
 	);
