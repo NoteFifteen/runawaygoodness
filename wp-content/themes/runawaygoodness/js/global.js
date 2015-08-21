@@ -23,3 +23,15 @@ jQuery(function( $ ){
     });
 	
 });
+
+jQuery(document).ready(function($) {
+    // hours entry form validation
+    $('#mc-embedded-subscribe-form').submit(function() {
+        //do validation
+        if ( ! document.getElementById('over18').checked ) {
+            alert('now not checked');
+            return false;
+        }
+        return true;
+    });
+});

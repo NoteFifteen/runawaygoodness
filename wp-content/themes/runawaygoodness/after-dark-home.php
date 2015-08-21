@@ -62,7 +62,8 @@ $html.= '								<input type="text" name="b_1c904fe9a0639b7e2464b65c4_159f7318a4
 $html.= '							</div>';
 $html.= '							<input type="hidden" name="SOURCE" id="SOURCE" value="rg-ad-home" />';
 $html.= '							<div id="" class="om-clearfix om-has-email" data-om-action="selectable" data-om-target="#optin-monster-saas-field-footer_bg">';
-$html.= '								<input type="email" value="" name="EMAIL" class="required email" id="bt-mce-EMAIL" aria-required="true" placeholder="Enter your email address here...">';
+$html.= '								<input type="email" value="" name="EMAIL" class="required email" id="bt-mce-EMAIL" aria-required="true" placeholder="Enter your email address here..."><br />';
+$html.= '								<input type="checkbox" name="over18" id="over18"> Yep, I\'m over 18<br />';
 $html.= '								<input id="om-lightbox-bullseye-optin-submit" type="submit" data-om-action="selectable" placeholder="Enter a valid email address" data-om-target="#optin-monster-saas-field-submit_field" value="Get Your Book!">';
 $html.= '							</div>';
 $html.= '						</form>';
