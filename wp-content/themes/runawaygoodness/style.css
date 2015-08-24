@@ -1,7 +1,7 @@
 /*
-	Theme Name: RunAwayGoodness
+	Theme Name: RunawayGoodness
 	Theme URI: http://my.studiopress.com/themes/centric/
-	Description: Customized theme for RunAwayGoodnss
+	Description: Customized theme for RunawayGoodnss
 	Author: StudioPress
 	Author URI: http://www.studiopress.com/
 	
@@ -2012,6 +2012,10 @@ Theme Colors
 	color: #987197;
 }
 
+.entry-content a {
+	text-decoration: underline;
+}
+
 .centric-pro-purple .button,
 .centric-pro-purple .footer-widgets a:hover,
 .centric-pro-purple .site-footer a:hover {
@@ -2173,6 +2177,12 @@ div.home-widgets-5.widget-area {
 
 .home-widgets .home-widgets-5 .widget:last-child {
 	padding-bottom: 40px;
+}
+
+
+.footer-widgets .footer-widgets-4 li {
+	float: left;
+	padding-right: 20px;
 }
 
 /*
