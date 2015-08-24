@@ -199,6 +199,6 @@ function sp_footer_creds_text() {
 	echo '<div class="creds"><p>';
 	echo 'Copyright &copy; ';
 	echo date('Y');
-	echo ' &middot; <a href="http://runawaygoodness.com">Run Away Goodness</a>';
+	echo ' &middot; <a href="http://runawaygoodness.com">Runaway Goodness</a>';
 	echo '</p></div>';
 }
