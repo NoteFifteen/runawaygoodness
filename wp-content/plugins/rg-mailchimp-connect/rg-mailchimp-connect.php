@@ -16,6 +16,9 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 // setup mailchimp shortcode
+// 
+// To display content on a page, add [rgmcconnect]
+// 
 function rg_mailchimp_connect() {
     $html = "<p>Hello, World!</p>";
  
