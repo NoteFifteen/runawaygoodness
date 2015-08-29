@@ -12,3 +12,15 @@ jQuery(function( $ ){
     });
 	
 });
+
+jQuery(function( $ ) {
+    $('#group7249').change(function(){
+        var options = group7249.options;
+        var id      = options[options.selectedIndex].id;
+        var value   = options[options.selectedIndex].value;
+        
+        //you can process your conditions here
+
+        $(this).attr('name', id); // this will change the name attribute
+    });
+});
