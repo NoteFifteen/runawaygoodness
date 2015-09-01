@@ -26,13 +26,39 @@ jQuery(function( $ ){
 
 jQuery(document).ready(function($) {
     // hours entry form validation
-    $('#mc-embedded-subscribe-form').submit(function() {
+    $('.home #mc-embedded-subscribe-form').submit(function() {
         //do validation
-        if ( ! document.getElementById('over18').checked ) {
+        if(jQuery.trim($('#group7249').val())===''){
+            alert('Please select a genre for your free book.');
+            return false;
+        }
+
+        if(jQuery.trim($('#bt-mce-EMAIL').val())===''){
+            alert('Please supply an email address to receive your free book.');
+            return false;
+        }
+
+        return true;
+    });
+});
+
+
+jQuery(document).ready(function($) {
+    // hours entry form validation
+    $('.after-dark-home #mc-embedded-subscribe-form').submit(function() {
+        //do validation
+        
+        if(jQuery.trim($('#bt-mce-EMAIL').val())===''){
+            alert('Please supply an email address to receive your free book.');
+            return false;
+        }
+
+        if ( ! jQuery('#over18').attr('checked')) {
             alert('The After Dark newsletter contains explicit material and is only intended for people over the age of 18. Please visit runawaygoodness.com to sign up for a more age appropriate newsletter.');
             window.location.replace("http://runawaygoodness.com/");
             return false;
         }
+
         return true;
     });
 });

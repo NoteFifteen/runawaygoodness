@@ -1,3 +1,4 @@
+
 jQuery(function( $ ){
 	
     $('.home-featured .wrap') .css({'height': (($(window).height()))+'px'});
@@ -19,8 +20,6 @@ jQuery(function( $ ) {
         var id      = options[options.selectedIndex].id;
         var value   = options[options.selectedIndex].value;
         
-        //you can process your conditions here
-
         $(this).attr('name', id); // this will change the name attribute
     });
 });
