@@ -197,7 +197,7 @@ function create_genre_taxonomy() {
 // Now register the non-hierarchical taxonomy like tag
 
   register_taxonomy( 'deal_genres','deal',array(
-'hierarchical' => false,
+'hierarchical' => true,
 'labels' => $labels,
 'show_ui' => true,
 'show_admin_column' => true,
