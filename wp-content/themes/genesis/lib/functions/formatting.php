@@ -69,7 +69,7 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
 
 	//* More link?
 	if ( $more_link_text ) {
-		$link   = apply_filters( 'get_the_content_more_link', sprintf( '&#x02026; <a href="%s" class="more-link">%s</a>', get_permalink(), $more_link_text ), $more_link_text );
+		$link   = apply_filters( 'get_the_content_more_link', sprintf( '&#x02026; <a href="%s" class="more-link">%s</a>', get_permalink(), genesis_a11y_more_link( $more_link_text ) ), $more_link_text );
 		$output = sprintf( '<p>%s %s</p>', $content, $link );
 	} else {
 		$output = sprintf( '<p>%s</p>', $content );
@@ -79,6 +79,24 @@ function get_the_content_limit( $max_characters, $more_link_text = '(more...)', 
 	return apply_filters( 'get_the_content_limit', $output, $content, $link, $max_characters );
 
 }
+
+/**
+ * Return more link text plus hidden title for screen readers, to improve accessibility.
+ *
+ * @since 2.2.0
+ *
+ * @param string  $more_link_text Text of the more link.
+ *
+ * @return string $more_link_text with or withput the hidden title.
+ */
+ function genesis_a11y_more_link( $more_link_text )  {
+
+ 	if ( genesis_a11y() && ! empty( $more_link_text ) ) {
+		$more_link_text .= ' <span class="screen-reader-text">' . __( 'about ', 'genesis' ) . get_the_title() . '</span>';
+ 	}
+ 	return $more_link_text;
+
+ }
 
 /**
  * Echo the limited content.
@@ -170,6 +188,40 @@ function genesis_strip_attr( $text, $elements, $attributes, $two_passes = true )
 		$text = preg_replace( $patterns, '$1$2', $text );
 
 	return $text;
+
+}
+
+/**
+ * Return the special URL of a paged post.
+ *
+ * Taken from _wp_link_page() in WordPress core, but instead of anchor markup, just return the URL.
+ *
+ * @since 2.2.0
+ *
+ * @param int $i The page number to generate the URL from.
+ * @param int $post_id The post ID
+ *
+ * @return string Unescaped URL
+ */
+function genesis_paged_post_url( $i, $post_id = 0 ) {
+
+	global $wp_rewrite;
+
+	$post = get_post( $post_id );
+
+	if ( 1 == $i ) {
+		$url = get_permalink( $post_id );
+	} else {
+		if ( '' == get_option( 'permalink_structure' ) || in_array( $post->post_status, array( 'draft', 'pending' ) ) ) {
+			$url = add_query_arg( 'page', $i, get_permalink( $post_id ) );
+		} elseif ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_on_front' ) == $post->ID ) {
+			$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( "$wp_rewrite->pagination_base/" . $i, 'single_paged' );
+		} else {
+			$url = trailingslashit( get_permalink( $post_id ) ) . user_trailingslashit( $i, 'single_paged' );
+		}
+	}
+
+	return $url;
 
 }
 

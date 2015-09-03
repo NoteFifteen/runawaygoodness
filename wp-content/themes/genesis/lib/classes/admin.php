@@ -492,7 +492,7 @@ abstract class Genesis_Admin_Form extends Genesis_Admin {
 
 			<?php settings_fields( $this->settings_field ); ?>
 
-			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<p class="top-buttons">
 				<?php
 				submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false );
@@ -578,7 +578,7 @@ abstract class Genesis_Admin_Boxes extends Genesis_Admin {
 			<?php wp_nonce_field( 'meta-box-order', 'meta-box-order-nonce', false ); ?>
 			<?php settings_fields( $this->settings_field ); ?>
 
-			<h2><?php echo esc_html( get_admin_page_title() ); ?></h2>
+			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<p class="top-buttons">
 				<?php
 				submit_button( $this->page_ops['save_button_text'], 'primary', 'submit', false, array( 'id' => '' ) );

@@ -19,7 +19,7 @@
  * @package  Templates
  * @author   StudioPress
  * @license  GPL-2.0+
- * @link     http://my.studiopress.com/themes/genesis
+ * @link     http://my.studiopress.com/themes/genesis/
  */
 
 require_once( dirname( __FILE__ ) . '/lib/init.php' );

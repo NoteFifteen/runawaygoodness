@@ -42,7 +42,7 @@ class Genesis_Breadcrumb {
 		//* Default arguments
 		$this->args = array(
 			'home'                    => __( 'Home', 'genesis' ),
-			'sep'                     => ' / ',
+			'sep'                     => __( ' <span aria-label="breadcrumb separator">/</span> ', 'genesis' ),
 			'list_sep'                => ', ',
 			'prefix'                  => sprintf( '<div %s>', genesis_attr( 'breadcrumb' ) ),
 			'suffix'                  => '</div>',
@@ -85,7 +85,7 @@ class Genesis_Breadcrumb {
 		 *      @type string $sep                     Separator.
 		 *      @type string $list_set                List format separator.
 		 *      @type string $prefix                  Prefix before breadcrumb list.
-		 *      @type string $suffix                  Suffix after breadcrump list.
+		 *      @type string $suffix                  Suffix after breadcrumb list.
 		 *      @type bool   $heirarchial_attachments Whether attachments are hierarchical.
 		 *      @type bool   $heirarchial_categories  Whether categories are hierarchical.
 		 *      @type array $labels                   Labels including the following keys: 'prefix', 'author', 'category',
@@ -748,14 +748,18 @@ class Genesis_Breadcrumb {
 	 * @param string $title   Title attribute.
 	 * @param string $content Linked content.
 	 * @param string $sep     Separator.
-	 * 
+	 *
 	 * @return string HTML markup for anchor link and optional separator.
 	 */
 	protected function get_breadcrumb_link( $url, $title, $content, $sep = false ) {
 
-		$title = $title ? ' title="' . esc_attr( $title ) . '"' : '';
+		//* Empty title, for backward compatibility
+		$title = '';
 
-		$link = sprintf( '<a href="%s"%s>%s</a>', esc_attr( $url ), $title, esc_html( $content ) );
+		$itemprop_url  = genesis_html5() ? ' itemprop="url"' : '';
+		$itemprop_name = genesis_html5() ? ' itemprop="name"' : '';
+
+		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_url, $itemprop_name, $content );
 
 		/**
 		 * Filter the anchor link for a single breadcrumb.
@@ -769,6 +773,10 @@ class Genesis_Breadcrumb {
 		 * @param array  $args    Arguments used to generate the breadcrumbs. Documented in Genesis_Breadcrumbs::get_output().
 		 */
 		$link = apply_filters( 'genesis_breadcrumb_link', $link, $url, $title, $content, $this->args );
+
+		if ( genesis_html5() ) {
+			$link = sprintf( '<span %s>', genesis_attr( 'breadcrumb-link-wrap' ) ) . $link . '</span>';
+		}
 
 		if ( $sep ) {
 			$link .= $sep;

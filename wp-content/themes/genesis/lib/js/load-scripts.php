@@ -24,9 +24,12 @@ function genesis_register_scripts() {
 
 	$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-	wp_register_script( 'superfish', GENESIS_JS_URL . "/menu/superfish$suffix.js", array( 'jquery' ), '1.7.4', true );
+	wp_register_script( 'superfish', GENESIS_JS_URL . "/menu/superfish$suffix.js", array( 'jquery', 'hoverIntent', ), '1.7.5', true );
 	wp_register_script( 'superfish-args', apply_filters( 'genesis_superfish_args_url', GENESIS_JS_URL . "/menu/superfish.args$suffix.js" ), array( 'superfish' ), PARENT_THEME_VERSION, true );
 	wp_register_script( 'superfish-compat', GENESIS_JS_URL . "/menu/superfish.compat$suffix.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
+	wp_register_script( 'skip-links',  GENESIS_JS_URL . "/skip-links.js" );
+	wp_register_script( 'drop-down-menu',  GENESIS_JS_URL . "/drop-down-menu.js", array( 'jquery' ), PARENT_THEME_VERSION, true );
+
 
 }
 
@@ -45,6 +48,7 @@ add_action( 'wp_enqueue_scripts', 'genesis_load_scripts' );
  */
 function genesis_load_scripts() {
 
+
 	//* If a single post or page, threaded comments are enabled, and comments are open
 	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() )
 		wp_enqueue_script( 'comment-reply' );
@@ -60,6 +64,12 @@ function genesis_load_scripts() {
 			wp_enqueue_script( 'superfish-compat' );
 
 	}
+
+	//* If accessibility support enabled
+	if ( genesis_a11y( 'skip-links' ) ) {
+		wp_enqueue_script( 'skip-links' );
+	}
+
 
 }
 

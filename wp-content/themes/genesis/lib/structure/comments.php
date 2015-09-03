@@ -305,20 +305,35 @@ function genesis_html5_comment_callback( $comment, array $args, $depth ) {
 				 */
 				$comment_author_says_text = apply_filters( 'comment_author_says_text', __( 'says', 'genesis' ) );
 
-				printf( '<span itemprop="name">%s</span> <span class="says">%s</span>', $author, $comment_author_says_text );
-				?>
-		 	</p>
+				if ( ! empty( $comment_author_says_text ) ) {
+					$comment_author_says_text = '<span class="says">' . $comment_author_says_text . '</span>';
+				}
 
-			<p <?php echo genesis_attr( 'comment-meta' ); ?>>
-				<?php				
+				printf( '<span itemprop="name">%s</span> %s', $author, $comment_author_says_text );
+				?>
+			</p>
+
+			<?php
+			/**
+			 * Allows developer to control whether to print the comment date.
+			 *
+			 * @since 2.2.0
+			 *
+			 * @param boolean $comment_date Whether to print the comment date
+			 * @param string  $post_type    The current post type
+			 */
+			$comment_date = apply_filters( 'genesis_show_comment_date', true, get_post_type() );
+
+			if ( $comment_date ) {
+				printf( '<p %s>', genesis_attr( 'comment-meta' ) );
 				printf( '<time %s>', genesis_attr( 'comment-time' ) );
 				printf( '<a href="%s" %s>', esc_url( get_comment_link( $comment->comment_ID ) ), genesis_attr( 'comment-time-link' ) );
 				echo    esc_html( get_comment_date() ) . ' ' . __( 'at', 'genesis' ) . ' ' . esc_html( get_comment_time() );
-				echo    '</a></time>';
+				echo    '</a></time></p>';
+			}
 
-				edit_comment_link( __( '(Edit)', 'genesis' ), ' ' );
-				?>
-			</p>
+			edit_comment_link( __( '(Edit)', 'genesis' ), ' ' );
+			?>
 		</header>
 
 		<div <?php echo genesis_attr( 'comment-content' ); ?>>

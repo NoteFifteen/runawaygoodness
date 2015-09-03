@@ -11,6 +11,33 @@
  * @link    http://my.studiopress.com/themes/genesis/
  */
 
+add_filter( 'nav_menu_link_attributes', 'genesis_nav_menu_link_attributes', 10, 3 );
+/**
+ * Pass nav menu link attributes through attribute parser.
+ *
+ * Adds nav menu link attributes via the Genesis markup API.
+ *
+ * @since 2.2.0
+ *
+ * @param array $atts {
+ *		The HTML attributes applied to the menu item's <a>, empty strings are ignored.
+ *
+ *		@type string $title Title attribute.
+ *		@type string $target Target attribute.
+ *		@type string $rel The rel attribute.
+ *		@type string $href The href attribute.
+ * }
+ * @param object $item The current menu item.
+ * @param array $args An array of wp_nav_menu() arguments.
+ *
+ * @return array Maybe modified menu attributes array.
+ */
+function genesis_nav_menu_link_attributes( $atts, $item, $args ) {
+
+	return genesis_parse_attr( 'nav-link', $atts );
+
+}
+
 add_action( 'after_setup_theme', 'genesis_register_nav_menus' );
 /**
  * Register the custom menu locations, if theme has support for them.
@@ -44,6 +71,7 @@ add_action( 'genesis_after_header', 'genesis_do_nav' );
  *
  * @uses genesis_nav_menu() Display a navigation menu.
  * @uses genesis_nav_menu_supported() Checks for support of specific nav menu.
+ * @uses genesis_a11y() Checks for acessibility support to add a heading to the main navigation.
  */
 function genesis_do_nav() {
 
@@ -54,6 +82,10 @@ function genesis_do_nav() {
 	$class = 'menu genesis-nav-menu menu-primary';
 	if ( genesis_superfish_enabled() ) {
 		$class .= ' js-superfish';
+	}
+
+	if ( genesis_a11y( 'headings' ) ) {
+		printf( '<h2 class="screen-reader-text">%s</h2>', __( 'Main navigation', 'genesis' ) );
 	}
 
 	genesis_nav_menu( array(

@@ -143,7 +143,7 @@ function genesis_footer_genesis_link_shortcode( $atts ) {
 	$defaults = array(
 		'after'  => '',
 		'before' => '',
-		'url'    => 'http://my.studiopress.com/themes/genesis',
+		'url'    => 'http://my.studiopress.com/themes/genesis/',
 	);
 	$atts = shortcode_atts( $defaults, $atts, 'footer_genesis_link' );
 

@@ -56,8 +56,7 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 		$default_settings = apply_filters(
 			'genesis_seo_settings_defaults',
 			array(
-				'semantic_headings'            => 1,
-				'publisher_uri'                => '',
+				'semantic_headings'            => 0,
 
 				'append_site_title'            => 0,
 				'doctitle_sep'                 => '–',
@@ -139,7 +138,6 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 				'noarchive_search_archive',
 				'noodp',
 				'noydir',
-				'canonical_archives',
 			)
 		);
 
@@ -193,7 +191,7 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 			'<p>' .  __( 'These are the homepage specific SEO settings. Note: these settings will not apply if a static page is set as the front page. If you\'re using a static WordPress page as your hompage, you\'ll need to set the SEO settings on that particular page.', 'genesis' ) . '</p>' .
 			'<p>' .  __( 'You can also specify if the Site Title, Description, or your own custom text should be wrapped in an &lt;h1&gt; tag (the primary heading in HTML).', 'genesis' ) . '</p>' .
 			'<p>' .  __( 'To add custom text you\'ll have to either edit a php file, or use a text widget on a widget enabled homepage.', 'genesis' ) . '</p>' .
-			'<p>' .  __( 'The home doctitle sets what will appear within the <title></title> tags (unseen in the browser) for the home page.', 'genesis' ) . '</p>' .
+			'<p>' .  sprintf( __( 'The home doctitle sets what will appear within the %1$s tags (unseen in the browser) for the home page.', 'genesis' ), '<code>&lt;title&gt;</code>' ) . '</p>' .
 			'<p>' .  __( 'The home META description and keywords fill in the meta tags for the home page. The META description is the short text blurb that appear in search engine results.', 'genesis' ) . '</p>' .
 			'<p>' .  __( 'Most search engines do not use Keywords at this time or give them very little consideration; however, it\'s worth using in case keywords are given greater consideration in the future and also to help guide your content. If the content doesn’t match with your targeted key words, then you may need to consider your content more carefully.', 'genesis' ) . '</p>' .
 			'<p>' .  __( 'The Homepage Robots Meta Tags tell search engines how to handle the homepage. Noindex means not to index the page at all, and it will not appear in search results. Nofollow means do not follow any links from this page and noarchive tells them not to make an archive copy of the page.', 'genesis' ) . '</p>';
@@ -208,11 +206,6 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 			'<p>' .  __( 'Noarchive and noindex are explained in the home settings. Here you can select what other parts of the site to apply these options to.', 'genesis' ) . '</p>' .
 			'<p>' .  __( 'At least one archive should be indexed, but indexing multiple archives will typically result in a duplicate content penalization (multiple pages with identical content look manipulative to search engines).', 'genesis' ) . '</p>' .
 			'<p>' .  __( 'For most sites either the home page or blog page (using the blog template) will serve as this index which is why the default is not to index categories, tags, authors, dates, or searches.', 'genesis' ) . '</p>';
-
-		$seoarchives_help =
-			'<h3>' . __( 'Archives Settings', 'genesis' ) . '</h3>' .
-			'<p>' .  __( 'Canonical links will point search engines to the front page of paginated content (search engines have to choose the “preferred link” when there is duplicate content on pages).', 'genesis' ) . '</p>' .
-			'<p>' .  __( 'This tells them “this is paged content and the first page starts here” and helps to avoid spreading keywords across multiple pages.', 'genesis' ) . '</p>';
 
 		$screen->add_help_tab( array(
 			'id'	=> $this->pagehook . '-seo-settings',
@@ -239,18 +232,13 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 			'title'	=> __( 'Robots Meta Settings', 'genesis' ),
 			'content'	=> $robots_help,
 		) );
-		$screen->add_help_tab( array(
-			'id'	=> $this->pagehook . '-seo-archives',
-			'title'	=> __( 'SEO Archives', 'genesis' ),
-			'content'	=> $seoarchives_help,
-		) );
 
 		//* Add help sidebar
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'genesis' ) . '</strong></p>' .
-			'<p><a href="http://my.studiopress.com/help/" target="_blank">' . __( 'Get Support', 'genesis' ) . '</a></p>' .
-			'<p><a href="http://my.studiopress.com/snippets/" target="_blank">' . __( 'Genesis Snippets', 'genesis' ) . '</a></p>' .
-			'<p><a href="http://my.studiopress.com/tutorials/" target="_blank">' . __( 'Genesis Tutorials', 'genesis' ) . '</a></p>'
+			'<p><a href="http://my.studiopress.com/help/" target="_blank">' . __( 'Get Support', 'genesis' ) . '<span class="screen-reader-text">. ' .  __( 'Link opens in a new window.', 'genesis' ) . '</span></a></p>' .
+			'<p><a href="http://my.studiopress.com/snippets/" target="_blank">' . __( 'Genesis Snippets', 'genesis' ) . '<span class="screen-reader-text">. ' .  __( 'Link opens in a new window.', 'genesis' ) . '</span></a></p>' .
+			'<p><a href="http://my.studiopress.com/tutorials/" target="_blank">' . __( 'Genesis Tutorials', 'genesis' ) . '<span class="screen-reader-text">. ' .  __( 'Link opens in a new window.', 'genesis' ) . '</span></a></p>'
 		);
 
 	}
@@ -264,7 +252,6 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
  	 * @see \Genesis_Admin_SEO_Settings::homepage_box()      Callback for home page box.
  	 * @see \Genesis_Admin_SEO_Settings::document_head_box() Callback for document head box.
  	 * @see \Genesis_Admin_SEO_Settings::robots_meta_box()   Callback for robots meta box.
- 	 * @see \Genesis_Admin_SEO_Settings::archives_box()      Callback for archives box.
  	 */
 	function metaboxes() {
 
@@ -272,7 +259,6 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 		add_meta_box( 'genesis-seo-settings-homepage', __( 'Homepage Settings', 'genesis' ), array( $this, 'homepage_box' ), $this->pagehook, 'main' );
 		add_meta_box( 'genesis-seo-settings-dochead', __( 'Document Head Settings', 'genesis' ), array( $this, 'document_head_box' ), $this->pagehook, 'main' );
 		add_meta_box( 'genesis-seo-settings-robots', __( 'Robots Meta Settings', 'genesis' ), array( $this, 'robots_meta_box' ), $this->pagehook, 'main' );
-		add_meta_box( 'genesis-seo-settings-archives', __( 'Archives Settings', 'genesis' ), array( $this, 'archives_box' ), $this->pagehook, 'main' );
 
 	}
 
@@ -289,17 +275,7 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 	 */
 	function sitewide_box() {
 
-		?>
-
-		<h4><?php _e( 'Google+', 'genesis' ); ?></h4>
-
-		<p>
-			<label for="<?php $this->field_id( 'publisher_uri' ); ?>"><?php _e( 'Publisher URL:', 'genesis' ); ?></label><br />
-			<input type="text" name="<?php $this->field_name( 'publisher_uri' ); ?>" class="regular-text" id="<?php $this->field_id( 'publisher_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'publisher_uri' ) ); ?>" /><br />
-			<span class="description"><?php _e( 'Your company\'s Google+ Profile URL. Must be a business, not a personal account.', 'genesis' ); ?></span>
-		</p>
-
-		<?php if ( genesis_html5() ) : ?>
+		if ( genesis_html5() ) : ?>
 
 		<h4><?php _e( 'Section Headings', 'genesis' ); ?></h4>
 
@@ -379,7 +355,7 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 			<input type="text" name="<?php $this->field_name( 'home_doctitle' ); ?>" class="large-text" id="<?php $this->field_id( 'home_doctitle' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'home_doctitle' ) ); ?>" /><br />
 			<span class="description"><?php _e( 'If you leave the document title field blank, your site&#8217;s title will be used instead.', 'genesis' ); ?></span>
 		</p>
-		
+
 		<p>
 			<label for="<?php $this->field_id( 'append_description_home' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'append_description_home' ); ?>" id="<?php $this->field_id( 'append_description_home' ); ?>" value="1" <?php checked( $this->get_field_value( 'append_description_home' ) ); ?> />
 			<?php printf( __( 'Add site description (tagline) to %s on home page?', 'genesis' ), genesis_code( '<title>' ) ); ?></label>
@@ -526,32 +502,6 @@ class Genesis_Admin_SEO_Settings extends Genesis_Admin_Boxes {
 			<label for="<?php $this->field_id( 'noydir' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'noydir' ); ?>" id="<?php $this->field_id( 'noydir' ); ?>" value="1" <?php checked( $this->get_field_value( 'noydir' ) ); ?> />
 			<?php printf( __( 'Apply %s to your site?', 'genesis' ), genesis_code( 'noydir' ) ) ?></label>
 		</p>
-		<?php
-
-	}
-
-	/**
-	 * Callback for SEO Settings Canonical Archives meta box.
-	 *
-	 * @since 1.3.0
-	 *
-	 * @uses \Genesis_Admin::get_field_id()    Construct field ID.
-	 * @uses \Genesis_Admin::get_field_name()  Construct field name.
-	 * @uses \Genesis_Admin::get_field_value() Retrieve value of key under $this->settings_field.
-	 *
-	 * @see \Genesis_Admin_SEO_Settings::metaboxes() Register meta boxes on the SEO Settings page.
-	 */
-	function archives_box() {
-
-		?>
-		<p>
-			<label for="<?php $this->field_id( 'canonical_archives' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'canonical_archives' ); ?>" id="<?php $this->field_id( 'canonical_archives' ); ?>" value="1" <?php checked( $this->get_field_value( 'canonical_archives' ) ); ?> />
-			<?php printf( __( 'Canonical Paginated Archives', 'genesis' ) ); ?></label>
-		</p>
-		<p>
-			<span class="description"><?php _e( 'This option points search engines to the first page of an archive, if viewing a paginated page. If you do not know what this means, leave it on.', 'genesis' ); ?></span>
-		</p>
-
 		<?php
 
 	}

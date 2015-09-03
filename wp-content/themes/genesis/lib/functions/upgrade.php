@@ -19,7 +19,7 @@
  * @uses genesis_get_option() Get theme setting value.
  * @uses PARENT_THEME_VERSION Genesis version string.
  *
- * @return sting First version.
+ * @return string First version.
  */
 function genesis_first_version() {
 
@@ -99,6 +99,7 @@ function genesis_update_check() {
 					'html5'           => genesis_html5(),
 					'php_version'     => phpversion(),
 					'uri'             => home_url(),
+					'stylesheet'      => get_stylesheet(),
 					'user-agent'      => "WordPress/$wp_version;",
 					'wp_version'      => $wp_version,
 				),
@@ -106,16 +107,17 @@ function genesis_update_check() {
 		);
 
 		$response = wp_remote_post( $url, $options );
-		$genesis_update = wp_remote_retrieve_body( $response );
+		$response_body = wp_remote_retrieve_body( $response );
 
 		//* If an error occurred, return FALSE, store for 1 hour
-		if ( 'error' === $genesis_update || is_wp_error( $genesis_update ) || ! is_serialized( $genesis_update ) ) {
-			set_transient( 'genesis-update', array( 'new_version' => PARENT_THEME_VERSION ), 60 * 60 );
+		if ( 'error' === $response_body || is_wp_error( $response_body ) || ! is_serialized( $response_body ) ) {
+			$genesis_update = array( 'new_version' => PARENT_THEME_VERSION );
+			set_transient( 'genesis-update', $genesis_update, 60 * 60 );
 			return array();
 		}
 
 		//* Else, unserialize
-		$genesis_update = maybe_unserialize( $genesis_update );
+		$genesis_update = maybe_unserialize( $response_body );
 
 		//* And store in transient for 24 hours
 		set_transient( 'genesis-update', $genesis_update, 60 * 60 * 24 );
@@ -132,20 +134,43 @@ function genesis_update_check() {
 }
 
 /**
- * Upgrade the database to version 2105.
+ * Upgrade the database to version 2203.
  *
- * @since 2.1.3
+ * @since 2.2.0
  *
  * @uses genesis_update_settings()  Merges new settings with old settings and pushes them into the database.
  * @uses genesis_get_option()       Get theme setting value.
  */
-function genesis_upgrade_2105() {
+function genesis_upgrade_2203() {
 
 	//* Update Settings
 	genesis_update_settings( array(
-		'theme_version'   => '2.1.3',
-		'db_version'      => '2105',
+		'theme_version'   => '2.2.0',
+		'db_version'      => '2203',
 	) );
+
+}
+
+/**
+ * Upgrade the database to version 2201.
+ *
+ * @since 2.2.0
+ *
+ * @uses genesis_update_settings()  Merges new settings with old settings and pushes them into the database.
+ * @uses genesis_get_option()       Get theme setting value.
+ */
+function genesis_upgrade_2201() {
+
+	//* Update Settings
+	genesis_update_settings( array(
+		'theme_version'   => '2.2.0-beta2',
+		'db_version'      => '2201',
+	) );
+
+	//* Update SEO Settings
+	genesis_update_settings( array(
+		'canonical_archives' => 'unset',
+	), GENESIS_SEO_SETTINGS_FIELD );
 
 }
 
@@ -490,11 +515,18 @@ function genesis_upgrade() {
 		genesis_upgrade_2100();
 
 	###########################
-	# UPDATE DB TO VERSION 2105
+	# UPDATE DB TO VERSION 2201
 	###########################
 
-	if ( genesis_get_option( 'db_version', null, false ) < '2105' )
-		genesis_upgrade_2105();
+	if ( genesis_get_option( 'db_version', null, false ) < '2201' )
+		genesis_upgrade_2201();
+
+	###########################
+	# UPDATE DB TO VERSION 2203
+	###########################
+
+	if ( genesis_get_option( 'db_version', null, false ) < '2203' )
+		genesis_upgrade_2203();
 
 	do_action( 'genesis_upgrade' );
 
@@ -516,7 +548,7 @@ function genesis_network_upgrade_site( $blog_id ) {
 	$upgrade_url = add_query_arg( array( 'action' => 'genesis-silent-upgrade' ), admin_url( 'admin-ajax.php' ) );
 	restore_current_blog();
 
-	wp_remote_get( $upgrade_url );
+	wp_remote_get( esc_url_raw( $upgrade_url ) );
 
 }
 
@@ -579,7 +611,7 @@ function genesis_upgraded_notice() {
 		return;
 
 	if ( isset( $_REQUEST['upgraded'] ) && 'true' === $_REQUEST['upgraded'] )
-		echo '<div id="message" class="updated highlight" id="message"><p><strong>' . sprintf( __( 'Congratulations! You are now rocking Genesis %s', 'genesis' ), genesis_get_option( 'theme_version' ) ) . '</strong></p></div>';
+		echo '<div id="message" class="updated highlight"><p><strong>' . sprintf( __( 'Congratulations! You are now rocking Genesis %s', 'genesis' ), genesis_get_option( 'theme_version' ) ) . '</strong></p></div>';
 
 }
 

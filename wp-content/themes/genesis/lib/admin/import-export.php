@@ -97,9 +97,9 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		//* Add help sidebar
 		$screen->set_help_sidebar(
 			'<p><strong>' . __( 'For more information:', 'genesis' ) . '</strong></p>' .
-			'<p><a href="http://my.studiopress.com/help/" target="_blank">' . __( 'Get Support', 'genesis' ) . '</a></p>' .
-			'<p><a href="http://my.studiopress.com/snippets/" target="_blank">' . __( 'Genesis Snippets', 'genesis' ) . '</a></p>' .
-			'<p><a href="http://my.studiopress.com/tutorials/" target="_blank">' . __( 'Genesis Tutorials', 'genesis' ) . '</a></p>'
+			'<p><a href="http://my.studiopress.com/help/" target="_blank">' . __( 'Get Support', 'genesis' ) . '<span class="screen-reader-text">. ' . __( 'Link opens in a new window.', 'genesis' ) . '</span></a></p>' .
+			'<p><a href="http://my.studiopress.com/snippets/" target="_blank">' . __( 'Genesis Snippets', 'genesis' ) . '<span class="screen-reader-text">. ' . __( 'Link opens in a new window.', 'genesis' ) . '</span></a></p>' .
+			'<p><a href="http://my.studiopress.com/tutorials/" target="_blank">' . __( 'Genesis Tutorials', 'genesis' ) . '<span class="screen-reader-text">. ' . __( 'Link opens in a new window.', 'genesis' ) . '</span></a></p>'
 		);
 
 	}
@@ -124,39 +124,39 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 				<tbody>
 
 					<tr>
-						<th scope="row"><b><?php _e( 'Import Genesis Settings File', 'genesis' ); ?></p></th>
+						<th scope="row"><strong><?php _e( 'Import Genesis Settings File', 'genesis' ); ?></strong></th>
 						<td>
 							<p><?php printf( __( 'Upload the data file (%s) from your computer and we\'ll import your settings.', 'genesis' ), genesis_code( '.json' ) ); ?></p>
 							<p><?php _e( 'Choose the file from your computer and click "Upload file and Import"', 'genesis' ); ?></p>
-							<p>
+
 								<form enctype="multipart/form-data" method="post" action="<?php echo menu_page_url( 'genesis-import-export', 0 ); ?>">
-									<?php wp_nonce_field( 'genesis-import' ); ?>
+									<?php wp_nonce_field( 'genesis-import', 'genesis-import-nonce' ); ?>
 									<input type="hidden" name="genesis-import" value="1" />
-									<label for="genesis-import-upload"><?php sprintf( __( 'Upload File: (Maximum Size: %s)', 'genesis' ), ini_get( 'post_max_size' ) ); ?></label>
-									<input type="file" id="genesis-import-upload" name="genesis-import-upload" size="25" />
+									<label for="genesis-import-upload"><?php printf( __( 'Upload File (Maximum Size: %s): ', 'genesis' ), ini_get( 'post_max_size' ) ); ?></label>
+									<input type="file" id="genesis-import-upload" name="genesis-import-upload" />
 									<?php
 									submit_button( __( 'Upload File and Import', 'genesis' ), 'primary', 'upload' );
 									?>
 								</form>
-							</p>
+
 						</td>
 					</tr>
 
 					<tr>
-						<th scope="row"><b><?php _e( 'Export Genesis Settings File', 'genesis' ); ?></b></th>
+						<th scope="row"><strong><?php _e( 'Export Genesis Settings File', 'genesis' ); ?></strong></th>
 						<td>
 							<p><?php printf( __( 'When you click the button below, Genesis will generate a data file (%s) for you to save to your computer.', 'genesis' ), genesis_code( '.json' ) ); ?></p>
 							<p><?php _e( 'Once you have saved the download file, you can use the import function on another site to import this data.', 'genesis' ); ?></p>
-							<p>
+
 								<form method="post" action="<?php echo menu_page_url( 'genesis-import-export', 0 ); ?>">
 									<?php
-									wp_nonce_field( 'genesis-export' );
+									wp_nonce_field( 'genesis-export', 'genesis-export-nonce' );
 									$this->export_checkboxes();
 									if ( $this->get_export_options() )
 										submit_button( __( 'Download Export File', 'genesis' ), 'primary', 'download' );
 									?>
 								</form>
-							</p>
+
 						</td>
 					</tr>
 
@@ -185,9 +185,9 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 			return;
 
 		if ( isset( $_REQUEST['imported'] ) && 'true' === $_REQUEST['imported'] )
-			echo '<div id="message" class="updated"><p><strong>' . __( 'Settings successfully imported.', 'genesis' ) . '</strong></p></div>';
+			echo '<div id="message" class="updated" role="alert"><p><strong>' . __( 'Settings successfully imported.', 'genesis' ) . '</strong></p></div>';
 		elseif ( isset( $_REQUEST['error'] ) && 'true' === $_REQUEST['error'] )
-			echo '<div id="message" class="error"><p><strong>' . __( 'There was a problem importing your settings. Please try again.', 'genesis' ) . '</strong></p></div>';
+			echo '<div id="message" class="error" role="alert"><p><strong>' . __( 'There was a problem importing your settings. Please try again.', 'genesis' ) . '</strong></p></div>';
 
 	}
 
@@ -274,7 +274,7 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		if ( empty( $_REQUEST['genesis-export'] ) )
 			return;
 
-		check_admin_referer( 'genesis-export' );
+		check_admin_referer( 'genesis-export', 'genesis-export-nonce' );
 
 		do_action( 'genesis_export', $_REQUEST['genesis-export'] );
 
@@ -303,7 +303,7 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		//* Complete the export file name by joining parts together
 		$prefix = join( '-', $prefix );
 
-	    $output = json_encode( (array) $settings );
+	    $output = wp_json_encode( (array) $settings );
 
 		//* Prepare and send the export file to the browser
 	    header( 'Content-Description: File Transfer' );
@@ -344,7 +344,7 @@ class Genesis_Admin_Import_Export extends Genesis_Admin_Basic {
 		if ( empty( $_REQUEST['genesis-import'] ) )
 			return;
 
-		check_admin_referer( 'genesis-import' );
+		check_admin_referer( 'genesis-import', 'genesis-import-nonce' );
 
 		do_action( 'genesis_import', $_REQUEST['genesis-import'], $_FILES['genesis-import-upload'] );
 

@@ -89,19 +89,25 @@ function genesis_get_image( $args = array() ) {
 	if ( false !== $pre )
 		return $pre;
 
-	//* Check for post image (native WP)
+	//* If post thumbnail (native WP) exists, use its id
 	if ( has_post_thumbnail( $args['post_id'] ) && ( 0 === $args['num'] ) ) {
 		$id = get_post_thumbnail_id( $args['post_id'] );
-		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
-		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
 	}
-	//* Else if first-attached, pull the first (default) image attachment
+	//* Else if the first (default) image attachment is the fallback, use its id
 	elseif ( 'first-attached' === $args['fallback'] ) {
 		$id = genesis_get_image_id( $args['num'], $args['post_id'] );
+	}
+	//* Else if fallback id is supplied, use it
+	elseif ( is_int( $args['fallback'] ) ) {
+		$id = $args['fallback'];
+	}
+
+	//* If we have an id, get the html and url
+	if ( isset( $id ) ) {
 		$html = wp_get_attachment_image( $id, $args['size'], false, $args['attr'] );
 		list( $url ) = wp_get_attachment_image_src( $id, $args['size'], false, $args['attr'] );
 	}
-	//* Else if fallback array exists
+	//* Else if fallback html and url exist, use them
 	elseif ( is_array( $args['fallback'] ) ) {
 		$id   = 0;
 		$html = $args['fallback']['html'];

@@ -78,26 +78,44 @@ function genesis_custom_field_redirect() {
 }
 
 /**
- * Return a specific value from the associative array passed as the second argument to `add_theme_support()`.
+ * Return a specific value from the array passed as the second argument to `add_theme_support()`.
+ *
+ * Supports associative and index array of theme support arguments.
  *
  * @since 1.9.0
  *
  * @param string $feature The theme feature.
  * @param string $arg     The theme feature argument.
- * @param string $default Fallback if value is blank or doesn't exist.
+ * @param string $default Optional. Fallback if value is blank or doesn't exist.
+ *                        Default is empty string.
  *
- * @return mixed Return $default if theme doesn't support $feature, or $arg key doesn't exist.
+ * @return mixed Return value if associative array, true if indexed array, or
+ *               $default if theme doesn't support $feature or $arg doesn't exist.
  */
 function genesis_get_theme_support_arg( $feature, $arg, $default = '' ) {
 
 	$support = get_theme_support( $feature );
 
-	if ( ! $support || ! isset( $support[0] ) || ! array_key_exists( $arg, (array) $support[0] ) )
-		return $default;
+	if ( ! $arg &&  $support ) {
+		return true;
+	}
 
-	return $support[0][ $arg ];
+	if ( ! $support || ! isset( $support[0] ) ) {
+		return $default;
+	}
+
+	if ( array_key_exists( $arg, (array) $support[0] ) ) {
+		return $support[0][ $arg ];
+	}
+
+	if ( in_array( $arg, (array) $support[0] ) ) {
+		return true;
+	}
+
+	return $default;
 
 }
+
 
 /**
  * Detect active plugin by constant, class or function existence.
@@ -181,27 +199,27 @@ function genesis_is_customizer() {
 
 	global $wp_customize;
 
-	return is_a( $wp_customize, 'WP_Customize_Manager' ) && $wp_customize->is_preview(); 
+	return is_a( $wp_customize, 'WP_Customize_Manager' ) && $wp_customize->is_preview();
 
 }
 
 /**
- * Helper function to determine if the blog_page.php template should be used.
+ * Determine if the Blog template is being used.
+ *
+ * is_page_template() is not available within the loop or any loop that
+ * modifies $wp_query because it changes all the conditionals therein.
+ * Since the conditionals change, is_page() no longer returns true, thus
+ * is_page_template() will always return false.
  *
  * @since 2.1.0
- * 
- * @uses get_post_meta() Get post metadata.
- * @uses get_queried_object_id() Get queried object ID.
  *
- * @return bool
+ * @link http://codex.wordpress.org/Function_Reference/is_page_template#Cannot_Be_Used_Inside_The_Loop
+ *
+ * @return bool True if Blog template is being used, false otherwise.
  */
 function genesis_is_blog_template() {
 
-	if ( 'page_blog.php' == get_post_meta( get_queried_object_id(), '_wp_page_template', true ) ) {
-		return true;
-	}
-
-	return false;
+	return 'page_blog.php' === get_post_meta( get_queried_object_id(), '_wp_page_template', true );
 
 }
 
@@ -218,6 +236,9 @@ function genesis_get_global_post_type_name( $post_type_name = '' ) {
 
 	if ( ! $post_type_name ) {
 		$post_type_name = get_post_type();
+		if ( false === get_post_type() ) {
+			$post_type_name = get_query_var( 'post_type' );
+		}
 	}
 
 	return $post_type_name;
@@ -325,6 +346,93 @@ function genesis_html5() {
 }
 
 /**
+ * Determine if theme support genesis-accessibility is activated by the child theme.
+ * Assumes the presence of a screen-reader-text class in the stylesheet (required generated class as from WordPress 4.2)
+ *
+ * Adds screen-reader-text by default.
+ * Skip links to primary navigation, main contant, sidebars and footer, semantic headings and a keyboard accessible drop-down-menu
+ * can be added as extra features as: 'skip-links', 'headings', 'drop-down-menu'
+ *
+ * @since 2.2.0
+ *
+ * @param string $arg Optional. Specific accessibility feature to check for support.
+ *                    Accepts `drop-down-menu` and `headings`. Default is empty string.
+ *
+ * @return bool True if current theme supports genesis-accessibility, or an specific feature of it, false otherwise.
+ */
+function genesis_a11y( $arg = '' ) {
+
+	$feature = 'genesis-accessibility';
+
+	if ( empty( $arg ) ) {
+		return current_theme_supports( $feature );
+	}
+
+	$support = get_theme_support( $feature );
+
+	// No support for feature.
+	if ( ! $support ) {
+		return false;
+	}
+
+	// No args passed in to add_theme_support(), so accept all.
+	if ( ! isset( $support[0] ) ) {
+		return true;
+	}
+
+	// Support for specific arg found.
+	if ( in_array( $arg, $support[0] ) ) {
+		return true;
+	}
+
+}
+
+/**
+ * Add a sitemap
+ * Used in page_archive.php and 404.php, can be filtered
+ *
+ * $heading:  genesis_a11y( 'headings' ) ? 'h2' : 'h4' );
+ *
+ * @since 2.2.0
+ *
+ * @param string $heading
+ *
+ * @return string $heading Sitemap content
+ *
+ */
+function genesis_sitemap( $heading = 'h2' ) {
+
+	$sitemap  =  sprintf( '<%2$s>%1$s</%2$s>', __( 'Pages:', 'genesis' ), $heading );
+	$sitemap .=  sprintf( '<ul>%s</ul>', wp_list_pages( 'title_li=&echo=0' ) );
+
+	$sitemap .=  sprintf( '<%2$s>%1$s</%2$s>', __( 'Categories:', 'genesis' ) , $heading );
+	$sitemap .=  sprintf( '<ul>%s</ul>', wp_list_categories( 'sort_column=name&title_li=&echo=0' ) );
+
+	$sitemap .=  sprintf( '<%2$s>%1$s</%2$s>', __( 'Authors:', 'genesis' ) , $heading );
+	$sitemap .=  sprintf( '<ul>%s</ul>', wp_list_authors( 'exclude_admin=0&optioncount=1&echo=0' ) );
+
+	$sitemap .=  sprintf( '<%2$s>%1$s</%2$s>', __( 'Monthly:', 'genesis' ) , $heading );
+	$sitemap .=  sprintf( '<ul>%s</ul>', wp_get_archives( 'type=monthly&echo=0' ) );
+
+	$sitemap .=  sprintf( '<%2$s>%1$s</%2$s>', __( 'Recent Posts:', 'genesis' ) , $heading );
+	$sitemap .=  sprintf( '<ul>%s</ul>', wp_get_archives( 'type=postbypost&limit=100&echo=0' ) );
+
+	/**
+	 * Filter the sitemap.
+	 *
+	 * @since 2.2.0
+	 *
+	 * @param string $sitemap {
+	 *     Default sitemap.
+	 * }
+	 */
+	$sitemap = apply_filters( 'genesis_sitemap_output', $sitemap );
+
+	echo $sitemap;
+
+}
+
+/**
  * Build links to install plugins.
  *
  * @since 2.0.0
@@ -348,6 +456,105 @@ function genesis_plugin_install_link( $plugin_slug = '', $text = '' ) {
 }
 
 /**
+ * Check if the root page of the site is being viewed.
+ *
+ * is_front_page() returns false for the root page of a website when
+ * - the WordPress "Front page displays" setting is set to "A static page"
+ * - "Front page" is left undefined
+ * - "Posts page" is assigned to an existing page
+ *
+ * This function checks for is_front_page() or the root page of the website
+ * in this edge case.
+ *
+ * @since 2.2.0
+ *
+ * @return bool True if this is the root page of the site, false othewise.
+ */
+function genesis_is_root_page() {
+
+	if ( is_front_page() || ( is_home() && get_option( 'page_for_posts' ) && ! get_option( 'page_on_front' ) && ! get_queried_object() ) ) {
+		return true;
+	}
+
+	return false;
+
+}
+
+/**
+ * Calculate and return the canonical URL.
+ *
+ * @since 2.2.0
+ *
+ * @return string The canonical URL, if one exists.
+ */
+function genesis_canonical_url() {
+
+	global $wp_query;
+
+	$canonical = '';
+
+	$paged = intval( get_query_var( 'paged' ) );
+	$page  = intval( get_query_var( 'page' ) );
+
+	if ( is_front_page() ) {
+
+		if ( $paged ) {
+			$canonical = get_pagenum_link( $paged );
+		} else {
+			$canonical = trailingslashit( home_url() );
+		}
+
+	}
+
+	if ( is_singular() ) {
+
+		$numpages = substr_count( $wp_query->post->post_content, '<!--nextpage-->' ) + 1;
+
+		if ( ! $id = $wp_query->get_queried_object_id() ) {
+			return;
+		}
+
+		$cf = genesis_get_custom_field( '_genesis_canonical_uri' );
+
+		if ( $cf ) {
+			$canonical = $cf;
+		} elseif ( $numpages > 1 && $page > 1 ) {
+			$canonical = genesis_paged_post_url( $page, $id );
+		} else {
+			$canonical = get_permalink( $id );
+		}
+
+	}
+
+	if ( is_category() || is_tag() || is_tax() ) {
+
+		if ( ! $id = $wp_query->get_queried_object_id() )
+			return;
+
+		$taxonomy = $wp_query->queried_object->taxonomy;
+
+		$canonical = $paged ? get_pagenum_link( $paged ) : get_term_link( (int) $id, $taxonomy );
+
+	}
+
+	if ( is_author() ) {
+
+		if ( ! $id = $wp_query->get_queried_object_id() )
+			return;
+
+		$canonical = $paged ? get_pagenum_link( $paged ) : get_author_posts_url( $id );
+
+	}
+
+	if ( is_search() ) {
+		$canonical = get_search_link();
+	}
+
+	return apply_filters( 'genesis_canonical_url', $canonical );
+
+}
+
+/**
  * A list of Genesis contributors for the current development cycle.
  *
  * @since 2.0.0
@@ -364,11 +571,39 @@ function genesis_contributors() {
 			'gravatar' => '//0.gravatar.com/avatar/e341eca9e1a85dcae7127044301b4363?s=120',
 		),
 		/**/
+		//*
+		array(
+			'name'     => 'Jen Baumann',
+			'url'      => 'http://twitter.com/dreamwhisper',
+			'gravatar' => '//0.gravatar.com/avatar/eb9c6d91d77db908473131160e71ef6f?s=120',
+		),
+		/**/
+		//*
+		array(
+			'name'     => 'Brian Bourn',
+			'url'      => 'http://twitter.com/brianbourn',
+			'gravatar' => '//0.gravatar.com/avatar/fd5093291ce465911f8a2d5aa2045de6?s=120',
+		),
+		/**/
 		/*
 		array(
 			'name'     => 'Chris Cochran',
 			'url'      => 'http://twitter.com/tweetsfromchris',
 			'gravatar' => '//0.gravatar.com/avatar/aa0bea067ea6bfb854387d73f595aa1c?s=120',
+		),
+		/**/
+		//*
+		array(
+			'name'     => 'Nick Cernis',
+			'url'      => 'http://twitter.com/NickCernis',
+			'gravatar' => '//0.gravatar.com/avatar/459313f5f8b00775ef71be0e5191ff62?s=120',
+		),
+		/**/
+		//*
+		array(
+			'name'     => 'Robin Cornett',
+			'url'      => 'http://twitter.com/robincornett',
+			'gravatar' => '//0.gravatar.com/avatar/92f90103972341af5dcf421661209729?s=120',
 		),
 		/**/
 		/*
@@ -385,7 +620,7 @@ function genesis_contributors() {
 			'gravatar' => '//0.gravatar.com/avatar/28d02f8d09fc32fccc0282efdc23a4e5?s=120',
 		),
 		/**/
-		//*
+		/*
 		array(
 			'name'     => 'Remkus de Vries',
 			'url'      => 'http://twitter.com/DeFries',
@@ -394,12 +629,19 @@ function genesis_contributors() {
 		/**/
 		//*
 		array(
-			'name'     => 'Joost de Valk',
-			'url'      => 'https://twitter.com/yoast',
-			'gravatar' => '//0.gravatar.com/avatar/f08c3c3253bf14b5616b4db53cea6b78?s=120'
+			'name'     => 'Carrie Dils',
+			'url'      => 'http://twitter.com/cdils',
+			'gravatar' => '//0.gravatar.com/avatar/312a558dc3619f40b429d60b6fde9ee1?s=120',
 		),
 		/**/
-		/*
+		//*
+		array(
+			'name'     => 'Josh Eaton',
+			'url'      => 'http://twitter.com/jjeaton',
+			'gravatar' => '//0.gravatar.com/avatar/d32c3546dfa39bda008b07a91826df1d?s=120',
+		),
+		/**/
+		//*
 		array(
 			'name'     => 'Bill Erickson',
 			'url'      => 'http://twitter.com/billerickson',
@@ -420,7 +662,7 @@ function genesis_contributors() {
 			'gravatar' => '//0.gravatar.com/avatar/fe4225114bfd1f8993c6d20d32227537?s=120',
 		),
 		/**/
-		//*
+		/*
 		array(
 			'name'     => 'Mark Jaquith',
 			'url'      => 'http://twitter.com/markjaquith',
@@ -434,7 +676,7 @@ function genesis_contributors() {
 			'gravatar' => '//0.gravatar.com/avatar/e70d4086e89c2e1e081870865be68485?s=120',
 		),
 		/**/
-		//*
+		/*
 		array(
 			'name'     => 'Brandon Kraft',
 			'url'      => 'http://twitter.com/kraft',
@@ -446,6 +688,13 @@ function genesis_contributors() {
 			'name'     => 'Lauren Mancke',
 			'url'      => 'http://twitter.com/laurenmancke',
 			'gravatar' => '//0.gravatar.com/avatar/f7478b09179c624a91ba6c45422fbf4e?s=120',
+		),
+		/**/
+		//*
+		array(
+			'name'     => 'Carlo Manf',
+			'url'      => 'http://twitter.com/manfcarlo',
+			'gravatar' => '//0.gravatar.com/avatar/495aa472007b999d2489201fdb17aa35?s=120',
 		),
 		/**/
 		/*
@@ -462,18 +711,25 @@ function genesis_contributors() {
 			'gravatar' => '//0.gravatar.com/avatar/a3b6222854e90883765f5f30375718bf?s=120',
 		),
 		/**/
-		//*
+		/*
 		array(
 			'name'     => 'Jeremy Pry',
 			'url'      => 'http://twitter.com/JPry',
 			'gravatar' => '//0.gravatar.com/avatar/84552f74b71a1a3e6aae380aa9ab3bd3?s=120',
 		),
 		/**/
-		/*
+		//*
 		array(
 			'name'     => 'Greg Rickaby',
 			'url'      => 'http://twitter.com/GregRickaby',
 			'gravatar' => '//0.gravatar.com/avatar/28af3e39c0a1fe4c31367c7e9a8bcac3?s=120',
+		),
+		/**/
+		//*
+		array(
+			'name'     => 'Rian Rietveld',
+			'url'      => 'http://twitter.com/RianRietveld',
+			'gravatar' => '//0.gravatar.com/avatar/54b6a8a47f9d6f1a93f33be5909c59a5?s=120',
 		),
 		/**/
 		//*

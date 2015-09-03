@@ -43,34 +43,34 @@ function genesis_inpost_seo_box() {
 	wp_nonce_field( 'genesis_inpost_seo_save', 'genesis_inpost_seo_nonce' );
 	?>
 
-	<p><label for="genesis_title"><b><?php _e( 'Custom Document Title', 'genesis' ); ?></b> <abbr title="&lt;title&gt; Tag">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'genesis' ), '<span id="genesis_title_chars">'. mb_strlen( genesis_get_custom_field( '_genesis_title' ) ) .'</span>' ); ?></span></label></p>
+	<p><label for="genesis_title"><strong><?php _e( 'Custom Document Title', 'genesis' ); ?></strong> <span title="&lt;title&gt; Tag">[?]<span class="screen-reader-text"> &lt;title&gt; Tag. </span></span> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'genesis' ), '<span id="genesis_title_chars">'. mb_strlen( genesis_get_custom_field( '_genesis_title' ) ) .'</span>' ); ?></span></label></p>
 	<p><input class="large-text" type="text" name="genesis_seo[_genesis_title]" id="genesis_title" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_title' ) ); ?>" /></p>
 
-	<p><label for="genesis_description"><b><?php _e( 'Custom Post/Page Meta Description', 'genesis' ); ?></b> <abbr title="&lt;meta name=&quot;description&quot; /&gt;">[?]</abbr> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'genesis' ), '<span id="genesis_description_chars">'. mb_strlen( genesis_get_custom_field( '_genesis_description' ) ) .'</span>' ); ?></span></label></p>
+	<p><label for="genesis_description"><strong><?php _e( 'Custom Post/Page Meta Description', 'genesis' ); ?></strong> <span title="&lt;meta name=&quot;description&quot; /&gt;">[?]<span class="screen-reader-text"> &lt;meta name=&quot;description&quot; /&gt;. </span></span> <span class="hide-if-no-js"><?php printf( __( 'Characters Used: %s', 'genesis' ), '<span id="genesis_description_chars">'. mb_strlen( genesis_get_custom_field( '_genesis_description' ) ) .'</span>' ); ?></span></label></p>
 	<p><textarea class="widefat" name="genesis_seo[_genesis_description]" id="genesis_description" rows="4" cols="4"><?php echo esc_textarea( genesis_get_custom_field( '_genesis_description' ) ); ?></textarea></p>
 
-	<p><label for="genesis_keywords"><b><?php _e( 'Custom Post/Page Meta Keywords, comma separated', 'genesis' ); ?></b> <abbr title="&lt;meta name=&quot;keywords&quot; /&gt;">[?]</abbr></label></p>
+	<p><label for="genesis_keywords"><strong><?php _e( 'Custom Post/Page Meta Keywords, comma separated', 'genesis' ); ?></strong> <span title="&lt;meta name=&quot;keywords&quot; /&gt;">[?]<span class="screen-reader-text"> &lt;meta name=&quot;keywords&quot; /&gt;. </span></span></label></p>
 	<p><input class="large-text" type="text" name="genesis_seo[_genesis_keywords]" id="genesis_keywords" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_keywords' ) ); ?>" /></p>
 
-	<p><label for="genesis_canonical"><b><?php _e( 'Custom Canonical URL', 'genesis' ); ?></b> <a href="http://www.mattcutts.com/blog/canonical-link-tag/" target="_blank" title="&lt;link rel=&quot;canonical&quot; /&gt;">[?]</a></label></p>
+	<p><label for="genesis_canonical"><strong><?php _e( 'Custom Canonical URL', 'genesis' ); ?></strong> <a href="http://www.mattcutts.com/blog/canonical-link-tag/" target="_blank" title="&lt;link rel=&quot;canonical&quot; /&gt;">[?]<span class="screen-reader-text"> &lt;link rel=&quot;canonical&quot; /&gt;. <?php _e( 'Read more about', 'genesis' ); ?> <?php _e( 'Custom Canonical URL', 'genesis' ); ?>. <?php _e( 'Link opens in a new window.', 'genesis' ); ?></span></a></label></p>
 	<p><input class="large-text" type="text" name="genesis_seo[_genesis_canonical_uri]" id="genesis_canonical" value="<?php echo esc_url( genesis_get_custom_field( '_genesis_canonical_uri' ) ); ?>" /></p>
 
-	<p><label for="genesis_redirect"><b><?php _e( 'Custom Redirect URL', 'genesis' ); ?></b> <a href="http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=93633" target="_blank" title="301 Redirect">[?]</a></label></p>
+	<p><label for="genesis_redirect"><strong><?php _e( 'Custom Redirect URL', 'genesis' ); ?></strong> <a href="http://www.google.com/support/webmasters/bin/answer.py?hl=en&amp;answer=93633" target="_blank" title="301 Redirect">[?]<span class="screen-reader-text"> 301 Redirect. <?php _e( 'Read more about', 'genesis' ); ?> <?php _e( 'Custom Redirect URL', 'genesis' ); ?>. <?php _e( 'Link opens in a new window.', 'genesis' ); ?></span></a></label></p>
 	<p><input class="large-text" type="text" name="genesis_seo[redirect]" id="genesis_redirect" value="<?php echo esc_url( genesis_get_custom_field( 'redirect' ) ); ?>" /></p>
 
 	<br />
 
-	<p><b><?php _e( 'Robots Meta Settings', 'genesis' ); ?></b></p>
+	<p><strong><?php _e( 'Robots Meta Settings', 'genesis' ); ?></strong></p>
 
 	<p>
 		<label for="genesis_noindex"><input type="checkbox" name="genesis_seo[_genesis_noindex]" id="genesis_noindex" value="1" <?php checked( genesis_get_custom_field( '_genesis_noindex' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'genesis' ), genesis_code( 'noindex' ) ); ?> <a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]</a></label><br />
+		<?php printf( __( 'Apply %s to this post/page', 'genesis' ), genesis_code( 'noindex' ) ); ?> <a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]<span class="screen-reader-text"> <?php _e( 'Read more about', 'genesis' ); ?> noindex. <?php _e( 'Link opens in a new window.', 'genesis' ); ?></span></a></label><br />
 
 		<label for="genesis_nofollow"><input type="checkbox" name="genesis_seo[_genesis_nofollow]" id="genesis_nofollow" value="1" <?php checked( genesis_get_custom_field( '_genesis_nofollow' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'genesis' ), genesis_code( 'nofollow' ) ); ?> <a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]</a></label><br />
+		<?php printf( __( 'Apply %s to this post/page', 'genesis' ), genesis_code( 'nofollow' ) ); ?> <a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]<span class="screen-reader-text"> <?php _e( 'Read more about', 'genesis' ); ?> nofollow. <?php _e( 'Link opens in a new window.', 'genesis' ); ?></span></a></label><br />
 
 		<label for="genesis_noarchive"><input type="checkbox" name="genesis_seo[_genesis_noarchive]" id="genesis_noarchive" value="1" <?php checked( genesis_get_custom_field( '_genesis_noarchive' ) ); ?> />
-		<?php printf( __( 'Apply %s to this post/page', 'genesis' ), genesis_code( 'noarchive' ) ); ?> <a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]</a></label>
+		<?php printf( __( 'Apply %s to this post/page', 'genesis' ), genesis_code( 'noarchive' ) ); ?> <a href="http://yoast.com/articles/robots-meta-tags/" target="_blank">[?]<span class="screen-reader-text"> <?php _e( 'Read more about', 'genesis' ); ?> noarchive. <?php _e( 'Link opens in a new window.', 'genesis' ); ?></span></a></label>
 	</p>
 	<?php
 
@@ -155,7 +155,7 @@ function genesis_inpost_scripts_box() {
 	wp_nonce_field( 'genesis_inpost_scripts_save', 'genesis_inpost_scripts_nonce' );
 	?>
 
-	<p><label for="genesis_scripts" class="screen-reader-text"><b><?php _e( 'Page-specific Scripts', 'genesis' ); ?></b></label></p>
+	<p><label for="genesis_scripts" class="screen-reader-text"><strong><?php _e( 'Page-specific Scripts', 'genesis' ); ?></strong></label></p>
 	<p><textarea class="widefat" rows="4" cols="4" name="genesis_seo[_genesis_scripts]" id="genesis_scripts"><?php echo esc_textarea( genesis_get_custom_field( '_genesis_scripts' ) ); ?></textarea></p>
 	<p><?php printf( __( 'Suitable for custom tracking, conversion or other page-specific script. Must include %s tags.', 'genesis' ), genesis_code( 'script' ) ); ?></p>
 	<?php
@@ -231,18 +231,20 @@ function genesis_inpost_layout_box() {
 	$layout = genesis_get_custom_field( '_genesis_layout' );
 
 	?>
-	<div class="genesis-layout-selector">
-		<p><input type="radio" name="genesis_layout[_genesis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'genesis' ), menu_page_url( 'genesis', 0 ) ); ?></label></p>
+	<fieldset class="genesis-layout-selector">
+		<legend class="screen-reader-text"><?php _e( 'Layout Settings', 'genesis' ); ?></legend>
 
-		<p><?php genesis_layout_selector( array( 'name' => 'genesis_layout[_genesis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-	</div>
+		<p><input type="radio" name="genesis_layout[_genesis_layout]" class="default-layout" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'genesis' ), menu_page_url( 'genesis', 0 ) ); ?></label></p>
+		<?php genesis_layout_selector( array( 'name' => 'genesis_layout[_genesis_layout]', 'selected' => $layout, 'type' => 'site' ) ); ?>
+
+	</fieldset>
 
 	<br class="clear" />
 
-	<p><label for="genesis_custom_body_class"><b><?php _e( 'Custom Body Class', 'genesis' ); ?></b></label></p>
+	<p><label for="genesis_custom_body_class"><strong><?php _e( 'Custom Body Class', 'genesis' ); ?></strong></label></p>
 	<p><input class="large-text" type="text" name="genesis_layout[_genesis_custom_body_class]" id="genesis_custom_body_class" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_custom_body_class' ) ); ?>" /></p>
 
-	<p><label for="genesis_custom_post_class"><b><?php _e( 'Custom Post Class', 'genesis' ); ?></b></label></p>
+	<p><label for="genesis_custom_post_class"><strong><?php _e( 'Custom Post Class', 'genesis' ); ?></strong></label></p>
 	<p><input class="large-text" type="text" name="genesis_layout[_genesis_custom_post_class]" id="genesis_custom_post_class" value="<?php echo esc_attr( genesis_get_custom_field( '_genesis_custom_post_class' ) ); ?>" /></p>
 	<?php
 

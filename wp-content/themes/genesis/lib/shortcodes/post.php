@@ -446,6 +446,11 @@ function genesis_post_categories_shortcode( $atts ) {
 
 	$cats = get_the_category_list( trim( $atts['sep'] ) . ' ' );
 
+	//* Do nothing if no cats
+	if ( ! $cats ) {
+		return '';
+	}
+
 	if ( genesis_html5() )
 		$output = sprintf( '<span %s>', genesis_attr( 'entry-categories' ) ) . $atts['before'] . $cats . $atts['after'] . '</span>';
 	else
@@ -475,11 +480,22 @@ add_shortcode( 'post_terms', 'genesis_post_terms_shortcode' );
 function genesis_post_terms_shortcode( $atts ) {
 
 	$defaults = array(
-			'after'    => '',
-			'before'   => __( 'Filed Under: ', 'genesis' ),
-			'sep'      => ', ',
-			'taxonomy' => 'category',
+		'after'    => '',
+		'before'   => __( 'Filed Under: ', 'genesis' ),
+		'sep'      => ', ',
+		'taxonomy' => 'category',
 	);
+
+	/**
+	 * Post terms shortcode defaults.
+	 *
+	 * Allows the default args in the post terms shortcode function to be filtered.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @param array $defaults The default args array.
+	 */
+	$defaults = apply_filters( 'genesis_post_terms_shortcode_defaults', $defaults );
 
 	$atts = shortcode_atts( $defaults, $atts, 'post_terms' );
 

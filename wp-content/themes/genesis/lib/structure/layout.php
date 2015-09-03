@@ -63,7 +63,7 @@ function genesis_custom_body_class( array $classes ) {
 	$new_class = is_singular() ? genesis_get_custom_field( '_genesis_custom_body_class' ) : null;
 
 	if ( $new_class )
-		$classes[] = esc_attr( $new_class );
+		$classes[] = $new_class;
 
 	return $classes;
 
@@ -125,6 +125,32 @@ function genesis_layout_body_classes( array $classes ) {
 
 }
 
+add_filter( 'body_class', 'genesis_archive_no_results_body_class' );
+/**
+ * Add archive-no-results body class on empty archive pages
+ *
+ * Allows CSS styling of resultless archive pages
+ *
+ * @since 2.2.0
+ *
+ * @global WP_Query $wp_query Query object.
+ *
+ * @param array $classes Existing classes.
+ *
+ * @return array Amended classes
+ */
+function genesis_archive_no_results_body_class( array $classes ) {
+
+	global $wp_query;
+
+	if ( is_archive() && ! $wp_query->posts ) {
+		$classes[] = 'archive-no-results';
+	}
+
+	return $classes;
+
+}
+
 add_filter( 'body_class', 'genesis_style_selector_body_classes' );
 /**
  * Add style selector classes to the body classes.
@@ -144,7 +170,7 @@ function genesis_style_selector_body_classes( array $classes ) {
 	$current = genesis_get_option( 'style_selection' );
 
 	if ( $current )
-		$classes[] = esc_attr( sanitize_html_class( $current ) );
+		$classes[] = $current;
 
 	return $classes;
 
@@ -173,7 +199,7 @@ function genesis_cpt_archive_body_class( array $classes ) {
 	$new_class = genesis_get_cpt_option( 'body_class' );
 
 	if ( $new_class )
-		$classes[] = esc_attr( sanitize_html_class( $new_class ) );
+		$classes[] = $new_class;
 
 	return $classes;
 

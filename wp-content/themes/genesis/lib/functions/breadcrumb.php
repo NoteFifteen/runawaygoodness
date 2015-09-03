@@ -54,8 +54,10 @@ function genesis_do_breadcrumbs() {
 	)
 		return;
 
+	$breadcrumb_markup_open = sprintf( '<div %s>', genesis_attr( 'breadcrumb' ) );
+
 	if ( function_exists( 'bcn_display' ) ) {
-		echo '<div class="breadcrumb" itemprop="breadcrumb">';
+		echo $breadcrumb_markup_open;
 		bcn_display();
 		echo '</div>';
 	}
@@ -66,10 +68,10 @@ function genesis_do_breadcrumbs() {
 		crumbs();
 	}
 	elseif ( class_exists( 'WPSEO_Breadcrumbs' ) && genesis_get_option( 'breadcrumbs-enable', 'wpseo_internallinks' ) ) {
-		yoast_breadcrumb( '<div class="breadcrumb" itemprop="breadcrumb">', '</div>' );
+		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
 	}
 	elseif( function_exists( 'yoast_breadcrumb' ) && ! class_exists( 'WPSEO_Breadcrumbs' ) ) {
-		yoast_breadcrumb( '<div class="breadcrumb" itemprop="breadcrumb">', '</div>' );
+		yoast_breadcrumb( $breadcrumb_markup_open, '</div>' );
 	}
 	else {
 		genesis_breadcrumb();

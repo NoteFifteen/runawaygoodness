@@ -45,7 +45,7 @@ class Genesis_Admin_CPT_Archive_Settings extends Genesis_Admin_Boxes {
 				'parent_slug' => 'edit.php?post_type=' . $this->post_type->name,
 				'page_title'  => apply_filters( 'genesis_cpt_archive_settings_page_label', __( 'Archive Settings', 'genesis' ) ),
 				'menu_title'  => apply_filters( 'genesis_cpt_archive_settings_menu_label', __( 'Archive Settings', 'genesis' ) ),
-				'capability'  => 'edit_theme_options',
+				'capability'  => 'manage_categories',
 			)
 		);
 
@@ -135,11 +135,17 @@ class Genesis_Admin_CPT_Archive_Settings extends Genesis_Admin_Boxes {
  	 * @see \Genesis_Admin_CPT_Archives_Settings::layout_box()  Callback for Layout box.
 	 */
 	public function metaboxes() {
+
 		add_meta_box( 'genesis-cpt-archives-settings', __( 'Archive Settings', 'genesis' ), array( $this, 'archive_box' ), $this->pagehook, 'main' );
-		add_meta_box( 'genesis-cpt-archives-seo-settings', __( 'SEO Settings', 'genesis' ), array( $this, 'seo_box' ), $this->pagehook, 'main' );
+
+		if ( ! genesis_seo_disabled() ) {
+			add_meta_box( 'genesis-cpt-archives-seo-settings', __( 'SEO Settings', 'genesis' ), array( $this, 'seo_box' ), $this->pagehook, 'main' );
+		}
+
 		add_meta_box( 'genesis-cpt-archives-layout-settings', __( 'Layout Settings', 'genesis' ), array( $this, 'layout_box' ), $this->pagehook, 'main' );
 
 		do_action( 'genesis_cpt_archives_settings_metaboxes', $this->pagehook );
+
 	}
 
 	/**
@@ -220,11 +226,13 @@ class Genesis_Admin_CPT_Archive_Settings extends Genesis_Admin_Boxes {
 		$layout = $this->get_field_value( 'layout' );
 
 		?>
-		<div class="genesis-layout-selector">
-			<p><input type="radio" class="default-layout" name="<?php $this->field_name( 'layout' ); ?>" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'genesis' ), menu_page_url( 'genesis', 0 ) ); ?></label></p>
+		<fieldset class="genesis-layout-selector">
+			<legend class="screen-reader-text"><?php _e( 'Layout Settings', 'genesis' ); ?></legend>
 
-			<p><?php genesis_layout_selector( array( 'name' => $this->get_field_name( 'layout' ), 'selected' => $layout, 'type' => 'site' ) ); ?></p>
-		</div>
+			<p><input type="radio" class="default-layout" name="<?php $this->field_name( 'layout' ); ?>" id="default-layout" value="" <?php checked( $layout, '' ); ?> /> <label class="default" for="default-layout"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'genesis' ), menu_page_url( 'genesis', 0 ) ); ?></label></p>
+			<?php genesis_layout_selector( array( 'name' => $this->get_field_name( 'layout' ), 'selected' => $layout, 'type' => 'site' ) ); ?>
+
+		</fieldset>
 
 		<br class="clear" />
 

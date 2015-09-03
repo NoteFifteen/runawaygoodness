@@ -46,14 +46,14 @@ function genesis_taxonomy_archive_options( $tag, $taxonomy ) {
 	<table class="form-table">
 		<tbody>
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="genesis-meta[headline]"><?php _e( 'Archive Headline', 'genesis' ); ?></label></th>
+				<th scope="row"><label for="genesis-meta[headline]"><?php _e( 'Archive Headline', 'genesis' ); ?></label></th>
 				<td>
 					<input name="genesis-meta[headline]" id="genesis-meta[headline]" type="text" value="<?php echo esc_attr( $tag->meta['headline'] ); ?>" size="40" />
 					<p class="description"><?php _e( 'Leave empty if you do not want to display a headline.', 'genesis' ); ?></p>
 				</td>
 			</tr>
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="genesis-meta[intro_text]"><?php _e( 'Archive Intro Text', 'genesis' ); ?></label></th>
+				<th scope="row"><label for="genesis-meta[intro_text]"><?php _e( 'Archive Intro Text', 'genesis' ); ?></label></th>
 				<td>
 					<textarea name="genesis-meta[intro_text]" id="genesis-meta[intro_text]" rows="5" cols="50" class="large-text"><?php echo esc_textarea( $tag->meta['intro_text'] ); ?></textarea>
 					<p class="description"><?php _e( 'Leave empty if you do not want to display any intro text.', 'genesis' ); ?></p>
@@ -99,21 +99,21 @@ function genesis_taxonomy_seo_options( $tag, $taxonomy ) {
 	<table class="form-table">
 		<tbody>
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="genesis-meta[doctitle]"><?php _e( 'Custom Document Title', 'genesis' ); ?></label></th>
+				<th scope="row"><label for="genesis-meta[doctitle]"><?php _e( 'Custom Document Title', 'genesis' ); ?></label></th>
 				<td>
 					<input name="genesis-meta[doctitle]" id="genesis-meta[doctitle]" type="text" value="<?php echo esc_attr( $tag->meta['doctitle'] ); ?>" size="40" />
 				</td>
 			</tr>
 
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="genesis-meta[description]"><?php _e( 'Meta Description', 'genesis' ); ?></label></th>
+				<th scope="row"><label for="genesis-meta[description]"><?php _e( 'Meta Description', 'genesis' ); ?></label></th>
 				<td>
 					<textarea name="genesis-meta[description]" id="genesis-meta[description]" rows="5" cols="50" class="large-text"><?php echo esc_html( $tag->meta['description'] ); ?></textarea>
 				</td>
 			</tr>
 
 			<tr class="form-field">
-				<th scope="row" valign="top"><label for="genesis-meta[keywords]"><?php _e( 'Meta Keywords', 'genesis' ); ?></label></th>
+				<th scope="row"><label for="genesis-meta[keywords]"><?php _e( 'Meta Keywords', 'genesis' ); ?></label></th>
 				<td>
 					<input name="genesis-meta[keywords]" id="genesis-meta[keywords]" type="text" value="<?php echo esc_attr( $tag->meta['keywords'] ); ?>" size="40" />
 					<p class="description"><?php _e( 'Comma separated list', 'genesis' ); ?></p>
@@ -121,7 +121,7 @@ function genesis_taxonomy_seo_options( $tag, $taxonomy ) {
 			</tr>
 
 			<tr>
-				<th scope="row" valign="top"><?php _e( 'Robots Meta', 'genesis' ); ?></th>
+				<th scope="row"><?php _e( 'Robots Meta', 'genesis' ); ?></th>
 				<td>
 					<label for="genesis-meta[noindex]"><input name="genesis-meta[noindex]" id="genesis-meta[noindex]" type="checkbox" value="1" <?php checked( $tag->meta['noindex'] ); ?> />
 					<?php printf( __( 'Apply %s to this archive?', 'genesis' ), genesis_code( 'noindex' ) ); ?></label><br />
@@ -170,19 +170,19 @@ function genesis_taxonomy_layout_options( $tag, $taxonomy ) {
 
 	?>
 	<h3><?php _e( 'Layout Settings', 'genesis' ); ?></h3>
+
 	<table class="form-table">
 		<tbody>
 			<tr>
-				<th scope="row" valign="top"><?php _e( 'Choose Layout', 'genesis' ); ?></th>
+				<th scope="row"><?php _e( 'Choose Layout', 'genesis' ); ?></th>
 				<td>
-					<div class="genesis-layout-selector">
-						<p>
-							<input type="radio" class="default-layout" name="genesis-meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> />
-							<label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'genesis' ), menu_page_url( 'genesis', 0 ) ); ?></label>
-						</p>
+					<fieldset class="genesis-layout-selector">
+						<legend class="screen-reader-text"><?php _e( 'Choose Layout', 'genesis' ); ?></legend>
 
-						<p><?php genesis_layout_selector( array( 'name' => 'genesis-meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?></p>
-					</div>
+						<p><input type="radio" class="default-layout" name="genesis-meta[layout]" id="default-layout" value="" <?php checked( $tag->meta['layout'], '' ); ?> /> <label for="default-layout" class="default"><?php printf( __( 'Default Layout set in <a href="%s">Theme Settings</a>', 'genesis' ), menu_page_url( 'genesis', 0 ) ); ?></label></p>
+						<?php genesis_layout_selector( array( 'name' => 'genesis-meta[layout]', 'selected' => $tag->meta['layout'], 'type' => 'site' ) ); ?>
+
+					</fieldset>
 				</td>
 			</tr>
 		</tbody>
@@ -237,8 +237,28 @@ function genesis_get_term_filter( $term, $taxonomy ) {
 	) ) );
 
 	//* Sanitize term meta
-	foreach ( $term->meta as $field => $value )
-		$term->meta[$field] = apply_filters( "genesis_term_meta_{$field}", stripslashes( wp_kses_decode_entities( $value ) ), $term, $taxonomy );
+	foreach ( $term->meta as $field => $value ) {
+
+		if ( is_array( $value ) ) {
+			$value = stripslashes_deep( array_filter( $value, 'wp_kses_decode_entities' ) );
+		} else {
+			$value = stripslashes( wp_kses_decode_entities( $value ) );
+		}
+
+		/**
+		 * Term meta value filter.
+		 *
+		 * Allow term meta value to be filtered before being injected into the $term->meta array.
+		 *
+		 * @since
+		 *
+		 * @param string|array  $value The term meta value.
+		 * @param string  $term The term that is being filtered.
+		 * @param string  $taxonomy The taxonomy to which the term belongs.
+		 */
+		$term->meta[ $field ] = apply_filters( "genesis_term_meta_{$field}", $value, $term, $taxonomy );
+
+	}
 
 	$term->meta = apply_filters( 'genesis_term_meta', $term->meta, $term, $taxonomy );
 
@@ -322,7 +342,7 @@ add_action( 'split_shared_term', 'genesis_split_shared_term' );
  *
  * When WordPress splits terms, ensure that the term meta gets preserved for the newly created term.
  *
- * @since 2.1.3
+ * @since 2.2.0
  *
  * @param integer @old_term_id The ID of the term being split.
  * @param integer @new_term_id The ID of the newly created term.

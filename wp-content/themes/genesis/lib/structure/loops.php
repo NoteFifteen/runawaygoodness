@@ -25,6 +25,7 @@ add_action( 'genesis_loop', 'genesis_do_loop' );
 function genesis_do_loop() {
 
 	if ( is_page_template( 'page_blog.php' ) ) {
+
 		$include = genesis_get_option( 'blog_cat' );
 		$exclude = genesis_get_option( 'blog_cat_exclude' ) ? explode( ',', str_replace( ' ', '', genesis_get_option( 'blog_cat_exclude' ) ) ) : '';
 		$paged   = get_query_var( 'paged' ) ? get_query_var( 'paged' ) : 1;
@@ -280,7 +281,7 @@ function genesis_grid_loop( $args = array() ) {
 	remove_action( 'genesis_post_content', 'genesis_do_post_image' );
 	remove_action( 'genesis_post_content', 'genesis_do_post_content' );
 	remove_action( 'genesis_post_content', 'genesis_do_post_content_nav' );
-	
+
 	remove_action( 'genesis_entry_header', 'genesis_do_post_format_image', 4 );
 	remove_action( 'genesis_entry_content', 'genesis_do_post_image', 8 );
 	remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
@@ -371,14 +372,14 @@ function genesis_grid_loop_content() {
 				'attr'    => genesis_parse_attr( 'entry-image-grid-loop', array( 'class' => $_genesis_loop_args['feature_image_class'] ) ),
 			) );
 
-			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
+			printf( '<a href="%s">%s</a>', get_permalink(), $image );
 
 		}
 
 		if ( $_genesis_loop_args['feature_content_limit'] )
-			the_content_limit( (int) $_genesis_loop_args['feature_content_limit'], esc_html( $_genesis_loop_args['more'] ) );
+			the_content_limit( (int) $_genesis_loop_args['feature_content_limit'], genesis_a11y_more_link( esc_html( $_genesis_loop_args['more'] ) ) );
 		else
-			the_content( esc_html( $_genesis_loop_args['more'] ) );
+			the_content( genesis_a11y_more_link( esc_html( $_genesis_loop_args['more'] ) ) );
 
 	}
 
@@ -392,15 +393,15 @@ function genesis_grid_loop_content() {
 				'attr'    => genesis_parse_attr( 'entry-image-grid-loop', array( 'class' => $_genesis_loop_args['grid_image_class'] ) ),
 			) );
 
-			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $image );
+			printf( '<a href="%s">%s</a>', get_permalink(), $image );
 
 		}
 
 		if ( $_genesis_loop_args['grid_content_limit'] ) {
-			the_content_limit( (int) $_genesis_loop_args['grid_content_limit'], esc_html( $_genesis_loop_args['more'] ) );
+			the_content_limit( (int) $_genesis_loop_args['grid_content_limit'], genesis_a11y_more_link( esc_html( $_genesis_loop_args['more'] ) ) );
 		} else {
 			the_excerpt();
-			printf( '<a href="%s" class="more-link">%s</a>', get_permalink(), esc_html( $_genesis_loop_args['more'] ) );
+			printf( '<a href="%s" class="more-link">%s</a>', get_permalink(), genesis_a11y_more_link( esc_html( $_genesis_loop_args['more'] ) ) );
 		}
 
 	}

@@ -13,7 +13,7 @@
 
 //* Output secondary sidebar structure
 genesis_markup( array(
-	'html5'   => '<aside %s>',
+	'html5'   => '<aside %s>' . genesis_sidebar_title( 'sidebar-alt' ),
 	'xhtml'   => '<div id="sidebar-alt" class="sidebar widget-area">',
 	'context' => 'sidebar-secondary',
 ) );

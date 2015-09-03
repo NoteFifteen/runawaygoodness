@@ -12,18 +12,20 @@
  */
 
 /**
- *
+ * Base class for Customizer classes in Genesis.
  */
 abstract class Genesis_Customizer_Base {
 
 	/**
-	 * Define defaults, call the `register` method, add css to head.
+	 * Define defaults, call the `register` method, add CSS to head.
+	 *
+	 * @since 2.1.0
 	 */
 	public function __construct() {
 
-		//** Register new customizer elements
+		//* Register new customizer elements
 		if ( method_exists( $this, 'register' ) ) {
-			add_action( 'customize_register', array( $this, 'register'), 15 );
+			add_action( 'customize_register', array( $this, 'register' ), 15 );
 		} else {
 			_doing_it_wrong( 'Genesis_Customizer_Base', __( 'When extending Genesis_Customizer_Base, you must create a register method.', 'genesis' ) );
 		}
@@ -35,14 +37,38 @@ abstract class Genesis_Customizer_Base {
 
 	}
 
+	/**
+	 * Get field name attribute value.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string $name Option name.
+	 * @return string Option name as key of settings field.
+	 */
 	protected function get_field_name( $name ) {
 		return sprintf( '%s[%s]', $this->settings_field, $name );
 	}
 
+	/**
+	 * Get field ID attribute value.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string $id Option ID.
+	 * @return string Option ID as key of settings field.
+	 */
 	protected function get_field_id( $id ) {
 		return sprintf( '%s[%s]', $this->settings_field, $id );
 	}
 
+	/**
+	 * Get field value.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string $key Option key.
+	 * @return mixed Field value.
+	 */
 	protected function get_field_value( $key ) {
 		return genesis_get_option( $key, $this->settings_field );
 	}
@@ -50,19 +76,35 @@ abstract class Genesis_Customizer_Base {
 }
 
 /**
+ * Genesis Customizer.
  *
+ * The class in which settings within Genesis core are added to the Customizer.
  */
 class Genesis_Customizer extends Genesis_Customizer_Base {
 
 	/**
 	 * Settings field.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @var string Settings field.
 	 */
 	public $settings_field = 'genesis-settings';
 
 	/**
+	 * Register new Customizer elements.
 	 *
+	 * Actual registration of settings and controls are handled in private methods.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 */
 	public function register( $wp_customize ) {
+
+		if ( ! current_theme_supports( 'genesis-custom-header' ) && ! current_theme_supports( 'custom-header' ) ) {
+			$this->blog_title( $wp_customize );
+		}
 
 		$this->color_scheme( $wp_customize );
 		$this->layout( $wp_customize );
@@ -76,18 +118,56 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 
 	}
 
+	/**
+	 * Register the site title setting and control.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 */
+	private function blog_title( $wp_customize ) {
+		$wp_customize->add_setting(
+			$this->get_field_name( 'blog_title' ),
+			array(
+				'default' => '',
+				'type'    => 'option',
+			)
+		);
+
+		$wp_customize->add_control(
+			'blog_title',
+			array(
+				'label'    => __( 'Use for site title/logo:', 'genesis' ),
+				'section'  => 'title_tagline',
+				'settings' => $this->get_field_name( 'blog_title' ),
+				'type'     => 'select',
+				'choices'  => array(
+					'text'  => __( 'Dynamic Text', 'genesis' ),
+					'image' => __( 'Image logo', 'genesis' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Register the color scheme setting and control.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 * @return Return early if the theme does not support genesis-style-selector.
+	 */
 	private function color_scheme( $wp_customize ) {
 
-		//** Color Selector
-		if ( ! current_theme_supports( 'genesis-style-selector' ) )
+		if ( ! current_theme_supports( 'genesis-style-selector' ) ) {
 			return;
+		}
 
-		//** Add Section
 		$wp_customize->add_section(
 			'genesis_color_scheme',
 			array(
 				'title'    => __( 'Color Scheme', 'genesis' ),
-				'priority' => 150,
+				'priority' => '158.80',
 			)
 		);
 
@@ -99,29 +179,38 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 			)
 		);
 
+		$genesis_style_support = get_theme_support( 'genesis-style-selector' );
+
 		$wp_customize->add_control(
 			'genesis_color_scheme',
 			array(
-				'label'    => __( 'Select Color Style', 'genesis'),
+				'label'    => __( 'Select Color Style', 'genesis' ),
 				'section'  => 'genesis_color_scheme',
 				'settings' => $this->get_field_name( 'style_selection' ),
 				'type'     => 'select',
 				'choices'  => array_merge(
 					array( '' => __( 'Default', 'genesis' ) ),
-					array_shift( get_theme_support( 'genesis-style-selector' ) )
+					array_shift( $genesis_style_support )
 				),
 			)
 		);
 
 	}
 
+	/**
+	 * Register the layout selector setting and control.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 */
 	private function layout( $wp_customize ) {
 
 		$wp_customize->add_section(
 			'genesis_layout',
 			array(
 				'title'    => __( 'Site Layout', 'genesis' ),
-				'priority' => 150,
+				'priority' => '158.81',
 			)
 		);
 
@@ -146,25 +235,32 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 
 	}
 
+	/**
+	 * Register the breadcrumbs settings and controls.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 */
 	private function breadcrumbs( $wp_customize ) {
 
 		$wp_customize->add_section(
 			'genesis_breadcrumbs',
 			array(
 				'title'    => __( 'Breadcrumbs', 'genesis' ),
-				'priority' => 150,
+				'priority' => '158.82',
 			)
 		);
 
 		$settings = array(
-			'breadcrumb_home'       => __( 'Homepage', 'genesis' ),
-			'breadcrumb_front_page' => __( 'Front Page', 'genesis' ),
-			'breadcrumb_posts_page' => __( 'Posts Page', 'genesis' ),
-			'breadcrumb_single'     => __( 'Single', 'genesis' ),
-			'breadcrumb_page'       => __( 'Page', 'genesis' ),
-			'breadcrumb_archive'    => __( 'Archive', 'genesis' ),
-			'breadcrumb_404'        => __( '404', 'genesis' ),
-			'breadcrumb_attachment' => __( 'Attachment/Media', 'genesis' ),
+			'breadcrumb_home'       => __( 'Breadcrumbs on Homepage', 'genesis' ),
+			'breadcrumb_front_page' => __( 'Breadcrumbs on Front Page', 'genesis' ),
+			'breadcrumb_posts_page' => __( 'Breadcrumbs on Posts Page', 'genesis' ),
+			'breadcrumb_single'     => __( 'Breadcrumbs on Single', 'genesis' ),
+			'breadcrumb_page'       => __( 'Breadcrumbs on Page', 'genesis' ),
+			'breadcrumb_archive'    => __( 'Breadcrumbs on Archive', 'genesis' ),
+			'breadcrumb_404'        => __( 'Breadcrumbs on 404 Page', 'genesis' ),
+			'breadcrumb_attachment' => __( 'Breadcrumbs on Attachment/Media', 'genesis' ),
 		);
 
 		$priority = 1;
@@ -196,13 +292,21 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 
 	}
 
+	/**
+	 * Register the comments and trackbacks settings and controls.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 * @return null Return early if the theme does not support genesis-style-selector.
+	 */
 	private function comments( $wp_customize ) {
 
 		$wp_customize->add_section(
 			'genesis_comments',
 			array(
 				'title'    => __( 'Comments and Trackbacks', 'genesis' ),
-				'priority' => 150,
+				'priority' => '158.83',
 			)
 		);
 
@@ -237,6 +341,13 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 
 	}
 
+	/**
+	 * Register the archives settings and controls.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
+	 */
 	private function archives( $wp_customize ) {
 
 		$wp_customize->add_section(
@@ -244,7 +355,7 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 			array(
 				'title'       => __( 'Content Archives', 'genesis' ),
 				'description' => __( 'These options will affect any blog listings page, including archive, author, blog, category, search, and tag pages.', 'genesis' ),
-				'priority'    => 150,
+				'priority'    => '158.84',
 			)
 		);
 
@@ -350,8 +461,11 @@ class Genesis_Customizer extends Genesis_Customizer_Base {
 
 add_action( 'init', 'genesis_customizer_init' );
 /**
+ * Create a new instance of the Genesis Customizer class.
  *
+ * @since 2.1.0
  */
 function genesis_customizer_init() {
 	new Genesis_Customizer;
 }
+

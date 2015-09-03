@@ -202,23 +202,29 @@ function genesis_custom_field( $field, $output_pattern = '%s' ) {
 /**
  * Return custom field post meta data.
  *
- * Return only the first value of custom field. Return false if field is blank or not set.
+ * Return only the first value of custom field. Return empty string if field is blank or not set.
  *
  * @since 0.1.3
  *
  * @param string $field Custom field key.
+ * @param int $post_id Optional. Post ID to use for Post Meta lookup, defaults to get_the_ID()
  *
- * @return string|boolean Return value or false on failure.
+ * @return string|boolean Return value or empty string on failure.
  */
-function genesis_get_custom_field( $field ) {
+function genesis_get_custom_field( $field, $post_id = null ) {
 
-	if ( null === get_the_ID() )
+	//* Use get_the_ID() if no $post_id is specified
+	$post_id = ( null !== $post_id ? $post_id : get_the_ID() );
+
+	if ( null === $post_id ) {
 		return '';
+	}
 
-	$custom_field = get_post_meta( get_the_ID(), $field, true );
+	$custom_field = get_post_meta( $post_id, $field, true );
 
-	if ( ! $custom_field )
+	if ( ! $custom_field ) {
 		return '';
+	}
 
 	//* Return custom field, slashes stripped, sanitized if string
 	return is_array( $custom_field ) ? stripslashes_deep( $custom_field ) : stripslashes( wp_kses_decode_entities( $custom_field ) );
@@ -301,6 +307,17 @@ function genesis_save_custom_fields( array $data, $nonce_action, $nonce_name, $p
  */
 function genesis_update_settings( $new = '', $setting = GENESIS_SETTINGS_FIELD ) {
 
-	return update_option( $setting, wp_parse_args( $new, get_option( $setting ) ) );
+	$old = get_option( $setting );
+
+	$settings = wp_parse_args( $new, $old );
+
+	//* Allow settings to be deleted
+	foreach ( $settings as $key => $value ) {
+		if ( 'unset' == $value ) {
+			unset( $settings[ $key ] );
+		}
+	}
+
+	return update_option( $setting, $settings );
 
 }

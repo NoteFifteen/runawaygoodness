@@ -237,7 +237,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 
 		$theme_settings_help =
 			'<h3>' . __( 'Theme Settings', 'genesis' ) . '</h3>' .
-			'<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional menu items to this list, including the ability to select different color schemes or set theme specific features such as a slider. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see. Below you\'ll find the items common to every child theme...', 'genesis' ) . '</p>';
+			'<p>'  . __( 'Your Theme Settings provides control over how the theme works. You will be able to control a lot of common and even advanced features from this menu. Some child themes may add additional menu items to this list, including the ability to select different color schemes or set theme specific features such as a slider. Each of the boxes can be collapsed by clicking the box header and expanded by doing the same. They can also be dragged into any order you desire or even hidden by clicking on "Screen Options" in the top right of the screen and "unchecking" the boxes you do not want to see. Below you\'ll find the items common to every child theme &#x02026;', 'genesis' ) . '</p>';
 
 		$information_help =
 			'<h3>' . __( 'Information', 'genesis' ) . '</h3>' .
@@ -312,7 +312,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 
 		$scripts_help =
 			'<h3>' . __( 'Header and Footer Scripts', 'genesis' ) . '</h3>' .
-			'<p>'  . __( 'This provides you with two fields that will output to the <head></head> of your site and just before the </body>. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then you should look into the Genesis Simple Hooks plugin.', 'genesis' ) . '</p>';
+			'<p>'  . sprintf( __( 'This provides you with two fields that will output to the %1$s element of your site and just before the %2$s tag. These will appear on every page of the site and are a great way to add analytic code and other scripts. You cannot use PHP in these fields. If you need to use PHP then you should look into the Genesis Simple Hooks plugin.', 'genesis' ), '<code>&lt;head&gt;</code>', '<code>&lt;/body&gt;</code>' ) . '</p>';
 
 		$home_help =
 			'<h3>' . __( 'How Home Pages Work', 'genesis' ) . '</h3>' .
@@ -507,7 +507,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 				<label for="<?php $this->field_id( 'update_email' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'update_email' ); ?>" id="<?php $this->field_id( 'update_email' ); ?>" value="1"<?php checked( $this->get_field_value( 'update_email' ) ) . disabled( is_super_admin(), 0 ); ?> />
 				<?php _e( 'Notify', 'genesis' ); ?></label>
 				<input type="text" name="<?php $this->field_name( 'update_email_address' ); ?>" id="<?php $this->field_id( 'update_email_address' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'update_email_address' ) ); ?>" size="30"<?php disabled( 0, is_super_admin() ); ?> />
-				<label for="<?php $this->field_id( 'update_email_address' ); ?>"><?php _e( 'when updates are available', 'genesis' ); ?></label>
+				<label for="<?php $this->field_id( 'update_email_address' ); ?>"><span class="screen-reader-text"><?php _e( 'Send an e-mail to this address ', 'genesis' ); ?></span><?php _e( 'when updates are available', 'genesis' ); ?></label>
 			</p>
 
 			<p><span class="description"><?php _e( 'If you provide an email address above, you will be notified via email when a new version of Genesis is available.', 'genesis' ); ?></span></p>
@@ -590,11 +590,12 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 	function layout_box() {
 
 		?>
-		<p class="genesis-layout-selector">
-		<?php
-		genesis_layout_selector( array( 'name' => $this->get_field_name( 'site_layout' ), 'selected' => $this->get_field_value( 'site_layout' ), 'type' => 'site' ) );
-		?>
-		</p>
+		<fieldset class="genesis-layout-selector">
+			<legend class="screen-reader-text"><?php _e( 'Default Layout', 'genesis' ); ?></legend>
+
+			<?php genesis_layout_selector( array( 'name' => $this->get_field_name( 'site_layout' ), 'selected' => $this->get_field_value( 'site_layout' ), 'type' => 'site' ) );?>
+
+		</fieldset>
 
 		<br class="clear" />
 		<?php
@@ -615,7 +616,8 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 		?>
 
 		<p><?php _e( 'Use for site title/logo:', 'genesis' ); ?>
-			<select name="<?php $this->field_name( 'blog_title' ); ?>">
+			<label for="<?php $this->field_name( 'blog_title' ); ?>" class="screen-reader-text"><?php _e( 'Use for site title/logo:', 'genesis' ); ?></label>
+			<select name="<?php $this->field_name( 'blog_title' ); ?>" id="<?php $this->field_name( 'blog_title' ); ?>">
 				<option value="text"<?php selected( $this->get_field_value( 'blog_title' ), 'text' ); ?>><?php _e( 'Dynamic text', 'genesis' ); ?></option>
 				<option value="image"<?php selected( $this->get_field_value( 'blog_title' ), 'image' ); ?>><?php _e( 'Image logo', 'genesis' ); ?></option>
 			</select>
@@ -705,7 +707,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 			<input type="text" name="<?php $this->field_name( 'feed_uri' ); ?>" class="regular-text" id="<?php $this->field_id( 'feed_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'feed_uri' ) ); ?>" />
 
 			<label for="<?php $this->field_id( 'redirect_feed' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'redirect_feed' ); ?>" id="<?php $this->field_id( 'redirect_feed' ); ?>" value="1"<?php checked( $this->get_field_value( 'redirect_feed' ) ); ?> />
-			<?php _e( 'Redirect Feed?', 'genesis' ); ?></label>
+			<?php _e( 'Redirect Custom Feed?', 'genesis' ); ?></label>
 		</p>
 
 		<p>
@@ -713,7 +715,7 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 			<input type="text" name="<?php $this->field_name( 'comments_feed_uri' ); ?>" class="regular-text" id="<?php $this->field_id( 'comments_feed_uri' ); ?>" value="<?php echo esc_attr( $this->get_field_value( 'comments_feed_uri' ) ); ?>" />
 
 			<label for="<?php $this->field_id( 'redirect_comments_feed' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'redirect_comments_feed' ); ?>" id="<?php $this->field_id( 'redirect_comments_feed' ); ?>" value="1"<?php checked( $this->get_field_value( 'redirect_comments__feed' ) ); ?> />
-			<?php _e( 'Redirect Feed?', 'genesis' ); ?></label>
+			<?php _e( 'Redirect Custom Comments Feed?', 'genesis' ); ?></label>
 		</p>
 
 		<p><span class="description"><?php printf( __( 'If your custom feed(s) are not handled by Feedblitz or Feedburner, do not use the redirect options.', 'genesis' ) ); ?></span></p>
@@ -735,23 +737,29 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 	function comments_box() {
 
 		?>
-		<p>
+		<fieldset>
+			<legend class="screen-reader-text"><?php _e( 'Enable Comments', 'genesis' ); ?></legend>
+
 			<?php _e( 'Enable Comments', 'genesis' ); ?>
-			<label for="<?php $this->field_id( 'comments_posts' ); ?>" title="Enable comments on posts"><input type="checkbox" name="<?php $this->field_name( 'comments_posts' ); ?>" id="<?php $this->field_id( 'comments_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_posts' ) ); ?> />
+			<label for="<?php $this->field_id( 'comments_posts' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'comments_posts' ); ?>" id="<?php $this->field_id( 'comments_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_posts' ) ); ?> />
 			<?php _e( 'on posts?', 'genesis' ); ?></label>
 
-			<label for="<?php $this->field_id( 'comments_pages' ); ?>" title="Enable comments on pages"><input type="checkbox" name="<?php $this->field_name( 'comments_pages' ); ?>" id="<?php $this->field_id( 'comments_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_pages' ) ); ?> />
+			<label for="<?php $this->field_id( 'comments_pages' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'comments_pages' ); ?>" id="<?php $this->field_id( 'comments_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'comments_pages' ) ); ?> />
 			<?php _e( 'on pages?', 'genesis' ); ?></label>
-		</p>
 
-		<p>
+		</fieldset>
+
+		<fieldset>
+			<legend class="screen-reader-text"><?php _e( 'Enable Trackbacks', 'genesis' ); ?></legend>
+
 			<?php _e( 'Enable Trackbacks', 'genesis' ); ?>
-			<label for="<?php $this->field_id( 'trackbacks_posts' ); ?>" title="Enable trackbacks on posts"><input type="checkbox" name="<?php $this->field_name( 'trackbacks_posts' ); ?>" id="<?php $this->field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_posts' ) ); ?> />
+			<label for="<?php $this->field_id( 'trackbacks_posts' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'trackbacks_posts' ); ?>" id="<?php $this->field_id( 'trackbacks_posts' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_posts' ) ); ?> />
 			<?php _e( 'on posts?', 'genesis' ); ?></label>
 
-			<label for="<?php $this->field_id( 'trackbacks_pages' ); ?>" title="Enable trackbacks on pages"><input type="checkbox" name="<?php $this->field_name( 'trackbacks_pages' ); ?>" id="<?php $this->field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_pages' ) ); ?> />
+			<label for="<?php $this->field_id( 'trackbacks_pages' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'trackbacks_pages' ); ?>" id="<?php $this->field_id( 'trackbacks_pages' ); ?>" value="1"<?php checked( $this->get_field_value( 'trackbacks_pages' ) ); ?> />
 			<?php _e( 'on pages?', 'genesis' ); ?></label>
-		</p>
+
+		</fieldset>
 
 		<p><span class="description"><?php _e( 'Comments and Trackbacks can also be disabled on a per post/page basis when creating/editing posts/pages.', 'genesis' ); ?></span></p>
 		<?php
@@ -772,8 +780,11 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 	function breadcrumb_box() {
 
 		?>
-		<h4><?php _e( 'Enable on:', 'genesis' ); ?></h4>
-		<p>
+		<h4><?php _e( 'Enable Breadcrumbs on:', 'genesis' ); ?></h4>
+
+		<fieldset>
+		<legend class="screen-reader-text"><?php _e( 'Enable Breadcrumbs on:', 'genesis' ); ?></legend>
+
 			<?php if ( 'page' === get_option( 'show_on_front' ) ) : ?>
 				<label for="<?php $this->field_id( 'breadcrumb_front_page' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'breadcrumb_front_page' ); ?>" id="<?php $this->field_id( 'breadcrumb_front_page' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_front_page' ) ); ?> />
 				<?php _e( 'Front Page', 'genesis' ); ?></label>
@@ -799,7 +810,9 @@ class Genesis_Admin_Settings extends Genesis_Admin_Boxes {
 
 			<label for="<?php $this->field_id( 'breadcrumb_attachment' ); ?>"><input type="checkbox" name="<?php $this->field_name( 'breadcrumb_attachment' ); ?>" id="<?php $this->field_id( 'breadcrumb_attachment' ); ?>" value="1"<?php checked( $this->get_field_value( 'breadcrumb_attachment' ) ); ?> />
 			<?php _e( 'Attachment Page', 'genesis' ); ?></label>
-		</p>
+
+		</fieldset>
+
 
 		<p><span class="description"><?php _e( 'Breadcrumbs are a great way of letting your visitors find out where they are on your site with just a glance. You can enable/disable them on certain areas of your site.', 'genesis' ); ?></span></p>
 		<?php

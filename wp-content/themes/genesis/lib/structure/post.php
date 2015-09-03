@@ -31,16 +31,16 @@ function genesis_reset_loops() {
 	add_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 	add_action( 'genesis_entry_header', 'genesis_do_post_title' );
 	add_action( 'genesis_entry_header', 'genesis_post_info', 12 );
-	
+
 	add_action( 'genesis_entry_content', 'genesis_do_post_image', 8 );
 	add_action( 'genesis_entry_content', 'genesis_do_post_content' );
 	add_action( 'genesis_entry_content', 'genesis_do_post_content_nav', 12 );
 	add_action( 'genesis_entry_content', 'genesis_do_post_permalink', 14 );
-	
+
 	add_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_open', 5 );
 	add_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_close', 15 );
 	add_action( 'genesis_entry_footer', 'genesis_post_meta' );
-	
+
 	add_action( 'genesis_after_entry', 'genesis_do_author_box_single', 8 );
 	add_action( 'genesis_after_entry', 'genesis_get_comments_template' );
 
@@ -114,6 +114,30 @@ function genesis_custom_post_class( array $classes ) {
 
 }
 
+add_filter( 'post_class', 'genesis_featured_image_post_class' );
+/**
+ * Featured Image Post Class
+ *
+ * @since 2.2.0
+ *
+ * @uses genesis_get_image() Genesis featured image
+ *
+ * @param array $classes Existing post classes
+ * @return array Amended post classes
+ *
+ */
+function genesis_featured_image_post_class( $classes ) {
+
+    $image = genesis_get_image();
+
+    if ( $image && ! in_array( 'has-post-thumbnail', $classes ) ) {
+        $classes[] = 'has-post-thumbnail';
+    }
+
+    return $classes;
+
+}
+
 add_action( 'genesis_entry_header', 'genesis_do_post_format_image', 4 );
 add_action( 'genesis_before_post_title', 'genesis_do_post_format_image' );
 /**
@@ -139,11 +163,11 @@ function genesis_do_post_format_image() {
 
 	//* If post format is set, look for post format image
 	if ( $post_format && file_exists( sprintf( '%s/images/post-formats/%s.png', CHILD_DIR, $post_format ) ) )
-		printf( '<a href="%s" title="%s" rel="bookmark"><img src="%s" class="post-format-image" alt="%s" /></a>', get_permalink(), the_title_attribute( 'echo=0' ), sprintf( '%s/images/post-formats/%s.png', CHILD_URL, $post_format ), $post_format );
+		printf( '<a href="%s" rel="bookmark"><img src="%s" class="post-format-image" alt="%s" /></a>', get_permalink(), sprintf( '%s/images/post-formats/%s.png', CHILD_URL, $post_format ), $post_format );
 
 	//* Else, look for the default post format image
 	elseif ( file_exists( sprintf( '%s/images/post-formats/default.png', CHILD_DIR ) ) )
-		printf( '<a href="%s" title="%s" rel="bookmark"><img src="%s/images/post-formats/default.png" class="post-format-image" alt="%s" /></a>', get_permalink(), the_title_attribute( 'echo=0' ), CHILD_URL, 'post' );
+		printf( '<a href="%s" rel="bookmark"><img src="%s/images/post-formats/default.png" class="post-format-image" alt="%s" /></a>', get_permalink(), CHILD_URL, 'post' );
 
 }
 
@@ -222,7 +246,7 @@ add_action( 'genesis_before_post_content', 'genesis_post_info' );
 /**
  * Echo the post info (byline) under the post title.
  *
- * Doesn't do post info on pages.
+ * By default, only does post info on posts.
  *
  * The post info makes use of several shortcodes by default, and the whole output is filtered via `genesis_post_info`
  * before echoing.
@@ -231,12 +255,18 @@ add_action( 'genesis_before_post_content', 'genesis_post_info' );
  *
  * @uses genesis_markup() Contextual markup.
  *
- * @return null Return early if on a page.
+ * @return null Return early if post type lacks support.
  */
 function genesis_post_info() {
 
-	if ( 'page' === get_post_type() )
+	if ( ! post_type_supports( get_post_type(), 'genesis-entry-meta-before-content' ) ) {
 		return;
+	}
+
+	$filtered = apply_filters( 'genesis_post_info', '[post_date] ' . __( 'by', 'genesis' ) . ' [post_author_posts_link] [post_comments] [post_edit]' );
+	if ( empty( $filtered ) ) {
+		return;
+	}
 
 	$output = genesis_markup( array(
 		'html5'   => '<p %s>',
@@ -245,8 +275,8 @@ function genesis_post_info() {
 		'echo'    => false,
 	) );
 
-	$output .= apply_filters( 'genesis_post_info', '[post_date] ' . __( 'by', 'genesis' ) . ' [post_author_posts_link] [post_comments] [post_edit]' );;
-	$output .= genesis_html5() ? '</p>' : '</div>';	
+	$output .= $filtered;
+	$output .= genesis_html5() ? '</p>' : '</div>';
 
 	echo $output;
 
@@ -273,11 +303,11 @@ function genesis_do_post_image() {
 			'format'  => 'html',
 			'size'    => genesis_get_option( 'image_size' ),
 			'context' => 'archive',
-			'attr'    => genesis_parse_attr( 'entry-image' ),
+			'attr'    => genesis_parse_attr( 'entry-image', array ( 'alt' => get_the_title() ) ),
 		) );
 
 		if ( ! empty( $img ) )
-			printf( '<a href="%s" title="%s">%s</a>', get_permalink(), the_title_attribute( 'echo=0' ), $img );
+			printf( '<a href="%s" aria-hidden="true">%s</a>', get_permalink(), $img );
 	}
 
 }
@@ -397,8 +427,9 @@ add_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_open', 5 );
  */
 function genesis_entry_footer_markup_open() {
 
-	if ( 'post' === get_post_type() )
+	if ( post_type_supports( get_post_type(), 'genesis-entry-meta-after-content' ) ) {
 		printf( '<footer %s>', genesis_attr( 'entry-footer' ) );
+	}
 
 }
 
@@ -410,8 +441,9 @@ add_action( 'genesis_entry_footer', 'genesis_entry_footer_markup_close', 15 );
  */
 function genesis_entry_footer_markup_close() {
 
-	if ( 'post' === get_post_type() )
+	if ( post_type_supports( get_post_type(), 'genesis-entry-meta-after-content' ) ) {
 		echo '</footer>';
+	}
 
 }
 
@@ -421,7 +453,7 @@ add_action( 'genesis_after_post_content', 'genesis_post_meta' );
 /**
  * Echo the post meta after the post content.
  *
- * Doesn't do post meta on pages.
+ * By default, only does post meta on posts.
  *
  * The post info makes use of a couple of shortcodes by default, and the whole output is filtered via
  * `genesis_post_meta` before echoing.
@@ -430,12 +462,18 @@ add_action( 'genesis_after_post_content', 'genesis_post_meta' );
  *
  * @uses genesis_markup() Contextual markup.
  *
- * @return null Return early if on a page
+ * @return null Return early if post type lacks support.
  */
 function genesis_post_meta() {
 
-	if ( 'page' === get_post_type() )
+	if ( ! post_type_supports( get_post_type(), 'genesis-entry-meta-after-content' ) ) {
 		return;
+	}
+
+	$filtered = apply_filters( 'genesis_post_meta', '[post_categories] [post_tags]' );
+	if ( empty( $filtered ) ) {
+		return;
+	}
 
 	$output = genesis_markup( array(
 		'html5'   => '<p %s>',
@@ -444,7 +482,7 @@ function genesis_post_meta() {
 		'echo'    => false,
 	) );
 
-	$output .= apply_filters( 'genesis_post_meta', '[post_categories] [post_tags]' );
+	$output .= $filtered;
 	$output .= genesis_html5() ? '</p>' : '</div>';
 
 	echo $output;
@@ -509,27 +547,28 @@ function genesis_author_box( $context = '', $echo = true ) {
 
 		/**
 		 * Author box title filter.
-		 * 
+		 *
 		 * Allows you to filter the title of the author box. $context passed as second parameter to allow for contextual filtering.
 		 *
 		 * @since unknown
-		 * 
+		 *
 		 * @param string $title Assembled Title.
-		 * @param string $context Context. 
+		 * @param string $context Context.
 		 */
 		$title = apply_filters( 'genesis_author_box_title', $title, $context );
 
-		$pattern  = sprintf( '<section %s>', genesis_attr( 'author-box' ) );
 		if ( 'single' === $context && ! genesis_get_seo_option( 'semantic_headings' ) ) {
-			$pattern .= '%s<h4 class="author-box-title">%s</h4>';
+			$heading_element = 'h4';
 		} else {
-			$pattern .= '%s<h1 class="author-box-title">%s</h1>';
+			$heading_element = 'h1';
 		}
+
+		$pattern  = sprintf( '<section %s>', genesis_attr( 'author-box' ) );
+		$pattern .= '%s<' . $heading_element . ' class="author-box-title">%s</' . $heading_element . '>';
 		$pattern .= '<div class="author-box-content" itemprop="description">%s</div>';
 		$pattern .= '</section>';
 
-	}
-	else {
+	} else {
 
 		$title = apply_filters( 'genesis_author_box_title', sprintf( '<strong>%s %s</strong>', __( 'About', 'genesis' ), get_the_author() ), $context );
 
@@ -541,17 +580,17 @@ function genesis_author_box( $context = '', $echo = true ) {
 
 	/**
 	 * Author box output filter.
-	 * 
+	 *
 	 * Allows you to filter the full output of the author box.
 	 *
 	 * @since unknown
-	 * 
+	 *
 	 * @param string $output Assembled output.
 	 * @param string $context Context.
-	 * @param string $pattern (s)printf pattern. 
-	 * @param string $context Gravatar. 
-	 * @param string $context Title. 
-	 * @param string $context Description. 
+	 * @param string $pattern (s)printf pattern.
+	 * @param string $context Gravatar.
+	 * @param string $context Title.
+	 * @param string $context Description.
 	 */
 	$output = apply_filters( 'genesis_author_box', $output, $context, $pattern, $gravatar, $title, $description );
 
@@ -567,7 +606,7 @@ add_action( 'genesis_after_entry', 'genesis_after_entry_widget_area' );
  * Display after-entry widget area on the genesis_after_entry action hook.
  *
  * @since 2.1.0
- * 
+ *
  * @uses genesis_widget_area() Output widget area.
  */
 function genesis_after_entry_widget_area() {
@@ -613,8 +652,8 @@ function genesis_posts_nav() {
  */
 function genesis_prev_next_posts_nav() {
 
-	$prev_link = get_previous_posts_link( apply_filters( 'genesis_prev_link_text', '&#x000AB;' . __( 'Previous Page', 'genesis' ) ) );
-	$next_link = get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'genesis' ) . '&#x000BB;' ) );
+	$prev_link = get_previous_posts_link( apply_filters( 'genesis_prev_link_text', '&#x000AB; ' . __( 'Previous Page', 'genesis' ) ) );
+	$next_link = get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'genesis' ) . ' &#x000BB;' ) );
 
 	$prev = $prev_link ? '<div class="pagination-previous alignleft">' . $prev_link . '</div>' : '';
 	$next = $next_link ? '<div class="pagination-next alignright">' . $next_link . '</div>' : '';
@@ -690,18 +729,20 @@ function genesis_numeric_posts_nav() {
 		'context' => 'archive-pagination',
 	) );
 
+	$before_number = genesis_a11y() ? '<span class="screen-reader-text">' . __( 'Page ', 'genesis' ) .  '</span>' : '';
+
 	echo '<ul>';
 
 	//* Previous Post Link
 	if ( get_previous_posts_link() )
-		printf( '<li class="pagination-previous">%s</li>' . "\n", get_previous_posts_link( apply_filters( 'genesis_prev_link_text', '&#x000AB;' . __( 'Previous Page', 'genesis' ) ) ) );
+		printf( '<li class="pagination-previous">%s</li>' . "\n", get_previous_posts_link( apply_filters( 'genesis_prev_link_text', '&#x000AB; ' . __( 'Previous Page', 'genesis' ) ) ) );
 
 	//* Link to first page, plus ellipses if necessary
 	if ( ! in_array( 1, $links ) ) {
 
 		$class = 1 == $paged ? ' class="active"' : '';
 
-		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), '1' );
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), $before_number . '1' );
 
 		if ( ! in_array( 2, $links ) )
 			echo '<li class="pagination-omission">&#x02026;</li>';
@@ -711,8 +752,8 @@ function genesis_numeric_posts_nav() {
 	//* Link to current page, plus 2 pages in either direction if necessary
 	sort( $links );
 	foreach ( (array) $links as $link ) {
-		$class = $paged == $link ? ' class="active"' : '';
-		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $link );
+		$class = $paged == $link ? ' class="active"  aria-label="' . __( 'Current page', 'genesis' ) . '"' : '';
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $link ) ), $before_number . $link );
 	}
 
 	//* Link to last page, plus ellipses if necessary
@@ -722,13 +763,13 @@ function genesis_numeric_posts_nav() {
 			echo '<li class="pagination-omission">&#x02026;</li>' . "\n";
 
 		$class = $paged == $max ? ' class="active"' : '';
-		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $max );
+		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( $max ) ), $before_number . $max );
 
 	}
 
 	//* Next Post Link
 	if ( get_next_posts_link() )
-		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'genesis' ) . '&#x000BB;' ) ) );
+		printf( '<li class="pagination-next">%s</li>' . "\n", get_next_posts_link( apply_filters( 'genesis_next_link_text', __( 'Next Page', 'genesis' ) . ' &#x000BB;' ) ) );
 
 	echo '</ul></div>' . "\n";
 

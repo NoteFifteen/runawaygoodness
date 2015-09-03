@@ -27,7 +27,7 @@ add_filter( 'get_search_form', 'genesis_search_form' );
  * @return string HTML markup.
  */
 function genesis_search_form() {
-	$search_text = get_search_query() ? apply_filters( 'the_search_query', get_search_query() ) : apply_filters( 'genesis_search_text', __( 'Search this website', 'genesis' ) . '&#x02026;' );
+	$search_text = get_search_query() ? apply_filters( 'the_search_query', get_search_query() ) : apply_filters( 'genesis_search_text', __( 'Search this website', 'genesis' ) . ' &#x02026;' );
 
 	$button_text = apply_filters( 'genesis_search_button_text', esc_attr__( 'Search', 'genesis' ) );
 
@@ -39,10 +39,55 @@ function genesis_search_form() {
 
 	$value_or_placeholder = ( get_search_query() == '' ) ? 'placeholder' : 'value';
 
-	if ( genesis_html5() )
-		$form = sprintf( '<form method="get" class="search-form" action="%s" role="search">%s<input type="search" name="s" %s="%s" /><input type="submit" value="%s" /></form>', home_url( '/' ), esc_html( $label ), $value_or_placeholder, esc_attr( $search_text ), esc_attr( $button_text ) );
-	else
-		$form = sprintf( '<form method="get" class="searchform search-form" action="%s" role="search" >%s<input type="text" value="%s" name="s" class="s search-input" onfocus="%s" onblur="%s" /><input type="submit" class="searchsubmit search-submit" value="%s" /></form>', home_url( '/' ), esc_html( $label ), esc_attr( $search_text ), esc_attr( $onfocus ), esc_attr( $onblur ), esc_attr( $button_text ) );
+	if ( genesis_html5() ) {
+
+		$form  = sprintf( '<form %s>', genesis_attr( 'search-form' ) );
+
+		if ( genesis_a11y( 'search-form' ) ) {
+
+			if ( '' == $label )  {
+				$label = apply_filters( 'genesis_search_text', __( 'Search this website', 'genesis' ) );
+			}
+
+			$form_id = uniqid( 'searchform-' );
+
+			$form .= sprintf(
+				'<meta itemprop="target" content="%s"/><label class="search-form-label screen-reader-text" for="%s">%s</label><input itemprop="query-input" type="search" name="s" id="%s" %s="%s" /><input type="submit" value="%s" /></form>',
+				home_url( '/?s={s}' ),
+				esc_attr( $form_id ),
+				esc_html( $label ),
+				esc_attr( $form_id ),
+				$value_or_placeholder,
+				esc_attr( $search_text ),
+				esc_attr( $button_text )
+			);
+
+		} else {
+
+			$form .= sprintf(
+				'%s<meta itemprop="target" content="%s"/><input itemprop="query-input" type="search" name="s" %s="%s" /><input type="submit" value="%s"  /></form>',
+				esc_html( $label ),
+				home_url( '/?s={s}' ),
+				$value_or_placeholder,
+				esc_attr( $search_text ),
+				esc_attr( $button_text )
+			);
+		}
+
+
+	} else {
+
+		$form = sprintf(
+			'<form method="get" class="searchform search-form" action="%s" role="search" >%s<input type="text" value="%s" name="s" class="s search-input" onfocus="%s" onblur="%s" /><input type="submit" class="searchsubmit search-submit" value="%s" /></form>',
+			home_url( '/' ),
+			esc_html( $label ),
+			esc_attr( $search_text ),
+			esc_attr( $onfocus ),
+			esc_attr( $onblur ),
+			esc_attr( $button_text )
+		);
+
+	}
 
 	return apply_filters( 'genesis_search_form', $form, $search_text, $button_text, $label );
 
