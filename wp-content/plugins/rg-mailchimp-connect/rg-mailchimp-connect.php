@@ -44,7 +44,7 @@ define('ALREADY_IN_LOC','/wordpress/already-in');
 function rg_signup_form() {
 	// get genres (interest categories)
 	$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
-//	$response = \Httpful\Request::get($url)->send();
+	$response = \Httpful\Request::get($url)->send();
 	$genre_options = '';
 
 	foreach ($response->body->interests as $genre) {
