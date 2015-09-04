@@ -50,7 +50,9 @@ function current_deals_shortcode() {
 
 			$html .= '<div class="singledeal">';
 				$html .= get_the_post_thumbnail( get_the_ID(), 'homedeal' ) . '<br />';
-				if ( get_post_meta( get_the_ID(), 'on_sale_price', true ) ) {
+
+				$free_amounts = array( '0', '0.00', '0.0' );
+				if ( get_post_meta( get_the_ID(), 'on_sale_price', true ) && !in_array( get_post_meta( get_the_ID(), 'on_sale_price', true ), $free_amounts ) ) {
 					$html .= 'Sale Price: $' . get_post_meta( get_the_ID(), 'on_sale_price', true ) . '<br />';
 				} else {
 					$html .= 'Sale Price: FREE!<br />';
@@ -61,7 +63,7 @@ function current_deals_shortcode() {
 
 				$html .= 'Reg. Price: $<span style="text-decoration: line-through;">' . get_post_meta( get_the_ID(), 'regular_price', true ) . '</span><br />';
 
-				if ( get_post_meta( get_the_ID(), 'on_sale_price', true ) ) {
+				if ( get_post_meta( get_the_ID(), 'on_sale_price', true ) && !in_array( get_post_meta( get_the_ID(), 'on_sale_price', true ), $free_amounts ) ) {
 					$html .= '<a class="button" href="http://www.amazon.com/dp/' . get_post_meta( get_the_ID(), 'amazon_id', true ) . '/?tag=runawaygoodness-20">Buy Now</a>';
 				} else {
 					$html .= '<a class="button" href="http://www.amazon.com/dp/' . get_post_meta( get_the_ID(), 'amazon_id', true ) . '/">Download</a>';
@@ -69,20 +71,6 @@ function current_deals_shortcode() {
 
 			
 			$html .= '</div>';
-
-/*
-			if( get_sub_field( 'amazon_asin' ) ) {
-				if( get_sub_field( 'book_price' ) == '0' ) {
-					$html .= '<a href="http://www.amazon.com/dp/' . get_post_meta( get_the_ID(), 'amazon_id', true ) . '/"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
-				} else {
-					$html .= '<a href="http://www.amazon.com/dp/' . get_post_meta( get_the_ID(), 'amazon_id', true ) . '/?tag=runawaygoodness-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
-				}
-			} else {
-				$html .= '<img src="' . get_sub_field( 'book_cover' ) . '" alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left">';
-			}
-*/
-
-
 		}
 		wp_reset_postdata();
 	}
@@ -106,6 +94,7 @@ function rg_edit_deal_columns( $columns ) {
 	$mycolumns = array(
 		'start_date'	=> __( 'Start Date', 'runawaygoodness' ),
 		'end_date'		=> __( 'End Date', 'runawaygoodness' ),
+		'amazon'		=> __( 'Amazon ID', 'runawaygoodness'),
 		'thumb'			=> __( 'Thumbnail', 'runawaygoodness' )
 	);
 
@@ -138,6 +127,9 @@ function rg_deal_columns( $column, $post_id ) {
 		case 'thumb' :
 			echo get_the_post_thumbnail( get_the_ID(), 'columnthumb' );
 		break;
+
+		case 'amazon' :
+			echo '<a href="http://amazon.com/dp/'. get_post_meta( get_the_ID(), 'amazon_id', true ) .'" target="_blank">'. get_post_meta( get_the_ID(), 'amazon_id', true ) .'</a>';
 
 		default :
 		break;
