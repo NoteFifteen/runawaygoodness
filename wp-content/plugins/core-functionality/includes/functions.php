@@ -206,3 +206,42 @@ function create_genre_taxonomy() {
 'rewrite' => array( 'slug' => 'genres' ),
   ));
 }
+
+add_shortcode( 'front_page_signup', 'front_page_signup_shortcode' );
+
+function front_page_signup_shortcode() {
+
+	$html = '<p align="center"><div class="signupblock">';
+	$html .= '<h1>Exciting deals on new books</h1>';
+	$html .= '<h2>The first one is on us!</h2>';
+	$html .= '<form action="//runawaygoodness.us11.list-manage.com/subscribe/post?u=1c904fe9a0639b7e2464b65c4&amp;id=5e63b9bb07" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" novalidate> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups--> <div style="position: absolute; left: -5000px;"> <input type="text" name="b_1c904fe9a0639b7e2464b65c4_5e63b9bb07" tabindex="-1" value=""> </div> <input type="hidden" name="SOURCE" id="SOURCE" value="rg-home" /> <div id="" class="om-clearfix om-has-email" data-om-action="selectable" data-om-target="#optin-monster-saas-field-footer_bg"> <div style="margin-bottom: 20px;"><select id="group7249" name=""> ';
+	$html .= '<option value="">Pick Your Genre</option> ';
+	$html .= '<option id="group[7249][1]" value="1" '; if( $_GET['g'] === "biz" ) { $html .= "SELECTED"; } $html .='>Business</option>';
+	$html .= '<option id="group[7249][2]" value="1" '; if( $_GET['g'] === "cl" ) { $html .= "SELECTED"; } $html .='>Chick Lit</option>';
+	$html .= '<option id="group[7249][4]" value="1" '; if( $_GET['g'] === "ch" ) { $html .= "SELECTED"; } $html .='>Christian</option>';
+	$html .= '<option id="group[7249][8]" value="1" '; if( $_GET['g'] === "cw" ) { $html .= "SELECTED"; } $html .='>Creative Writing</option>';
+	$html .= '<option id="group[7249][16]" value="1" '; if( $_GET['g'] === "fan" ) { $html .= "SELECTED"; } $html .='>Fantasy</option>';
+	$html .= '<option id="group[7249][32]" value="1" '; if( $_GET['g'] === "hr" ) { $html .= "SELECTED"; } $html .='>Historical Romance</option>';
+	$html .= '<option id="group[7249][64]" value="1" '; if( $_GET['g'] === "hor" ) { $html .= "SELECTED"; } $html .='>Horror</option>';
+	$html .= '<option id="group[7249][128]" value="1" '; if( $_GET['g'] === "hum" ) { $html .= "SELECTED"; } $html .='>Humor</option>';
+	$html .= '<option id="group[7249][256]" value="1" '; if( $_GET['g'] === "lf" ) { $html .= "SELECTED"; } $html .='>Literary Fiction</option>';
+	$html .= '<option id="group[7249][512]" value="1" '; if( $_GET['g'] === "mem" ) { $html .= "SELECTED"; } $html .='>Memoir</option>';
+	$html .= '<option id="group[7249][1024]" value="1" '; if( $_GET['g'] === "mg" ) { $html .= "SELECTED"; } $html .='>Mid-grade</option>';
+	$html .= '<option id="group[7249][2048]" value="1" '; if( $_GET['g'] === "mys" ) { $html .= "SELECTED"; } $html .='>Mystery</option>';
+	$html .= '<option id="group[7249][4096]" value="1" '; if( $_GET['g'] === "na" ) { $html .= "SELECTED"; } $html .='>New Adult</option>';
+	$html .= '<option id="group[7249][8192]" value="1" '; if( $_GET['g'] === "par" ) { $html .= "SELECTED"; } $html .='>Paranormal</option>';
+	$html .= '<option id="group[7249][16364]" value="1" '; if( $_GET['g'] === "rom" ) { $html .= "SELECTED"; } $html .='>Romance</option>';
+	$html .= '<option id="group[7249][32768]" value="1" '; if( $_GET['g'] === "rs" ) { $html .= "SELECTED"; } $html .='>Romantic Suspense</option>';
+	$html .= '<option id="group[7249][65536]" value="1" '; if( $_GET['g'] === "sf" ) { $html .= "SELECTED"; } $html .='>Science Fiction</option>';
+	$html .= '<option id="group[7249][131072]" value="1" '; if( $_GET['g'] === "sh" ) { $html .= "SELECTED"; } $html .='>Self Help</option>';
+	$html .= '<option id="group[7249][262144]" value="1" '; if( $_GET['g'] === "thr" ) { $html .= "SELECTED"; } $html .='>Thriller</option>';
+	$html .= '<option id="group[7249][524288]" value="1" '; if( $_GET['g'] === "wcf" ) { $html .= "SELECTED"; } $html .='>Women\'s Contemporary Fiction</option>';
+	$html .= '<option id="group[7249][1048576]" value="1" '; if( $_GET['g'] === "ya" ) { $html .= "SELECTED"; } $html .='>Young Adult</option>';
+	$html .= '</select> </div> <input type="email" value="" name="EMAIL" class="required email" id="bt-mce-EMAIL" aria-required="true" placeholder="Enter your email address here...">';
+	// $html .= '<p>While your free book is limited to one genre, we know you may have many favorite genres depending on your reading mood.  In the next step, you will be prompted to select as many genres as you might like.  We will send your customized newsletter based on your preferences.  You are more than welcome to update them at any time.  And feel free to check back periodically as we may add additional genres based on your feedback.</p>';
+
+
+	$html .= '<input id="om-lightbox-bullseye-optin-submit" type="submit" data-om-action="selectable" placeholder="Enter a valid email address" data-om-target="#optin-monster-saas-field-submit_field" value="Get Your Book!"> </div> </form></div></p>';
+
+	echo $html;
+}
