@@ -26,14 +26,14 @@ jQuery(function( $ ){
 
 jQuery(document).ready(function($) {
     // hours entry form validation
-    $('.home #mc-embedded-subscribe-form').submit(function() {
+    $('#rgsignupform').submit(function() {
         //do validation
-        if(jQuery.trim($('#group7249').val())===''){
+        if(jQuery.trim($('#lp-genre').val())===''){
             alert('Please select a genre for your free book.');
             return false;
         }
 
-        if(jQuery.trim($('#bt-mce-EMAIL').val())===''){
+        if(jQuery.trim($('#lp-email').val())===''){
             alert('Please supply an email address to receive your free book.');
             return false;
         }
