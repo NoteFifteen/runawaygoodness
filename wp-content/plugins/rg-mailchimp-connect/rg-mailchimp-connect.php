@@ -51,21 +51,20 @@ function rg_signup_form() {
 		$genre_options .= '<option value="' . $genre->id . ':' . $genre->name . '">' . $genre->name . '</option>';
 	}
 
-    echo '<form action="' . ALMOST_DONE_LOC . '" method="post">';
+    echo '<form id="rgsignupform" action="' . ALMOST_DONE_LOC . '" method="post">';
     echo '<p>';
 	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
-	echo '	<option>Pick Your Genre</option>';
+	echo '	<option value="">Pick Your Genre</option>';
 	echo 	$genre_options;
 	echo '	</option>';
 	echo '</select>';
     echo '</p>';
     echo '<p>';
-    echo 'Your Email (required) <br />';
-    echo '<input type="email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" size="40" />';
+    echo '<input type="email" id="lp-email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" placeholder="Enter your email address" />';
     echo '</p>';
     // pass through source if available
     echo '<input type="hidden" name="lp-source" value="' . ( isset( $_POST["lp-source"] ) ? esc_attr( $_POST["lp-source"] ) : 'rg-home' )  . '" />';
-    echo '<p><input type="submit" name="lp-submitted" value="Send"/></p>';
+    echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Book"/></p>';
     echo '</form>';
 }
 
@@ -138,10 +137,10 @@ function rg_mailchimp_genres_form() {
         <fieldset>';
 
 	foreach ($response->body->interests as $genre) {
-		$output .= '<input type="checkbox" name="lp-genres[]" value="' . $genre->id . '" checked />' . $genre->name . ' <br />';
+		$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" checked /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
 	}
 	$output .= '<input type="hidden" name="lp-email" value="' . $email . '" />';
-	$output .= '<input type="submit" name="lp-genres-submitted" value="Send"/>
+	$output .= '<div class="genresubmit"><input type="submit" name="lp-genres-submitted" value="Send"/></div>
         </fieldset></form>';
 	
 	$html .= $output;
@@ -179,7 +178,7 @@ function process_rg_genres() {
 		    ->send();                      				// and finally, fire that thing off!
  
  		if ($response->body->status == "404") {
- 			echo  "** " . $response->body->status . " ** Hmmm, something Strange happened. We could not locate this email in the system. Please contact books@runawaygoodness.com and we will be glad to help! **<br/>";
+ 			echo  '<div class="genreerror"><strong>** ' . $response->body->status . ' ** Hmmm, something Strange happened. We could not locate this email in the system. Please contact books@runawaygoodness.com and we will be glad to help! **</strong></div>';
 	    	rg_mailchimp_genres_form();
  		} else {
  			echo '<script type="text/javascript">';
