@@ -39,7 +39,7 @@ if( RGTESTMODE ) {
 } else {
 	// LIVE List
 	define( 'LIST_ID', '5e63b9bb07' );
-	define( 'INTEREST_TYPE', '???' ); // genres
+	define( 'INTEREST_TYPE', 'af1b834d6a' ); // genres
 
 }
 
