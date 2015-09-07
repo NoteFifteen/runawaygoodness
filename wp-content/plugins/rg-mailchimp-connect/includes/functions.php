@@ -13,7 +13,7 @@ function rg_signup_form() {
 		$genre_options .= '<option value="' . $genre->id . ':' . $genre->name . '">' . $genre->name . '</option>';
 	}
 
-    echo '<form id="rgsignupform" action="' . ALMOST_DONE_LOC . '" method="post">';
+    echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
     echo '<p>';
 	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
 	echo '	<option value="">Pick Your Genre</option>';
@@ -47,9 +47,9 @@ function process_rg_signup() {
 		// get genres (interest categories)
 		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/';
 
-		$response = \Httpful\Request::post($url)        // Build a POST request...
-		    ->sendsJson()                             	// tell it we're sending (Content-Type) JSON...
-		    ->authenticateWith(API_KEY, API_KEY)  		// authenticate with basic auth...
+		$response = \Httpful\Request::post($url)		// Build a POST request...
+		    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
+		    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
 		    ->body('{	"email_address": "' . $email . '", 
     					"status": "pending", 
     					"merge_fields": {
@@ -64,7 +64,7 @@ function process_rg_signup() {
 		// TODO: Handle Already on list
 		if ($response->body->status == "400") {
 			 echo '<script type="text/javascript">';
-    		echo 'window.location.href = "' . ALREADY_IN_LOC . '"';;
+    		echo 'window.location.href = "' . get_site_url() . "/" . get_page_uri( get_option( 'already_in_page' ) ) . "/" . '"';;
 			echo '</script>';
 			//echo $response->body->status;
 			//print_r($response);
@@ -144,7 +144,7 @@ function process_rg_genres() {
 	    	rg_mailchimp_genres_form();
  		} else {
  			echo '<script type="text/javascript">';
-    		echo 'window.location.href = "' . THANK_YOU_LOC . '"';
+    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'thank_you_page' ) ) . "/" . '"';
 			echo '</script>';
  		}
 
@@ -161,3 +161,75 @@ function rg_mailchimp_genres() {
 }
 
 add_shortcode( 'rgmcthankyou' , 'rg_mailchimp_genres' );
+
+/**
+ * Create settings page
+ */
+
+add_action( 'admin_menu', 'rgmc_add_menu' );
+add_action( 'admin_init', 'rgmc_register_settings' );
+
+function rgmc_register_settings() {
+	register_setting( 'rgmc_settings', 'almost_done_page' );
+	register_setting( 'rgmc_settings', 'thank_you_page' );
+	register_setting( 'rgmc_settings', 'already_in_page' );
+}
+
+function rgmc_add_menu() {
+	//create new top-level menu
+	add_submenu_page( 'options-general.php', 'RG Mailchimp Connect Settings', 'Mailchimp Connect', 'administrator', 'rgmc_settings', 'rgmc_settings_page' );
+
+	//call register settings function
+	add_action( 'admin_init', 'rgmc_register_settings' );
+}
+
+function rgmc_settings_page() {
+	?>
+	<div class="wrap">
+	<h2>Mailchimp Connect Settings</h2>
+	<form method="post" action="options.php">
+	<?php 
+	settings_fields( 'rgmc_settings' );
+	do_settings_sections( 'rgmc_settings' );
+
+	$args_almost_done = array(
+		'selected'			=> get_option( 'almost_done_page' ),
+		'name'				=> 'almost_done_page',
+		'show_option_none'	=> 'Please Select'
+	);
+
+	$args_thank_you = array(
+		'selected'			=> get_option( 'thank_you_page' ),
+		'name'				=> 'thank_you_page',
+		'show_option_none'	=> 'Please Select'
+	);
+
+	$args_already_in = array(
+		'selected'			=> get_option( 'already_in_page' ),
+		'name'				=> 'already_in_page',
+		'show_option_none'	=> 'Please Select'
+	);
+
+	?>
+	<table class="form-table">
+		<tr valign="top">
+		<th scope="row">Almost Done Page</th>
+		<td><?php wp_dropdown_pages( $args_almost_done ); ?></td>
+		</tr>
+
+		<tr valign="top">
+		<th scope="row">Thank You Page</th>
+		<td><?php wp_dropdown_pages( $args_thank_you ); ?></td>
+		</tr>
+
+		<tr valign="top">
+		<th scope="row">Already In Page</th>
+		<td><?php wp_dropdown_pages( $args_already_in ); ?></td>
+		</tr>
+	</table>
+
+    <?php submit_button(); ?>
+	</form>
+	</div>
+	<?php
+}

@@ -23,31 +23,29 @@ include( RG_INCLUDE_PATH . '/httpful.phar' );
 // Include function file
 include( RG_INCLUDE_PATH . '/functions.php' );
 
-// set plugin options
-/* 
- * Runaway Goodness Prod Main List
- */
-// "5e63b9bb07"; // RG main
-// "af1b834d6a"; // genres
-
-// "159f7318a4"; // after dark
-
-/* 
- * Internal Testing List
- */
-define( 'RGTESTMODE', false );
-if( RGTESTMODE ) {
-	// Internal Test List
-	define( 'LIST_ID', '66480cfb4f' );
-	define( 'INTEREST_TYPE', '11ca3b0147' ); // genres
-
-} else {
-	// LIVE List
-	define( 'LIST_ID', '5e63b9bb07' );
-	define( 'INTEREST_TYPE', 'af1b834d6a' ); // genres
-}
-
 define( 'API_KEY', '19970225f9c849e9cf2b472d76604739-us11' ); // RAG 
-define( 'ALMOST_DONE_LOC', '/almost-done/' );
-define( 'THANK_YOU_LOC', '/thank-you/' );
-define( 'ALREADY_IN_LOC', '/update-membership/' );
+
+// Set which list you want to use
+define( 'RG_USE_LIST', 'rgmain' );
+
+switch( RG_USE_LIST ) {
+
+	case 'rgmain':
+		// LIVE List
+		define( 'LIST_ID', '5e63b9bb07' );
+		define( 'INTEREST_TYPE', 'af1b834d6a' ); // genres
+	break;
+
+	case 'afterdark':
+		// After Dark
+		define( 'LIST_ID', '159f7318a4' );
+		// define( 'INTEREST_TYPE', 'af1b834d6a' ); // genres
+	break;
+
+	case 'internal':
+	default:
+		// Internal Test List
+		define( 'LIST_ID', '66480cfb4f' );
+		define( 'INTEREST_TYPE', '11ca3b0147' ); // genres
+	break;
+}
