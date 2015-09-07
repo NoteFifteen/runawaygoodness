@@ -453,7 +453,7 @@ input[type="search"]::-webkit-search-results-button {
 }
 
 .home-featured {
-	background: url('images/topbg.jpg');
+	background: #fff url('images/topbg.jpg') no-repeat;
 }
 
 .home-featured .more-link,
@@ -2138,15 +2138,15 @@ Theme Colors
 	width: 600px;
 	background-color: #000;
 	padding: 40px 80px;
+	line-height: 1.2;
 }
 
-input#om-lightbox-bullseye-optin-submit {
-	margin-top: 35px;
+input#rgsignupbutton {
 	background-color: #aa0000;
 	color: #FFF;
 }
 
-input#om-lightbox-bullseye-optin-submit:hover {
+input#rgsignupbutton:hover {
 	background-color: #987197;
 }
 
@@ -2188,11 +2188,31 @@ div.home-widgets-5.widget-area {
 }
 
 .home-widgets .home-widgets-2 .widget:first-child {
-	padding-top: 50px;
+	padding-top: 0px;
 }
 .footer-widgets .footer-widgets-4 li {
 	float: left;
 	padding-right: 20px;
+}
+
+fieldset {
+	border: none;
+}
+
+.genreinput {
+	display: inline-block;
+	float: left;
+	width: 50%;
+}
+
+.genresubmit {
+	clear: both;
+	padding-top: 10px;
+}
+
+.genreerror {
+	font-style: strong;
+	color: #FF0000;
 }
 
 /*
