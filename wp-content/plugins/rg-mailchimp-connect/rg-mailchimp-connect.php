@@ -34,8 +34,8 @@ define('LIST_ID', '66480cfb4f');
 define('INTEREST_TYPE','11ca3b0147'); // genres
 define('API_KEY','19970225f9c849e9cf2b472d76604739-us11'); // RAG 
 define('ALMOST_DONE_LOC','/almost-done');
-define('THANK_YOU_LOC','/wordpress/thank-you');
-define('ALREADY_IN_LOC','/wordpress/already-in');
+define('THANK_YOU_LOC','/thank-you');
+define('ALREADY_IN_LOC','/oops');
 
 // sign up mailchimp shortcode
 // 
@@ -122,7 +122,7 @@ add_shortcode( 'rgmcsignup' , 'rg_mailchimp_sign_up' );
 
 // thank you mailchimp shortcode
 // 
-// To display content on thank you page, add [rgmcthankyou]
+// To display content on Almost Done page, add [rgmcthankyou]
 // 
 function rg_mailchimp_genres_form() {
 
