@@ -92,14 +92,38 @@ function rg_mailchimp_genres_form() {
     	$emailmd5 = md5( strtolower( sanitize_email( $_POST["lp-email"] )));
     	$email  = strtolower( sanitize_email( $_POST["lp-email"] ));
    	}
+
+   	if( isset( $_GET['e'] ) ) {
+    	$emailmd5 = md5( strtolower( sanitize_email( $_GET["e"] )));
+    	$email  = strtolower( sanitize_email( $_GET["e"] ));   		
+   	}
+
+   	// grab list of genres
 	$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
 	$response = \Httpful\Request::get($url)->send();
+
+	// grab member data
+	$url2 = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/'. $emailmd5 .'?apikey='. API_KEY .'&output=json';
+	$response2 = \Httpful\Request::get($url2)->send();
+
+	$interest_array = array();
+	foreach( $response2->body->interests as $k=>$v ) {
+		if( $v == 1 ) {
+			$interest_array[] = $k;
+		} 
+	}
 
 	$output = '<form method="post">
         <fieldset>';
 
 	foreach ($response->body->interests as $genre) {
-		$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" checked /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
+		if( in_array( $genre->id, $interest_array ) ) {
+			$checkinterest = 'checked';
+		} else {
+			$checkinterest = '';
+		}
+
+		$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" '. $checkinterest .' /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
 	}
 	$output .= '<input type="hidden" name="lp-email" value="' . $email . '" />';
 	$output .= '<div class="genresubmit"><input type="submit" name="lp-genres-submitted" value="Send"/></div>
