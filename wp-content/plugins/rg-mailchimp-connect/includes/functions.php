@@ -140,11 +140,21 @@ function rg_mailchimp_genres_form() {
 
 function process_rg_genres() {
 
+	// grab entire list of interests
+	$interest_url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
+	$interest_response = \Httpful\Request::get($interest_url)->send();
+	$full_interest_list = array();
+
+	foreach ($interest_response->body->interests as $interests) {
+		$full_interest_list[] = $interests->id;
+	}
+
    // if the submit button is clicked, send the email
     if ( isset( $_POST['lp-genres-submitted'] ) ) {
     	$email = $_POST["lp-email"];
     	$mailmd5 = md5($email);
         $genres = $_POST["lp-genres"];
+
         $first = true;
 		foreach ($genres as $genre) {
 			if ( $first ) {
@@ -155,6 +165,13 @@ function process_rg_genres() {
 			}
 
 			$genre_list .= '"' . $genre . '":true';
+		}
+
+		// add unchecked genres to the list
+		$not_checked = array_diff( $full_interest_list, $genres );
+
+		foreach ($not_checked as $nci ) {
+			$genre_list .= ',"' . $nci . '":false';
 		}
 		
   		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/' . $mailmd5;
