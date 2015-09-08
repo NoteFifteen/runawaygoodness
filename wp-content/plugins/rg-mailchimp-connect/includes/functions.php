@@ -102,40 +102,63 @@ function rg_mailchimp_genres_form() {
     	$email  = strtolower( sanitize_email( $_GET["e"] ));   		
    	}
 
-   	// grab list of genres
-	$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
-	$response = \Httpful\Request::get($url)->send();
+   	if( isset( $_POST["resetemail"] ) ) {
+   		// send email with reset link
+   		$reset_link = get_site_url() . '/' . get_page_uri( get_option( 'already_in_page' ) ) . '/?e='. esc_attr( $_POST["resetemail"] );
 
-	// grab member data
-	$url2 = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/'. $emailmd5 .'?apikey='. API_KEY .'&output=json';
-	$response2 = \Httpful\Request::get($url2)->send();
+   		$to = esc_attr( $_POST["resetemail"] );
+   		$subject = 'Update Runaway Goodness subscription';
+   		$message = 'To reset your Runaway Goodness subscription settings, use the link below.'."\r\n".$reset_link;
+   		$headers = 'From: Runaway Goodness <books@runawaygoodness.com>' . "\r\n";
 
-	$interest_array = array();
-	foreach( $response2->body->interests as $k=>$v ) {
-		if( $v == 1 ) {
-			$interest_array[] = $k;
-		} 
-	}
+   		if( wp_mail( $to, $subject, $message, $headers ) ) {
+   			$html = '<p>We have sent you an email with a link to update your subscription settings.</p>';
+   		} else {
+   			$html = '<p>There was a problem sending your email.';
+   		}
 
-	$output = '<form method="post">
-        <fieldset>';
+   	} elseif( !isset( $email ) && !isset( $_POST["resetemail"] ) ) {
+   		$html = '<p>Oops! You reached this page in a way we didn\'t expect. Enter your email address below and we will send you a link to confirm you are you.';
+   		$html .= '<form method="post">';
+   		$html .= '<input type="text" name="resetemail" placeholder="Enter your email address"><br />';
+   		$html .= '<input type="submit" value="Submit">';
+   		$html .= '</form>';
+   	} else {
 
-	foreach ($response->body->interests as $genre) {
-		if( in_array( $genre->id, $interest_array ) ) {
-			$checkinterest = 'checked';
-		} else {
-			$checkinterest = '';
+	   	// grab list of genres
+		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
+		$response = \Httpful\Request::get($url)->send();
+
+		// grab member data
+		$url2 = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/'. $emailmd5 .'?apikey='. API_KEY .'&output=json';
+		$response2 = \Httpful\Request::get($url2)->send();
+
+		$interest_array = array();
+		foreach( $response2->body->interests as $k=>$v ) {
+			if( $v == 1 ) {
+				$interest_array[] = $k;
+			} 
 		}
 
-		$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" '. $checkinterest .' /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
-	}
-	$output .= '<input type="hidden" name="lp-email" value="' . $email . '" />';
-	$output .= '<div class="genresubmit"><input type="submit" name="lp-genres-submitted" value="Send"/></div>
-        </fieldset></form>';
-	
-	$html .= $output;
+		$output = '<form method="post">
+	        <fieldset>';
 
-    echo $html;
+		foreach ($response->body->interests as $genre) {
+			if( in_array( $genre->id, $interest_array ) ) {
+				$checkinterest = 'checked';
+			} else {
+				$checkinterest = '';
+			}
+
+			$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" '. $checkinterest .' /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
+		}
+		$output .= '<input type="hidden" name="lp-email" value="' . $email . '" />';
+		$output .= '<div class="genresubmit"><input type="submit" name="lp-genres-submitted" value="Send"/></div>
+	        </fieldset></form>';
+		
+		$html .= $output;
+	}
+	echo $html;
 }
 
 function process_rg_genres() {
@@ -173,7 +196,7 @@ function process_rg_genres() {
 		foreach ($not_checked as $nci ) {
 			$genre_list .= ',"' . $nci . '":false';
 		}
-		
+
   		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/' . $mailmd5;
 		$response = \Httpful\Request::patch($url)        // Build a POST request to update existing user
 		    ->sendsJson()                             	// tell it we're sending (Content-Type) JSON...
