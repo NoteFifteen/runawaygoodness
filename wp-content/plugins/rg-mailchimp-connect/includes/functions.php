@@ -4,6 +4,10 @@
 // To display content on sign up page, add [rgmcsignup]
 // 
 function rg_signup_form() {
+	if( isset( $_GET["ref"] ) ) {
+		$_POST["lp-source"] = esc_attr( $_GET["ref"] );
+	}
+
 	// get genres (interest categories)
 	$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
 	$response = \Httpful\Request::get($url)->send();
