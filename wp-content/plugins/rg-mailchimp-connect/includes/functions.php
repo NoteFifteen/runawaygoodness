@@ -140,7 +140,15 @@ function rg_mailchimp_genres_form() {
 			} 
 		}
 
-		$output = '<form method="post">
+
+		global $post;
+		$slug = get_post( $post )->post_name;
+
+		if ( isset($_GET['st'] ) && $_GET['st'] == 'up' ) {
+			$output = "<p><strong>Your settings have been saved!</strong></p>"; 
+		}
+
+		$output .= '<form method="post">
 	        <fieldset>';
 
 		foreach ($response->body->interests as $genre) {
@@ -152,6 +160,7 @@ function rg_mailchimp_genres_form() {
 
 			$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" '. $checkinterest .' /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
 		}
+		$output .= '<input type="hidden" name="frompage" value="' . $slug .'" />';
 		$output .= '<input type="hidden" name="lp-email" value="' . $email . '" />';
 		$output .= '<div class="genresubmit"><input type="submit" name="lp-genres-submitted" value="Send"/></div>
 	        </fieldset></form>';
@@ -211,9 +220,17 @@ function process_rg_genres() {
  			echo  '<div class="genreerror"><strong>** ' . $response->body->status . ' ** Hmmm, something Strange happened. We could not locate this email in the system. Please contact books@runawaygoodness.com and we will be glad to help! **</strong></div>';
 	    	rg_mailchimp_genres_form();
  		} else {
- 			echo '<script type="text/javascript">';
-    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'thank_you_page' ) ) . "/" . '"';
-			echo '</script>';
+
+ 			// redirect based on where the visitor came from
+ 			if( $_POST["frompage"] == get_post( get_option( 'almost_done_page' ) )->post_name ) {
+	 			echo '<script type="text/javascript">';
+	    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'thank_you_page' ) ) . "/" . '"';
+				echo '</script>';
+			} else {
+	 			echo '<script type="text/javascript">';
+	    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'already_in_page' ) ) . "/?e=" . $email . '&st=up"';
+				echo '</script>';			
+			}
  		}
 
     } else {
