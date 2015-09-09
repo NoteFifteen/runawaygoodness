@@ -121,14 +121,57 @@ function genesis_attr( $context, $attributes = array() ) {
 
     //* Cycle through attributes, build tag attribute string
     foreach ( $attributes as $key => $value ) {
-        if ( ! $value )
-            continue;
-        $output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
+
+		if ( ! $value ) {
+			continue;
+		}
+
+		if ( true === $value ) {
+			$output .= esc_html( $key ) . ' ';
+		} else {
+			$output .= sprintf( '%s="%s" ', esc_html( $key ), esc_attr( $value ) );
+		}
+
     }
 
     $output = apply_filters( "genesis_attr_{$context}_output", $output, $attributes, $context );
 
     return trim( $output );
+
+}
+
+/**
+ * Helper function for use as a filter for when you want to prevent a class from being automatically
+ * generated and output on an element that is passed through the markup API.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_empty_class( $attributes ) {
+
+	$attributes['class'] = '';
+
+	return $attributes;
+
+}
+
+/**
+ * Helper function for use as a filter for when you want to add screen-reader-text class to an element.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_screen_reader_class( $attributes ) {
+
+	$attributes['class'] .= ' screen-reader-text';
+
+	return $attributes;
 
 }
 
@@ -144,11 +187,16 @@ add_filter( 'genesis_attr_head', 'genesis_attributes_head' );
  */
  function genesis_attributes_head( $attributes ) {
 
- 	$attributes['class']     = '';
- 	$attributes['itemscope'] = 'itemscope';
- 	$attributes['itemtype']  = 'http://schema.org/WebSite';
+ 	$attributes['class'] = '';
 
- 	return $attributes;
+	if ( ! is_front_page() ) {
+		return $attributes;
+	}
+
+	$attributes['itemscope'] = true;
+	$attributes['itemtype']  = 'http://schema.org/WebSite';
+
+	return $attributes;
 
  }
 
@@ -165,7 +213,7 @@ add_filter( 'genesis_attr_body', 'genesis_attributes_body' );
 function genesis_attributes_body( $attributes ) {
 
 	$attributes['class']     = join( ' ', get_body_class() );
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/WebPage';
 
 	//* Search results pages
@@ -193,7 +241,7 @@ add_filter( 'genesis_attr_site-header', 'genesis_attributes_header' );
  */
 function genesis_attributes_header( $attributes ) {
 
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/WPHeader';
 
 	return $attributes;
@@ -267,7 +315,7 @@ add_filter( 'genesis_attr_breadcrumb', 'genesis_attributes_breadcrumb' );
 function genesis_attributes_breadcrumb( $attributes ) {
 
 	$attributes['itemprop']  = 'breadcrumb';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/BreadcrumbList';
 
 	//* Breadcrumb itemprop not valid on blog
@@ -292,7 +340,7 @@ add_filter( 'genesis_attr_breadcrumb-link-wrap', 'genesis_attributes_breadcrumb_
 function genesis_attributes_breadcrumb_link_wrap( $attributes ) {
 
 	$attributes['itemprop']  = 'itemListElement';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/ListItem';
 
 	return $attributes;
@@ -312,7 +360,7 @@ add_filter( 'genesis_attr_search-form', 'genesis_attributes_search_form' );
 function genesis_attributes_search_form( $attributes ) {
 
 	$attributes['itemprop']  = 'potentialAction';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/SearchAction';
 	$attributes['method']    = 'get';
 	$attributes['action']    = home_url( '/' );
@@ -338,7 +386,7 @@ add_filter( 'genesis_attr_nav-header', 'genesis_attributes_nav' );
  */
 function genesis_attributes_nav( $attributes ) {
 
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/SiteNavigationElement';
 
 	return $attributes;
@@ -420,9 +468,113 @@ add_filter( 'genesis_attr_content', 'genesis_attributes_content' );
  */
 function genesis_attributes_content( $attributes ) {
 
-	if ( ! ( is_singular( 'post' ) || is_archive() || is_home() || is_page_template( 'page_blog.php' ) ) ) {
-		$attributes['itemprop'] = 'mainContentOfPage';
-	}
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_taxonomy-archive-description', 'genesis_attributes_taxonomy_archive_description' );
+/**
+ * Add attributes for taxonomy description.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_taxonomy_archive_description( $attributes ) {
+
+	$attributes['class'] = 'archive-description taxonomy-archive-description taxonomy-description';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_author-archive-description', 'genesis_attributes_author_archive_description' );
+/**
+ * Add attributes for author description.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_author_archive_description( $attributes ) {
+
+	$attributes['class'] = 'archive-description author-archive-description author-description';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_cpt-archive-description', 'genesis_attributes_cpt_archive_description' );
+/**
+ * Add attributes for CPT archive description.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_cpt_archive_description( $attributes ) {
+
+	$attributes['class'] = 'archive-description cpt-archive-description';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_date-archive-description', 'genesis_attributes_date_archive_description' );
+/**
+ * Add attributes for date archive description.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_date_archive_description( $attributes ) {
+
+	$attributes['class'] = 'archive-description date-archive-description archive-date';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_blog-template-description', 'genesis_attributes_blog_template_description' );
+/**
+ * Add attributes for blog template description.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_blog_template_description( $attributes ) {
+
+	$attributes['class'] = 'archive-description blog-template-description';
+
+	return $attributes;
+
+}
+
+add_filter( 'genesis_attr_posts-page-description', 'genesis_attributes_posts_page_description' );
+/**
+ * Add attributes for posts page description.
+ *
+ * @since 2.2.1
+ *
+ * @param array $attributes Existing attributes.
+ *
+ * @return array Amended attributes.
+ */
+function genesis_attributes_posts_page_description( $attributes ) {
+
+	$attributes['class'] = 'archive-description posts-page-description';
 
 	return $attributes;
 
@@ -442,22 +594,22 @@ function genesis_attributes_entry( $attributes ) {
 
 	$attributes['class'] = join( ' ', get_post_class() );
 
-	if ( ! is_main_query() ) {
+	if ( ! is_main_query() && ! genesis_is_blog_template() ) {
 		return $attributes;
 	}
 
 	if ( ! is_page_template( 'page_blog.php' ) ) {
-		$attributes['itemscope'] = 'itemscope';
+		$attributes['itemscope'] = true;
 		$attributes['itemtype']  = 'http://schema.org/CreativeWork';
 	}
 
 	//* Blog posts microdata
 	if ( 'post' === get_post_type() ) {
 
-		$attributes['itemscope'] = 'itemscope';
+		$attributes['itemscope'] = true;
 		$attributes['itemtype']  = 'http://schema.org/BlogPosting';
 
-		//* If main query,
+		//* If not search results page
 		if ( ! is_search() ) {
 			$attributes['itemprop']  = 'blogPost';
 		}
@@ -537,7 +689,7 @@ add_filter( 'genesis_attr_entry-author', 'genesis_attributes_entry_author' );
 function genesis_attributes_entry_author( $attributes ) {
 
 	$attributes['itemprop']  = 'author';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/Person';
 
 	return $attributes;
@@ -727,7 +879,7 @@ function genesis_attributes_comment( $attributes ) {
 
 	$attributes['class']     = '';
 	$attributes['itemprop']  = 'comment';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/Comment';
 
 	return $attributes;
@@ -747,7 +899,7 @@ add_filter( 'genesis_attr_comment-author', 'genesis_attributes_comment_author' )
 function genesis_attributes_comment_author( $attributes ) {
 
 	$attributes['itemprop']  = 'author';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/Person';
 
 	return $attributes;
@@ -841,7 +993,7 @@ add_filter( 'genesis_attr_author-box', 'genesis_attributes_author_box' );
 function genesis_attributes_author_box( $attributes ) {
 
 	$attributes['itemprop']  = 'author';
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/Person';
 
 	return $attributes;
@@ -863,7 +1015,7 @@ function genesis_attributes_sidebar_primary( $attributes ) {
 	$attributes['class']     = 'sidebar sidebar-primary widget-area';
 	$attributes['role']      = 'complementary';
 	$attributes['aria-label']  = __( 'Primary Sidebar', 'genesis' );
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/WPSideBar';
 
 	return $attributes;
@@ -885,7 +1037,7 @@ function genesis_attributes_sidebar_secondary( $attributes ) {
 	$attributes['class']     = 'sidebar sidebar-secondary widget-area';
 	$attributes['role']      = 'complementary';
 	$attributes['aria-label']  = __( 'Secondary Sidebar', 'genesis' );
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/WPSideBar';
 
 	return $attributes;
@@ -904,7 +1056,7 @@ add_filter( 'genesis_attr_site-footer', 'genesis_attributes_site_footer' );
  */
 function genesis_attributes_site_footer( $attributes ) {
 
-	$attributes['itemscope'] = 'itemscope';
+	$attributes['itemscope'] = true;
 	$attributes['itemtype']  = 'http://schema.org/WPFooter';
 
 	return $attributes;

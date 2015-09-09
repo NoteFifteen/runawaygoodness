@@ -559,6 +559,8 @@ function genesis_author_box( $context = '', $echo = true ) {
 
 		if ( 'single' === $context && ! genesis_get_seo_option( 'semantic_headings' ) ) {
 			$heading_element = 'h4';
+		} elseif ( genesis_a11y( 'headings' ) ) {
+			$heading_element = 'h4';
 		} else {
 			$heading_element = 'h1';
 		}

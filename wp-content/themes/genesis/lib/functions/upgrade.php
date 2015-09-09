@@ -134,19 +134,19 @@ function genesis_update_check() {
 }
 
 /**
- * Upgrade the database to version 2203.
+ * Upgrade the database to version 2205.
  *
- * @since 2.2.0
+ * @since 2.2.2
  *
  * @uses genesis_update_settings()  Merges new settings with old settings and pushes them into the database.
  * @uses genesis_get_option()       Get theme setting value.
  */
-function genesis_upgrade_2203() {
+function genesis_upgrade_2205() {
 
 	//* Update Settings
 	genesis_update_settings( array(
-		'theme_version'   => '2.2.0',
-		'db_version'      => '2203',
+		'theme_version'   => '2.2.2',
+		'db_version'      => '2205',
 	) );
 
 }
@@ -522,11 +522,11 @@ function genesis_upgrade() {
 		genesis_upgrade_2201();
 
 	###########################
-	# UPDATE DB TO VERSION 2203
+	# UPDATE DB TO VERSION 2205
 	###########################
 
-	if ( genesis_get_option( 'db_version', null, false ) < '2203' )
-		genesis_upgrade_2203();
+	if ( genesis_get_option( 'db_version', null, false ) < '2205' )
+		genesis_upgrade_2205();
 
 	do_action( 'genesis_upgrade' );
 
@@ -586,8 +586,8 @@ function genesis_upgrade_redirect() {
 	if ( ! is_admin() || ! current_user_can( 'edit_theme_options' ) )
 		return;
 
-	#genesis_admin_redirect( 'genesis', array( 'upgraded' => 'true' ) );
-	genesis_admin_redirect( 'genesis-upgraded' );
+	genesis_admin_redirect( 'genesis', array( 'upgraded' => 'true' ) );
+	#genesis_admin_redirect( 'genesis-upgraded' );
 	exit;
 
 }
@@ -610,8 +610,11 @@ function genesis_upgraded_notice() {
 	if ( ! genesis_is_menu_page( 'genesis' ) )
 		return;
 
-	if ( isset( $_REQUEST['upgraded'] ) && 'true' === $_REQUEST['upgraded'] )
-		echo '<div id="message" class="updated highlight"><p><strong>' . sprintf( __( 'Congratulations! You are now rocking Genesis %s', 'genesis' ), genesis_get_option( 'theme_version' ) ) . '</strong></p></div>';
+	if ( isset( $_REQUEST['upgraded'] ) && 'true' === $_REQUEST['upgraded'] ) {
+		echo '<div id="message" class="updated highlight"><p><strong>';
+		printf( __( 'Congratulations, you are now rocking Genesis %s! <a href="%s">See what\'s new in %s</a>.', 'genesis' ), genesis_get_option( 'theme_version' ), menu_page_url( 'genesis-upgraded', 0 ), PARENT_THEME_BRANCH );
+		echo '</strong></p></div>';
+	}
 
 }
 

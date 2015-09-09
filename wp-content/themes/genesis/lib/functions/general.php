@@ -219,7 +219,9 @@ function genesis_is_customizer() {
  */
 function genesis_is_blog_template() {
 
-	return 'page_blog.php' === get_post_meta( get_queried_object_id(), '_wp_page_template', true );
+	global $wp_the_query;
+
+	return 'page_blog.php' === get_post_meta( $wp_the_query->get_queried_object_id(), '_wp_page_template', true );
 
 }
 

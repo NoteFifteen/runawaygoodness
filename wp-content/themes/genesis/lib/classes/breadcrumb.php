@@ -756,10 +756,10 @@ class Genesis_Breadcrumb {
 		//* Empty title, for backward compatibility
 		$title = '';
 
-		$itemprop_url  = genesis_html5() ? ' itemprop="url"' : '';
+		$itemprop_item = genesis_html5() ? ' itemprop="item"' : '';
 		$itemprop_name = genesis_html5() ? ' itemprop="name"' : '';
 
-		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_url, $itemprop_name, $content );
+		$link = sprintf( '<a href="%s"%s><span%s>%s</span></a>', esc_attr( $url ), $itemprop_item, $itemprop_name, $content );
 
 		/**
 		 * Filter the anchor link for a single breadcrumb.
