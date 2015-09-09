@@ -98,8 +98,9 @@ function rg_mailchimp_genres_form() {
    	}
 
    	if( isset( $_GET['e'] ) ) {
-    	$emailmd5 = md5( strtolower( sanitize_email( $_GET["e"] )));
-    	$email  = strtolower( sanitize_email( $_GET["e"] ));   		
+   		$eplus = str_replace(' ', '+', $_GET["e"] );
+    	$emailmd5 = md5( strtolower( sanitize_email( $eplus )));
+    	$email  = strtolower( sanitize_email( $eplus ) );
    	}
 
    	if( isset( $_POST["resetemail"] ) ) {
