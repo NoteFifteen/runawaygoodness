@@ -65,7 +65,10 @@ function process_rg_signup() {
     					}
 					}')             					// attach a body/payload...
 		    ->send();                      				// and finally, fire that thing off!
+		    add_post_meta( 1, 'rgmcresponse', $response, false );
+
 		// TODO: Handle Already on list
+		
 		if ($response->body->status == "400") {
 			 echo '<script type="text/javascript">';
     		echo 'window.location.href = "' . get_site_url() . "/" . get_page_uri( get_option( 'already_in_page' ) ) . "/" . '"';;
