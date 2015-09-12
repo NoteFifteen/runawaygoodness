@@ -144,10 +144,11 @@ if ( have_posts() ) {
 																									$html .= '<div style="font-family:Trebuchet MS;color:#888888;font-size:20px;line-height:1.38">Originally: <s>$'. get_sub_field( 'book_original_price' ) .'</s></div><br />';
 																								}
 
-																								if( get_sub_field( 'book_price' ) == '0' ) {
-																									$html .= '<div style="font-family:Trebuchet MS;color:#ff2800;font-size:32px;line-height:1.38">BUY <strong>FREE</strong></div><br />';
+
+																								if( get_sub_field( 'book_price' ) == '0' || get_sub_field( 'book_price' ) == '0.00' ) {
+																									$html .= '<div style="font-family:Trebuchet MS;color:#ff2800;font-size:32px;line-height:1.38"><strong>Download Free!</strong></div><br />';
 																								} else {
-																									$html .= '<div style="font-family:Trebuchet MS;color:#ff2800;font-size:32px;line-height:1.38">BUY <strong>$'. get_sub_field( 'book_price' ) .'</strong></div><br /><br /><br /><br />';
+																									$html .= '<div style="font-family:Trebuchet MS;color:#ff2800;font-size:32px;line-height:1.38">Buy <strong>$'. get_sub_field( 'book_price' ) .'</strong></div><br /><br /><br /><br />';
 																								}
 
 																								$html .= '<table cellpadding="0" cellspacing="0" width="366">';
