@@ -116,7 +116,7 @@ if ( have_posts() ) {
 																									if( get_sub_field( 'book_price' ) == '0' ) {
 																										$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
 																									} else {
-																										$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=btnewsletter-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
+																										$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=rgnewsletter-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
 																									}
 																								} else {
 																									$html .= '<img src="' . get_sub_field( 'book_cover' ) . '" alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left">';
@@ -160,7 +160,7 @@ if ( have_posts() ) {
 																													if( get_sub_field( 'book_price' ) == '0' ) {
 																														$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%">Kindle</a>';
 																													} else {
-																														$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=btnewsletter-20" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%">Kindle</a>';
+																														$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=rgnewsletter-20" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%">Kindle</a>';
 																													}
 																												$html .= '</td>';
 
@@ -201,7 +201,7 @@ if ( have_posts() ) {
 																													if( get_sub_field( 'book_price' ) == '0' ) {
 																														$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%">Amazon</a>';
 																													} else {
-																														$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=btnewsletter-20" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%">Amazon</a>';
+																														$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=rgnewsletter-20" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%">Amazon</a>';
 																													}
 																												$html .= '</td>';
 
