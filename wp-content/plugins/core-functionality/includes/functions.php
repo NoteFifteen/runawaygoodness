@@ -95,7 +95,8 @@ function rg_edit_deal_columns( $columns ) {
 		'start_date'	=> __( 'Start Date', 'runawaygoodness' ),
 		'end_date'		=> __( 'End Date', 'runawaygoodness' ),
 		'amazon'		=> __( 'Amazon ID', 'runawaygoodness'),
-		'thumb'			=> __( 'Thumbnail', 'runawaygoodness' )
+		'thumb'			=> __( 'Thumbnail', 'runawaygoodness' ),
+		'used'			=> __( 'In Newsletter', 'runawaygoodness' )
 	);
 
 	$columns = array_merge( $columns, $mycolumns );
@@ -130,6 +131,13 @@ function rg_deal_columns( $column, $post_id ) {
 
 		case 'amazon' :
 			echo '<a href="http://amazon.com/dp/'. get_post_meta( get_the_ID(), 'amazon_id', true ) .'" target="_blank">'. get_post_meta( get_the_ID(), 'amazon_id', true ) .'</a>';
+		break;
+
+		case 'used' :
+			if( get_post_meta( get_the_ID(), 'used_in_newsletter', true )[0] == 'Yes' ) {
+				echo '<img src="/wp-content/plugins/core-functionality/images/checkmark.png">';
+			}
+		break;
 
 		default :
 		break;
