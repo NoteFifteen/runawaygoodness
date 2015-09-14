@@ -9,29 +9,31 @@ function rg_signup_form() {
 	}
 
 	// get genres (interest categories)
-	$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
-	$response = \Httpful\Request::get($url)->send();
+		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?count=100&output=json';
+    	$response = \Httpful\Request::get($url)
+        ->authenticateWith(API_KEY, API_KEY)        // authenticate with basic auth...
+        ->send();
 	$genre_options = '';
 
 	foreach ($response->body->interests as $genre) {
 		$genre_options .= '<option value="' . $genre->id . ':' . $genre->name . '">' . $genre->name . '</option>';
 	}
 
-    echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
-    echo '<p>';
+   	echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
+   	echo '<p>';
 	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
 	echo '	<option value="">Pick Your Genre</option>';
 	echo 	$genre_options;
 	echo '	</option>';
 	echo '</select>';
-    echo '</p>';
-    echo '<p>';
-    echo '<input type="email" id="lp-email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" placeholder="Enter your email address" />';
-    echo '</p>';
+   	echo '</p>';
+   	echo '<p>';
+   	echo '<input type="email" id="lp-email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" placeholder="Enter your email address" />';
+   	echo '</p>';
     // pass through source if available
-    echo '<input type="hidden" name="lp-source" value="' . ( isset( $_POST["lp-source"] ) ? esc_attr( $_POST["lp-source"] ) : 'rg-home' )  . '" />';
-    echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Book"/></p>';
-    echo '</form>';
+   	echo '<input type="hidden" name="lp-source" value="' . ( isset( $_POST["lp-source"] ) ? esc_attr( $_POST["lp-source"] ) : 'rg-home' )  . '" />';
+   	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Book"/></p>';
+   	echo '</form>';
 }
 
 function process_rg_signup() {
@@ -130,12 +132,16 @@ function rg_mailchimp_genres_form() {
    	} else {
 
 	   	// grab list of genres
-		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
-		$response = \Httpful\Request::get($url)->send();
+		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests/?count=100&output=json';
+		$response = \Httpful\Request::get($url)
+        ->authenticateWith(API_KEY, API_KEY)        // authenticate with basic auth...
+        ->send();
 
 		// grab member data
-		$url2 = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/'. $emailmd5 .'?apikey='. API_KEY .'&output=json';
-		$response2 = \Httpful\Request::get($url2)->send();
+		$url2 = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/'. $emailmd5 .'?output=json';
+		$response2 = \Httpful\Request::get($url2)
+        ->authenticateWith(API_KEY, API_KEY)        // authenticate with basic auth...
+        ->send();
 
 		$interest_array = array();
 		foreach( $response2->body->interests as $k=>$v ) {
@@ -143,7 +149,6 @@ function rg_mailchimp_genres_form() {
 				$interest_array[] = $k;
 			} 
 		}
-
 
 		global $post;
 		$slug = get_post( $post )->post_name;
@@ -177,8 +182,11 @@ function rg_mailchimp_genres_form() {
 function process_rg_genres() {
 
 	// grab entire list of interests
-	$interest_url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?apikey=' . API_KEY . '&count=100&output=json';
-	$interest_response = \Httpful\Request::get($interest_url)->send();
+	$interest_url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/interest-categories/' . INTEREST_TYPE . '/interests?count=100&output=json';
+		$interest_response = \Httpful\Request::get($interest_url)
+        ->authenticateWith(API_KEY, API_KEY)        // authenticate with basic auth...
+        ->send();
+
 	$full_interest_list = array();
 
 	foreach ($interest_response->body->interests as $interests) {
