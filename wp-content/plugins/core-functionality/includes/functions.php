@@ -24,7 +24,7 @@ function current_deals_shortcode() {
 	$args = array (
 		'post_type'			=> 'deal',
 		'posts_per_page'	=> -5,
-		'orderby'			=> 'end_date',
+		'orderby'			=> 'rand',
 		'order'				=> 'ASC',
 		'meta_query'		=> array(
 			array(
