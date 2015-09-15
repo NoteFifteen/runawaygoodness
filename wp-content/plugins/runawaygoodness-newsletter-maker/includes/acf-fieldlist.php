@@ -167,6 +167,7 @@ register_field_group(array (
 							'LGBT' => 'LGBT',
 							'Literary Fiction' => 'Literary Fiction',
 							'Memoir' => 'Memoir',
+							'Mid-Grade' => 'Mid-Grade',
 							'Mystery' => 'Mystery',
 							'New Adult' => 'New Adult',
 							'Non-Fiction' => 'Non-Fiction',
