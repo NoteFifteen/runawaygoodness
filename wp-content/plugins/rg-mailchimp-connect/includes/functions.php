@@ -16,7 +16,13 @@ function rg_signup_form() {
 	$genre_options = '';
 
 	foreach ($response->body->interests as $genre) {
-		$genre_options .= '<option value="' . $genre->id . ':' . $genre->name . '">' . $genre->name . '</option>';
+		if( isset( $_GET["c"] ) && ( $_GET["c"] == $genre->id ) ) {
+			$preselect = "selected";
+		} else {
+			$preselect = '';
+		}
+
+		$genre_options .= '<option value="' . $genre->id . ':' . $genre->name . '" '. $preselect .'>' . $genre->name . '</option>';
 	}
 
    	echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
@@ -31,7 +37,16 @@ function rg_signup_form() {
    	echo '<input type="email" id="lp-email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" placeholder="Enter your email address" />';
    	echo '</p>';
     // pass through source if available
-   	echo '<input type="hidden" name="lp-source" value="' . ( isset( $_POST["lp-source"] ) ? esc_attr( $_POST["lp-source"] ) : 'rg-home' )  . '" />';
+    
+    if( isset( $_POST["lp-source"] ) ) {
+    	$source_id = esc_attr( $_POST["lp-source"] );
+    } elseif ( isset( $_COOKIE["rgref"] ) ) {
+    	$source_id = $_COOKIE["rgref"];
+    } else {
+    	$source_id = 'rg-home';
+    }
+
+   	echo '<input type="hidden" name="lp-source" value="' . $source_id . '" />';
    	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Book"/></p>';
    	echo '</form>';
 }
@@ -258,3 +273,14 @@ function rg_mailchimp_genres() {
 }
 
 add_shortcode( 'rgmcthankyou' , 'rg_mailchimp_genres' );
+
+
+
+function rg_set_ref_cookie() {
+	if( isset( $_GET["ref"] ) ) {
+		// set cookie
+		setcookie( "rgref", esc_attr( $_GET["ref"] ), time() + 604800 );
+	}
+}
+
+add_action( 'init', 'rg_set_ref_cookie' );
