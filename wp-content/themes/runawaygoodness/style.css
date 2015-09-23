@@ -709,7 +709,7 @@ Common Classes
 
 .page-title {
 	color: #fff;
-	padding: 40px 0 80px;
+	padding: 20px 0 20px;
 	text-align: center;
 }
 
@@ -1055,7 +1055,7 @@ Site Header
 }
 
 .bumper {
-	min-height: 160px;
+	min-height: 60px;
 }
 
 .site-header .wrap {
@@ -1140,30 +1140,27 @@ Site Header
 /* Shrink
 --------------------------------------------- */
 
-.site-header.shrink .wrap {
+.site-header .wrap {
 	background-color: rgba(255, 255, 255, 0.1);
 	min-height: 60px;
 	padding: 0 40px;
 }
 
-.shrink .site-title {
+.site-title {
 	font-size: 36px;
 	padding-top: 10px;
 }
 
-.header-image .shrink .site-title {
+.header-image .site-title {
 	padding: 0;
 }
 
-.header-image .shrink .site-title > a {
+.title-area .site-title a {
 	min-height: 60px;
-}
-
-.shrink .site-title a {
 	background-size: 270px 60px !important;
 }
 
-.site-header.shrink .widget-area {
+.site-header .widget-area {
 	padding-top: 0;
 }
 
@@ -2293,6 +2290,13 @@ body.rgad {
 	background-color: #000;
 }
 
+.page-id-528 h2,
+.page-id-822 h2 {
+	clear: both;
+}
+
+
+
 
 /*
 Media Queries
@@ -2414,7 +2418,7 @@ Media Queries
 		padding: 20px 5% 0;
 	}
 	
-	.site-header.shrink .wrap {
+	.site-header .wrap {
 		padding: 0px 5%;
 	}
 
@@ -2525,12 +2529,12 @@ Media Queries
 		font-size: 40px;
 	}
 	
-	.shrink .site-title {
+	.site-title {
 		font-size: 24px;
 	}
 	
-	.shrink .site-title a,
-	.shrink .site-title a:hover {
+	.site-title a,
+	.site-title a:hover {
 		text-shadow: 2px 2px rgba( 0, 0, 0, 0.1 );
 	}
 
