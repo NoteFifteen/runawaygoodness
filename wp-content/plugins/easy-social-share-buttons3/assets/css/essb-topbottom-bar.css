@@ -1,0 +1,91 @@
+.essb_topbar {
+	background: #ffffff;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: 2000;
+	transition:All 0.5s ease;
+	-webkit-transition:All 0.5s ease;
+	-moz-transition:All 0.5s ease;
+	-o-transition:All 0.5s ease;
+-webkit-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+-moz-box-shadow:    0px 2px 2px 0px rgba(50, 50, 50, 0.2);
+box-shadow:         0px 2px 2px 0px rgba(50, 50, 50, 0.2);	
+}
+
+
+.essb_topbar_inner {
+	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.essb_topbar .essb_t_l_big, .essb_topbar .essb_t_r_big {
+	line-height: 1em;
+	padding: 0px !important;
+}
+
+.essb_topbar .essb_topbar_inner_buttons, .essb_topbar .essb_topbar_inner_content {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.essb_topbar ul {
+	text-align: center;
+}
+.essb_topbar .essb_topbar_align_left ul {
+	text-align: left;
+}
+.essb_topbar .essb_topbar_align_right ul {
+	text-align: right;
+}
+
+.essb_topbar.essb_active_topbar { margin-top: 0px; }
+
+
+.essb_bottombar {
+	background: #ffffff;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	z-index: 2000;
+	transition:All 0.5s ease;
+	-webkit-transition:All 0.5s ease;
+	-moz-transition:All 0.5s ease;
+	-o-transition:All 0.5s ease;
+-webkit-box-shadow: 0px -2px 5px 0px rgba(50, 50, 50, 0.3);
+-moz-box-shadow:    0px -2px 5px 0px rgba(50, 50, 50, 0.3);
+box-shadow:         0px -2px 5px 0px rgba(50, 50, 50, 0.3);
+}
+
+.essb_bottombar_inner {
+	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.essb_bottombar .essb_t_l_big, .essb_bottombar .essb_t_r_big {
+	line-height: 1em;
+	padding: 0px !important;
+}
+
+.essb_bottombar .essb_bottombar_inner_buttons, .essb_bottombar .essb_bottombar_inner_content {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.essb_bottombar ul {
+	text-align: center;
+}
+.essb_bottombar .essb_bottombar_align_left ul {
+	text-align: left;
+}
+.essb_bottombar .essb_bottombar_align_right ul {
+	text-align: right;
+}
+
+.essb_bottombar.essb_active_bottombar { margin-bottom: 0px;  }
+
+.essb_bottombar .essb_bar_withoutcontent, .essb_topbar .essb_bar_withoutcontent {width: 100%;}
