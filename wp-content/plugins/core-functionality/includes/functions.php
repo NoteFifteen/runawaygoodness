@@ -226,6 +226,41 @@ function create_genre_taxonomy() {
   ));
 }
 
+add_action( 'init', 'create_dealsource_taxonomy', 0 );
+
+function create_dealsource_taxonomy() {
+
+	$labels = array(
+	'name' => _x( 'Deal Source', 'taxonomy general name' ),
+	'singular_name' => _x( 'Deal Source', 'taxonomy singular name' ),
+	'search_items' =>  __( 'Search Deal Source' ),
+	'popular_items' => __( 'Popular Deal Source' ),
+	'all_items' => __( 'All Deal Source' ),
+	'parent_item' => null,
+	'parent_item_colon' => null,
+	'edit_item' => __( 'Edit Deal Source' ), 
+	'update_item' => __( 'Update Deal Source' ),
+	'add_new_item' => __( 'Add New Deal Source' ),
+	'new_item_name' => __( 'New Deal Source Name' ),
+	'separate_items_with_commas' => __( 'Separate Deal Sources with commas' ),
+	'add_or_remove_items' => __( 'Add or remove Deal Sources' ),
+	'choose_from_most_used' => __( 'Choose from the most used Deal Sources' ),
+	'menu_name' => __( 'Deal Sources' ),
+	); 
+
+// Now register the non-hierarchical taxonomy like tag
+
+  register_taxonomy( 'deal_sources','deal',array(
+'hierarchical' => true,
+'labels' => $labels,
+'show_ui' => true,
+'show_admin_column' => true,
+'update_count_callback' => '_update_post_term_count',
+'query_var' => true,
+'rewrite' => array( 'slug' => 'dealsources' ),
+  ));
+}
+
 add_shortcode( 'front_page_signup', 'front_page_signup_shortcode' );
 
 function front_page_signup_shortcode() {
