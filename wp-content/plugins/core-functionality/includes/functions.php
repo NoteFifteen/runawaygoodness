@@ -90,6 +90,7 @@ add_filter( 'manage_edit-deal_columns', 'rg_edit_deal_columns' );
 function rg_edit_deal_columns( $columns ) {
 
 	unset( $columns['date'] );
+	unset( $columns['wpseo-score'] );
 
 	$mycolumns = array(
 		'start_date'	=> __( 'Start Date', 'runawaygoodness' ),
@@ -115,14 +116,32 @@ add_action( 'manage_deal_posts_custom_column', 'rg_deal_columns', 10, 2 );
 function rg_deal_columns( $column, $post_id ) {
 	global $post;
 
+	// figure out if deal is current
+	$today = strtotime( date( 'm/d/y' ) );
+	$s = strtotime( get_post_meta( get_the_ID(), 'start_date', true ) );
+	$e = strtotime( get_post_meta( get_the_ID(), 'end_date', true ) );
+
+// 	wp_die( $today . ' _ ' . $s . ' _ ' . $e );
+	if( ( $today >= $s ) && ( $today <= $e ) ) {
+		$start_color = "#0ad222";
+		$end_color = "#0ad222";
+	} else {
+		$start_color = "#555";
+	}
+
+	if( $today > $e ) {
+		$end_color = '#D20A29';
+	}
+
+
 	switch( $column ) {
 
 		case 'start_date' :
-			echo date( 'm/d/y', strtotime( get_post_meta( get_the_ID(), 'start_date', true ) ) ) ;
+			echo '<span style="color:'. $start_color .'">' . date( 'm/d/y', strtotime( get_post_meta( get_the_ID(), 'start_date', true ) ) ) . '</span>';
 		break;
 
 		case 'end_date' :
-			echo date( 'm/d/y', strtotime( get_post_meta( get_the_ID(), 'end_date', true ) ) ) ;
+			echo '<span style="color:'. $end_color .'">' . date( 'm/d/y', strtotime( get_post_meta( get_the_ID(), 'end_date', true ) ) ) . '</span>';
 		break;
 
 		case 'thumb' :
