@@ -28,7 +28,6 @@ function rg_signup_form() {
    	echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
    	echo '<p>';
 	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
-	echo '	<option value="">Pick Your Genre</option>';
 	echo 	$genre_options;
 	echo '	</option>';
 	echo '</select>';
@@ -47,7 +46,7 @@ function rg_signup_form() {
     }
 
    	echo '<input type="hidden" name="lp-source" value="' . $source_id . '" />';
-   	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Book"/></p>';
+   	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Free Book"/></p>';
    	echo '</form>';
 }
 
