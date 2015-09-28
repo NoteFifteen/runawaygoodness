@@ -202,3 +202,14 @@ function sp_footer_creds_text() {
 	echo ' &middot; <a href="http://runawaygoodness.com">Runaway Goodness</a>';
 	echo '</p></div>';
 }
+
+/** Add PWYW sidebar */
+genesis_register_sidebar(array(
+	'name'=>'PWYW Sidebar',
+	'id' => 'sidebar-pwyw',
+	'description' => 'This is the PWYW sidebar',
+	'before_widget' => '<div id="%1$s"><div class="widget %2$s">',
+	'after_widget'  => "</div></div>\n",
+	'before_title'  => '<h4><span>',
+	'after_title'   => "</span></h4>\n"
+));
