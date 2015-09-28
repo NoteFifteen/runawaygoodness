@@ -179,6 +179,7 @@ register_field_group(array (
 							'Religion' => 'Religion',
 							'Romance' => 'Romance',
 							'Romantic Suspense' => 'Romantic Suspense',
+							'Self Help' => 'Self Help',
 							'Science Fiction' => 'Science Fiction',
 							'Short Stories' => 'Short Stories',
 							'Spirituality' => 'Spirituality',
