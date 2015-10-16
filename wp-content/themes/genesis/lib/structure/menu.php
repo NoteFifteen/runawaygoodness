@@ -76,7 +76,7 @@ add_action( 'genesis_after_header', 'genesis_do_nav' );
 function genesis_do_nav() {
 
 	//* Do nothing if menu not supported
-	if ( ! genesis_nav_menu_supported( 'primary' ) )
+	if ( ! genesis_nav_menu_supported( 'primary' ) || ! has_nav_menu( 'primary' ) )
 		return;
 
 	$class = 'menu genesis-nav-menu menu-primary';

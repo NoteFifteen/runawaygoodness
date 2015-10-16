@@ -3,7 +3,7 @@ Contributors: shawndh, markjaquith, mordauk, JustinSainton, wpsmith, bhwebworks
 Tags: wp101, tutorials, video, help, learn, screencast
 Requires at least: 3.2
 Tested up to: 4.3
-Stable tag: 3.2.2
+Stable tag: 3.2.3
 
 Delivers a complete set of WordPress tutorial videos directly within the dashboard. Choose which videos to show, or add your own!
 
@@ -79,31 +79,31 @@ The `wp101_get_help_topics` filter is applied to the output of the `get_help_top
 
     php
     array(
-	1 => array( 
-		'id'      => 1, 
-		'title'   => 'The Dashboard', 
-		'content' => '<iframe src="//player.vimeo.com/video/104639801" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>' 
+	1 => array(
+		'id'      => 1,
+		'title'   => 'The Dashboard',
+		'content' => '<iframe src="//player.vimeo.com/video/104639801" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
 	),
-	2 => array( 
-		'id'      => 2, 
-		'title'   => 'Posts vs. Pages', 
-		'content' => '<iframe src="//player.vimeo.com/video/81744178" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>' 
+	2 => array(
+		'id'      => 2,
+		'title'   => 'Posts vs. Pages',
+		'content' => '<iframe src="//player.vimeo.com/video/81744178" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
 	),
-	3 => array( 
-		'id'      => 3, 
-		'title'   => 'The Editor', 
-		'content' => '<iframe src="//player.vimeo.com/video/81743148" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>' 
+	3 => array(
+		'id'      => 3,
+		'title'   => 'The Editor',
+		'content' => '<iframe src="//player.vimeo.com/video/81743148" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
 	)
-    );		
+    );
 
 Suppose you have a site where you aren't using any posts or pages.  Not inconceivable, as you might be entirely dependent upon custom post types for a specific build.  It would make great sense in this situation to remove the _Posts vs. Pages_ video, as it would be irrelevant.  Here's how you might do that:
 
     php
     add_filter( 'wp101_get_help_topics', function( $videos ) {
-    	
+
 	unset( $videos[2] );
 	return $videos;
-    
+
     } );
 
 And voila!  No more _Posts vs. Pages_ video in the core help topics.  Cool, right?
@@ -114,13 +114,13 @@ Maybe you have a really great plugin that you've made some instructional videos 
 
     php
     add_filter( 'wp101_get_custom_help_topics', function( $custom_videos ) {
-    
+
 	$custom_videos['myplugin.1'] => array(
 		'id'      => 'myplugin.1',
 		'title'   => 'General Helpful Stuff',
 		'content' => '<iframe src="//player.vimeo.com/video/12345678" width="1280" height="720" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>'
 	);
-    
+
 	return $custom_videos;
     } );
 
@@ -134,11 +134,11 @@ Say you want to hide a video - not necessarily remove it completely from WP101, 
     add_filter( 'wp101_get_hidden_topics', function( $hidden_videos ) {
 	// As in the first example, we might want to hide the Posts vs. Pages video.  Instead of the whole array, we add the topic ID.
 	$topic_id = 2;
-    	
+
 	if ( ! in_array( $topic_id, $hidden_videos ) ) {
 		$hidden_videos[] = $topic_id;
 	}
-    	
+
 	return $hidden_videos;
     } );
 
@@ -154,6 +154,9 @@ _Note: All code examples are using anonymous functions, which work in PHP 5.3+. 
 
 == Changelog ==
 
+= 3.2.3 =
+* Updated for new translation system on WordPress.org.
+
 = 3.2.2 =
 * Minor changes to description verbiage and fixed a tiny typo.
 * Tested and verified for WordPress 4.3!
@@ -162,7 +165,7 @@ _Note: All code examples are using anonymous functions, which work in PHP 5.3+. 
 * Changed title to reflect the new name of the Yoast SEO plugin.
 
 = 3.2 =
-* Updated the WordPress SEO Plugin videos for version 2.0.
+* Updated the Yoast SEO plugin videos for version 2.0.
 * Tested and verified for WordPress 4.2!
 
 = 3.1 =

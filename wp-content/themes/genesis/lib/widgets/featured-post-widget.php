@@ -397,7 +397,7 @@ class Genesis_Featured_Post extends WP_Widget {
 					<input id="<?php echo esc_attr( $this->get_field_id( 'exclude_displayed' ) ); ?>" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'exclude_displayed' ) ); ?>" value="1" <?php checked( $instance['exclude_displayed'] ); ?>/>
 					<label for="<?php echo esc_attr( $this->get_field_id( 'exclude_displayed' ) ); ?>"><?php _e( 'Exclude Previously Displayed Posts?', 'genesis' ); ?></label>
 				</p>
-				
+
 				<p>
 					<input id="<?php echo esc_attr( $this->get_field_id( 'exclude_sticky' ) ); ?>" type="checkbox" name="<?php echo esc_attr( $this->get_field_name( 'exclude_sticky' ) ); ?>" value="1" <?php checked( $instance['exclude_sticky'] ); ?>/>
 					<label for="<?php echo esc_attr( $this->get_field_id( 'exclude_sticky' ) ); ?>"><?php _e( 'Exclude Sticky Posts?', 'genesis' ); ?></label>

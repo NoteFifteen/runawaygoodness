@@ -45,7 +45,7 @@ function genesis_404() {
 
 			if ( ! genesis_html5() ) {
 				genesis_sitemap( 'h4' );
-			} elseif ( genesis_a11y() ) {
+			} elseif ( genesis_a11y( '404-page' ) ) {
 				echo '<h2>' . __( 'Sitemap', 'genesis' ) . '</h2>';
 				genesis_sitemap( 'h3' );
 			}

@@ -67,7 +67,14 @@ function genesis_theme_support() {
 	if ( ! is_child_theme() ) {
 		add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption'  ) );
 		add_theme_support( 'genesis-responsive-viewport' );
-		add_theme_support( 'genesis-accessibility', array( 'skip-links', 'search-form', 'drop-down-menu', 'headings', 'rems' ) );
+		add_theme_support( 'genesis-accessibility', array(
+			'404-page',
+			'drop-down-menu',
+			'headings',
+			'rems',
+			'search-form',
+			'skip-links',
+		) );
 	}
 
 }
@@ -114,10 +121,10 @@ function genesis_constants() {
 
 	//* Define Theme Info Constants
 	define( 'PARENT_THEME_NAME', 'Genesis' );
-	define( 'PARENT_THEME_VERSION', '2.2.2' );
+	define( 'PARENT_THEME_VERSION', '2.2.3' );
 	define( 'PARENT_THEME_BRANCH', '2.2' );
-	define( 'PARENT_DB_VERSION', '2205' );
-	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1441756800' ) );
+	define( 'PARENT_DB_VERSION', '2206' );
+	define( 'PARENT_THEME_RELEASE_DATE', date_i18n( 'F j, Y', '1444608000' ) );
 #	define( 'PARENT_THEME_RELEASE_DATE', 'TBD' );
 
 	//* Define Directory Location Constants

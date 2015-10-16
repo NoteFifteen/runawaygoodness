@@ -164,12 +164,12 @@ class Genesis_Featured_Page extends WP_Widget {
 					$orig_more = $more;
 					$more = 0;
 
-					the_content( genesis_a11y_more_link( $instance['more_text']  ) );
+					the_content( genesis_a11y_more_link( $instance['more_text'] ) );
 
 					$more = $orig_more;
 
 				} else {
-					the_content_limit( (int) $instance['content_limit'], esc_html( $instance['more_text'] ) );
+					the_content_limit( (int) $instance['content_limit'], genesis_a11y_more_link( esc_html( $instance['more_text'] ) ) );
 				}
 
 				echo genesis_html5() ? '</div>' : '';

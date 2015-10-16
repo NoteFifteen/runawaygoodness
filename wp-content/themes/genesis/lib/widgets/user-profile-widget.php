@@ -97,7 +97,7 @@ class Genesis_User_Profile_Widget extends WP_Widget {
 
 			//* If posts link option checked, add posts link to output
 			$display_name = get_the_author_meta( 'display_name', $instance['user'] );
-			$user_name = ( ! empty ( $display_name ) && genesis_a11y() ) ? '<span class="screen-reader-text">' . $display_name. ': </span>' : '';
+			$user_name = ( ! empty ( $display_name ) && genesis_a11y( 'screen-reader-text' ) ) ? '<span class="screen-reader-text">' . $display_name. ': </span>' : '';
 
 			if ( $instance['posts_link'] )
 				printf( '<div class="posts_link posts-link"><a href="%s">%s%s</a></div>', get_author_posts_url( $instance['user'] ), $user_name, __( 'View My Blog Posts', 'genesis' ) );

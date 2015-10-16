@@ -357,16 +357,15 @@ function genesis_html5() {
  *
  * @since 2.2.0
  *
- * @param string $arg Optional. Specific accessibility feature to check for support.
- *                    Accepts `drop-down-menu` and `headings`. Default is empty string.
+ * @param string $arg Optional. Specific accessibility feature to check for support. Default is screen-reader-text.
  *
  * @return bool True if current theme supports genesis-accessibility, or an specific feature of it, false otherwise.
  */
-function genesis_a11y( $arg = '' ) {
+function genesis_a11y( $arg = 'screen-reader-text' ) {
 
 	$feature = 'genesis-accessibility';
 
-	if ( empty( $arg ) ) {
+	if ( 'screen-reader-text' === $arg ) {
 		return current_theme_supports( $feature );
 	}
 
@@ -377,9 +376,9 @@ function genesis_a11y( $arg = '' ) {
 		return false;
 	}
 
-	// No args passed in to add_theme_support(), so accept all.
+	// No args passed in to add_theme_support(), so accept none.
 	if ( ! isset( $support[0] ) ) {
-		return true;
+		return false;
 	}
 
 	// Support for specific arg found.

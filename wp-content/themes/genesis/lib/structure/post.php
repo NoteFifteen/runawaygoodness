@@ -217,14 +217,26 @@ function genesis_do_post_title() {
 		return;
 
 	//* Link it, if necessary
-	if ( ! is_singular() && apply_filters( 'genesis_link_post_title', true ) )
+	if ( ! is_singular() && apply_filters( 'genesis_link_post_title', true ) ){
 		$title = sprintf( '<a href="%s" rel="bookmark">%s</a>', get_permalink(), $title );
+	}
 
 	//* Wrap in H1 on singular pages
 	$wrap = is_singular() ? 'h1' : 'h2';
 
 	//* Also, if HTML5 with semantic headings, wrap in H1
 	$wrap = genesis_html5() && genesis_get_seo_option( 'semantic_headings' ) ? 'h1' : $wrap;
+
+	/**
+	 * Entry title wrapping element
+	 *
+	 * The wrapping element for the entry title.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param string $wrap The wrapping element (h1, h2, p, etc.).
+	 */
+	$wrap = apply_filters( 'genesis_entry_title_wrap', $wrap );
 
 	//* Build the output
 	$output = genesis_markup( array(
@@ -349,9 +361,9 @@ function genesis_do_post_content() {
 	}
 	else {
 		if ( genesis_get_option( 'content_archive_limit' ) )
-			the_content_limit( (int) genesis_get_option( 'content_archive_limit' ), __( '[Read more...]', 'genesis' ) );
+			the_content_limit( (int) genesis_get_option( 'content_archive_limit' ), genesis_a11y_more_link( __( '[Read more...]', 'genesis' ) ) );
 		else
-			the_content( __( '[Read more...]', 'genesis' ) );
+			the_content( genesis_a11y_more_link( __( '[Read more...]', 'genesis' ) ) );
 	}
 
 }
@@ -559,7 +571,7 @@ function genesis_author_box( $context = '', $echo = true ) {
 
 		if ( 'single' === $context && ! genesis_get_seo_option( 'semantic_headings' ) ) {
 			$heading_element = 'h4';
-		} elseif ( genesis_a11y( 'headings' ) ) {
+		} elseif ( genesis_a11y( 'headings' ) || get_the_author_meta( 'headline', (int) get_query_var( 'author' ) ) ) {
 			$heading_element = 'h4';
 		} else {
 			$heading_element = 'h1';
@@ -574,7 +586,11 @@ function genesis_author_box( $context = '', $echo = true ) {
 
 		$title = apply_filters( 'genesis_author_box_title', sprintf( '<strong>%s %s</strong>', __( 'About', 'genesis' ), get_the_author() ), $context );
 
-		$pattern = 'single' === $context ? '<div class="author-box"><div>%s %s<br />%s</div></div>' : '<div class="author-box">%s<h1>%s</h1><div>%s</div></div>';
+		if ( 'single' === $context || get_the_author_meta( 'headline', (int) get_query_var( 'author' ) ) ) {
+			$pattern = '<div class="author-box"><div>%s %s<br />%s</div></div>';
+		} else {
+			$pattern = '<div class="author-box">%s<h1>%s</h1><div>%s</div></div>';
+		}
 
 	}
 
@@ -731,7 +747,7 @@ function genesis_numeric_posts_nav() {
 		'context' => 'archive-pagination',
 	) );
 
-	$before_number = genesis_a11y() ? '<span class="screen-reader-text">' . __( 'Page ', 'genesis' ) .  '</span>' : '';
+	$before_number = genesis_a11y( 'screen-reader-text' ) ? '<span class="screen-reader-text">' . __( 'Page ', 'genesis' ) .  '</span>' : '';
 
 	echo '<ul>';
 
@@ -746,8 +762,9 @@ function genesis_numeric_posts_nav() {
 
 		printf( '<li%s><a href="%s">%s</a></li>' . "\n", $class, esc_url( get_pagenum_link( 1 ) ), $before_number . '1' );
 
-		if ( ! in_array( 2, $links ) )
-			echo '<li class="pagination-omission">&#x02026;</li>';
+		if ( ! in_array( 2, $links ) ) {
+			echo '<li class="pagination-omission">&#x02026;</li>' . "\n";
+		}
 
 	}
 

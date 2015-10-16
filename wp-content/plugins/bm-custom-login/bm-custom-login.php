@@ -1,11 +1,29 @@
 <?php
 /*
-Plugin Name: BM Custom Login
-Plugin URI: http://www.binarymoon.co.uk/projects/bm-custom-login/
-Description: Display custom images on the WordPress login screen. Useful for branding.
-Author: Ben Gillbanks
-Version: 1.8.2
-Author URI: http://www.binarymoon.co.uk/
+	Plugin Name: BM Custom Login
+	Plugin URI: http://www.binarymoon.co.uk/projects/bm-custom-login/
+	Description: Display custom images on the WordPress login screen. Useful for branding.
+	Author: BinaryMoon
+	Version: 1.9
+	Author URI: http://prothemedesign.com/
+	License: GPLv2 or later
+	Text Domain: bm-custom-login
+*/
+
+/*
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 define( 'CL_GROUP', 'custom_login' );
@@ -277,7 +295,7 @@ class BMCustomLogin {
 
 	<div class="wrap">
 		<div class="icon32" id="icon-options-general"><br /></div>
-		<h2><?php _e( 'Custom Login Options', 'custom_login' ); ?></h2>
+		<h2><?php _e( 'Custom Login Options', 'bm-custom-login' ); ?></h2>
 
 		<form action="options.php" method="post">
 <?php
@@ -285,7 +303,7 @@ class BMCustomLogin {
 		do_settings_sections( CL_PAGE );
 ?>
 			<p class="submit">
-				<input name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes', 'custom_login' ); ?>" class="button-primary" />
+				<input name="Submit" type="submit" value="<?php esc_attr_e( 'Save Changes', 'bm-custom-login' ); ?>" class="button-primary" />
 			</p>
 		</form>
 
@@ -319,14 +337,14 @@ class BMCustomLogin {
 
 		add_settings_section(
 			CL_SECTION,
-			__( 'Login Screen Settings', 'custom_login' ),
+			__( 'Login Screen Settings', 'bm-custom-login' ),
 			array( $this, 'custom_login_section_validate' ),
 			CL_PAGE
 		);
 
 		add_settings_field (
 			'cl_background',
-			__( 'Background Image Url:', 'custom_login' ),
+			__( 'Background Image Url:', 'bm-custom-login' ),
 			array( $this, 'form_image' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -334,13 +352,13 @@ class BMCustomLogin {
 				'id' => 'cl_background',
 				'value' => $vars,
 				'default' => '',
-				'description' => __( 'Ideal size is 312 by 600', 'custom_login' ),
+				'description' => __( 'Ideal size is 312 by 600', 'bm-custom-login' ),
 			)
 		);
 
 		add_settings_field (
 			'cl_powerby',
-			__( 'Custom Login Powered by:', 'custom_login' ),
+			__( 'Custom Login Powered by:', 'bm-custom-login' ),
 			array( $this, 'form_text' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -354,7 +372,7 @@ class BMCustomLogin {
 
 		add_settings_field (
 			'cl_footertext',
-			__( 'WordPress footer text:', 'custom_login' ),
+			__( 'WordPress footer text:', 'bm-custom-login' ),
 			array( $this, 'form_text' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -362,13 +380,13 @@ class BMCustomLogin {
 				'id' => 'cl_footertext',
 				'value' => $vars,
 				'default' => '',
-				'description' => __( 'Appears at the bottom of the admin pages when logged in.', 'custom_login' ),
+				'description' => __( 'Appears at the bottom of the admin pages when logged in.', 'bm-custom-login' ),
 			)
 		);
 
 		add_settings_field (
 			'cl_backgroundColor',
-			__( 'Page Background Color:', 'custom_login' ),
+			__( 'Page Background Color:', 'bm-custom-login' ),
 			array( $this, 'form_color' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -381,7 +399,7 @@ class BMCustomLogin {
 
 		add_settings_field (
 			'cl_backgroundImage',
-			__( 'Page Background Image:', 'custom_login' ),
+			__( 'Page Background Image:', 'bm-custom-login' ),
 			array( $this, 'form_image' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -395,7 +413,7 @@ class BMCustomLogin {
 
 		add_settings_field (
 			'cl_backgroundPY',
-			__( 'Page Background Vertical Position:', 'custom_login' ),
+			__( 'Page Background Vertical Position:', 'bm-custom-login' ),
 			array( $this, 'form_select' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -404,13 +422,13 @@ class BMCustomLogin {
 				'value' => $vars,
 				'default' => 'top',
 				'options' => array ('top', 'center', 'bottom'),
-				'description' => __( 'Vertical  position of background element', 'custom_login' ),
+				'description' => __( 'Vertical  position of background element', 'bm-custom-login' ),
 			)
 		);
 
 		add_settings_field (
 			'cl_backgroundPX',
-			__( 'Page Background Horizontal Position:', 'custom_login' ),
+			__( 'Page Background Horizontal Position:', 'bm-custom-login' ),
 			array( $this, 'form_select' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -419,13 +437,13 @@ class BMCustomLogin {
 				'value' => $vars,
 				'default' => 'center',
 				'options' => array ('left', 'center', 'right'),
-				'description' => __( 'Horizontal position of background element', 'custom_login' ),
+				'description' => __( 'Horizontal position of background element', 'bm-custom-login' ),
 			)
 		);
 
 		add_settings_field (
 			'cl_backgroundPRepeat',
-			__( 'Page Background Repeat:', 'custom_login' ),
+			__( 'Page Background Repeat:', 'bm-custom-login' ),
 			array( $this, 'form_select' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -434,13 +452,13 @@ class BMCustomLogin {
 				'value' => $vars,
 				'default' => 'no-repeat',
 				'options' => array ('no-repeat', 'repeat-x', 'repeat-y', 'repeat'),
-				'description' => __( 'Background image repeat', 'custom_login' ),
+				'description' => __( 'Background image repeat', 'bm-custom-login' ),
 			)
 		);
 
 		add_settings_field (
 			'cl_color',
-			__( 'Text Color:', 'custom_login' ),
+			__( 'Text Color:', 'bm-custom-login' ),
 			array( $this, 'form_color' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -453,7 +471,7 @@ class BMCustomLogin {
 
 		add_settings_field (
 			'cl_colorShadow',
-			__( 'Text Shadow Color:', 'custom_login' ),
+			__( 'Text Shadow Color:', 'bm-custom-login' ),
 			array( $this, 'form_color' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -466,7 +484,7 @@ class BMCustomLogin {
 
 		add_settings_field (
 			'cl_linkColor',
-			__( 'Text Link Color:', 'custom_login' ),
+			__( 'Text Link Color:', 'bm-custom-login' ),
 			array( $this, 'form_color' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -479,7 +497,7 @@ class BMCustomLogin {
 
 		add_settings_field (
 			'cl_customCSS',
-			__( '<strong>Advanced<strong> - Custom CSS:', 'custom_login' ),
+			__( '<strong>Advanced<strong> - Custom CSS:', 'bm-custom-login' ),
 			array( $this, 'form_textarea' ),
 			CL_PAGE,
 			CL_SECTION,
@@ -694,7 +712,7 @@ class BMCustomLogin {
 		$id = $args['id'];
 ?>
 		<input class="image-picker" type="text" size="36" name="<?php echo CL_OPTIONS; ?>[<?php echo $id; ?>]" value="<?php echo $value; ?>" />
-		<button class="image-picker-button button-secondary"><?php esc_attr_e( 'Upload Image', 'custom_login' ); ?></button>
+		<button class="image-picker-button button-secondary"><?php esc_attr_e( 'Upload Image', 'bm-custom-login' ); ?></button>
 <?php
 
 		if ( ! empty( $description ) ) {

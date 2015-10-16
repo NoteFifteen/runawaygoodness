@@ -3,7 +3,7 @@ Contributors: pkthree
 Donate link: http://www.theblog.ca
 Tags: login, logout, redirect, admin, administration, dashboard, users, authentication
 Requires at least: 3.2
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: trunk
 
 Redirect users to different locations after logging in and logging out.
@@ -208,6 +208,9 @@ For a deeper dive into this feature, please see this video:
 http://www.screenr.com/Gqi8
 
 == Changelog ==
+
+= 2.9.0 =
+* 2015-09-25: Update translation text domain in order to support translate.wordpress.org translation system
 
 = 2.8.3 =
 * 2015-08-03: Add new URL variable "userslug" to match author URLs.

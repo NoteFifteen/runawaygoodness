@@ -47,6 +47,12 @@ blockquote::before {
 	right: -20px;
 }
 
+/* ## Screen Reader Text
+--------------------------------------------- */
+.screen-reader-text {
+	right: 0;
+}
+
 
 /* # Structure and Layout
 ---------------------------------------------------------------------------------------------------- */
@@ -163,6 +169,7 @@ img.alignright,
 .wp-caption.alignright {
 	margin: 0 24px 24px 0;
 }
+
 
 /* ## Genesis
 --------------------------------------------- */

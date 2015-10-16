@@ -112,8 +112,9 @@ function genesis_default_title( $title, $sep, $seplocation ) {
 	global $wp_query;
 	$post_id = null;
 
-	if ( is_feed() )
-		return trim( $title );
+	if ( is_feed() ) {
+		return $title;
+	}
 
 	$sep = genesis_get_seo_option( 'doctitle_sep' ) ? genesis_get_seo_option( 'doctitle_sep' ) : '–';
 	$seplocation = genesis_get_seo_option( 'doctitle_seplocation' ) ? genesis_get_seo_option( 'doctitle_seplocation' ) : 'right';
@@ -940,8 +941,22 @@ function genesis_seo_site_title() {
 	//* A little fallback, in case an SEO plugin is active
 	$wrap = genesis_is_root_page() && ! genesis_get_seo_option( 'home_h1_on' ) ? 'h1' : $wrap;
 
+	//* Wrap homepage site title in p tags if static front page
+	$wrap = is_front_page() && ! is_home() ? 'p' : $wrap;
+
 	//* And finally, $wrap in h1 if HTML5 & semantic headings enabled
 	$wrap = genesis_html5() && genesis_get_seo_option( 'semantic_headings' ) ? 'h1' : $wrap;
+
+	/**
+	 * Site title wrapping element
+	 *
+	 * The wrapping element for the site title.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param string $wrap The wrapping element (h1, h2, p, etc.).
+	 */
+	$wrap = apply_filters( 'genesis_site_title_wrap', $wrap );
 
 	//* Build the title
 	$title  = genesis_html5() ? sprintf( "<{$wrap} %s>", genesis_attr( 'site-title' ) ) : sprintf( '<%s id="title">%s</%s>', $wrap, $inside, $wrap );
@@ -971,10 +986,24 @@ function genesis_seo_site_description() {
 	$inside = esc_html( get_bloginfo( 'description' ) );
 
 	//* Determine which wrapping tags to use
-	$wrap = is_home() && 'description' === genesis_get_seo_option( 'home_h1_on' ) ? 'h1' : 'p';
+	$wrap = genesis_is_root_page() && 'description' === genesis_get_seo_option( 'home_h1_on' ) ? 'h1' : 'p';
+
+	//* Wrap homepage site description in p tags if static front page
+	$wrap = is_front_page() && ! is_home() ? 'p' : $wrap;
 
 	//* And finally, $wrap in h2 if HTML5 & semantic headings enabled
 	$wrap = genesis_html5() && genesis_get_seo_option( 'semantic_headings' ) ? 'h2' : $wrap;
+
+	/**
+	 * Site description wrapping element
+	 *
+	 * The wrapping element for the site description.
+	 *
+	 * @since 2.2.3
+	 *
+	 * @param string $wrap The wrapping element (h1, h2, p, etc.).
+	 */
+	$wrap = apply_filters( 'genesis_site_description_wrap', $wrap );
 
 	//* Build the description
 	$description  = genesis_html5() ? sprintf( "<{$wrap} %s>", genesis_attr( 'site-description' ) ) : sprintf( '<%s id="description">%s</%s>', $wrap, $inside, $wrap );
