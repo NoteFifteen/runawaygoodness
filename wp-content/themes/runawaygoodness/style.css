@@ -2176,6 +2176,16 @@ div.home-widgets-5.widget-area {
 	padding-bottom: 40px;
 }
 
+.home-widgets .home-widgets-2 .widget {
+	max-width: 960px;
+	font-size: 20px;
+}
+
+.home-widgets .home-widgets-2 .widget p {
+	text-align: left;
+}
+
+
 .home-widgets .home-widgets-2 .widget-title {
 	font-size: 40px;
 }
@@ -2185,8 +2195,9 @@ div.home-widgets-5.widget-area {
 }
 
 .home-widgets .home-widgets-2 .widget:first-child {
-	padding-top: 0px;
+	padding-top: 40px;
 }
+
 .footer-widgets .footer-widgets-4 li {
 	float: left;
 	padding-right: 20px;
@@ -2295,8 +2306,20 @@ body.rgad {
 	clear: both;
 }
 
+.sidebardealcover img {
+	padding: 0px;
+	margin: 3px;
+	float: left;
+}
 
+.sidebardeals {
+	width: 100%;
+	display: inline-block;
+}
 
+.actions-container .input-wrapper.has-prefix .input-prefix {
+	background: #FF0000!important;
+}
 
 /*
 Media Queries
@@ -2334,6 +2357,7 @@ Media Queries
 	.home-widgets .featuredpage .entry-content {
 		margin-bottom: 100px;
 	}
+
 
 }
 
@@ -2392,6 +2416,12 @@ Media Queries
 		max-width: 100%;
 		margin: 0 auto 40px;
 	}
+	
+	.sidebardealcover img {
+	padding: 0px;
+	margin: 0px;
+}
+
 
 }
 
@@ -2616,7 +2646,7 @@ Media Queries
 	}
 	
 	.home-featured .home-widgets-1 {
-		padding: 120px 0 60px;
+		padding: 200px 0 60px;
 	}
 	
 	.arrow a:before {
