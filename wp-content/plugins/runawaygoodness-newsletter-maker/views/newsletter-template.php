@@ -140,8 +140,13 @@ if ( have_posts() ) {
 																									$html .= '<div style="font-family:Trebuchet MS;color:#888888;font-size:16px;line-height:1.38">'. get_sub_field( 'book_blurb' ) .'</div><br /><br />';
 																								}
 
-																								if( get_sub_field( 'book_original_price' ) ) {
-																									$html .= '<div style="font-family:Trebuchet MS;color:#888888;font-size:20px;line-height:1.38">Originally: <s>$'. get_sub_field( 'book_original_price' ) .'</s></div><br />';
+																								// lower_price
+																								if( get_sub_field( 'lower_price' ) ) {
+																									$html .= '<div style="font-family:Trebuchet MS;color:#888888;font-size:20px;line-height:1.38">New Lower Price!</div><br />';
+																								} else {
+																									if( get_sub_field( 'book_original_price' ) ) {
+																										$html .= '<div style="font-family:Trebuchet MS;color:#888888;font-size:20px;line-height:1.38">Originally: <s>$'. get_sub_field( 'book_original_price' ) .'</s></div><br />';
+																									}
 																								}
 
 
