@@ -27,10 +27,10 @@ function rg_signup_form() {
 
    	echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
    	echo '<p>';
-	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
-	echo 	$genre_options;
-	echo '	</option>';
-	echo '</select>';
+//	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
+//	echo 	$genre_options;
+//	echo '	</option>';
+//	echo '</select>';
    	echo '</p>';
    	echo '<p>';
    	echo '<input type="email" id="lp-email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" placeholder="Enter your email address" />';
