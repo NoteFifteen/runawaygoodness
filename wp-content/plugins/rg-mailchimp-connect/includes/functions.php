@@ -3,7 +3,7 @@
 // 
 // To display content on sign up page, add [rgmcsignup]
 // 
-function rg_signup_form() {
+function rg_signup_form( $hidegenre = false, $button_text ) {
 	if( isset( $_GET["ref"] ) ) {
 		$_POST["lp-source"] = esc_attr( $_GET["ref"] );
 	}
@@ -26,12 +26,16 @@ function rg_signup_form() {
 	}
 
    	echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
-   	echo '<p>';
-//	echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
-//	echo 	$genre_options;
-//	echo '	</option>';
-//	echo '</select>';
-   	echo '</p>';
+
+   	if( !isset( $hidegenre ) || $hidegenre != true ) {
+	   	echo '<p>';
+		echo '<select id="lp-genre" value="' . ( isset( $_POST["lp-genre"] ) ? esc_attr( $_POST["lp-genre"] ) : '' ) . '" name="lp-genre">';
+		echo 	$genre_options;
+		echo '	</option>';
+		echo '</select>';
+	   	echo '</p>';
+	}
+
    	echo '<p>';
    	echo '<input type="email" id="lp-email" name="lp-email" value="' . ( isset( $_POST["lp-email"] ) ? esc_attr( $_POST["lp-email"] ) : '' ) . '" placeholder="Enter your email address" />';
    	echo '</p>';
@@ -46,7 +50,7 @@ function rg_signup_form() {
     }
 
    	echo '<input type="hidden" name="lp-source" value="' . $source_id . '" />';
-   	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="Get Your Free Book"/></p>';
+   	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="'. $button_text .'"/></p>';
    	echo '</form>';
 }
 
@@ -67,21 +71,39 @@ function process_rg_signup() {
 		// get genres (interest categories)
 		$url = 'http://us11.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/';
 
-		$response = \Httpful\Request::post($url)		// Build a POST request...
-		    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
-		    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
-		    ->body('{	"email_address": "' . $email . '", 
-    					"status": "pending", 
-    					"merge_fields": {
-    						"SOURCE": "' . $source . '",
-    						"FIRSTCAT": "' . $genre_name . '"
-    					},
-    					"interests": {
-  						    "' . $genre_code . '": true
-    					}
-					}')             					// attach a body/payload...
-		    ->send();                      				// and finally, fire that thing off!
-		    add_post_meta( 1, 'rgmcresponse', $response, false );
+		if( isset( $_POST["lp-genre"] ) ) {
+			// has genres
+			$response = \Httpful\Request::post($url)		// Build a POST request...
+			    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
+			    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
+			    ->body('{	"email_address": "' . $email . '", 
+	    					"status": "pending", 
+	    					"merge_fields": {
+	    						"SOURCE": "' . $source . '",
+	    						"FIRSTCAT": "' . $genre_name . '"
+	    					},
+	    					"interests": {
+	  						    "' . $genre_code . '": true
+	    					}
+						}')             					// attach a body/payload...
+			    ->send();                      				// and finally, fire that thing off!
+			    add_post_meta( 1, 'rgmcresponse', $response, false );
+		} else {
+			// no genres
+			$response = \Httpful\Request::post($url)		// Build a POST request...
+			    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
+			    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
+			    ->body('{	"email_address": "' . $email . '", 
+	    					"status": "pending", 
+	    					"merge_fields": {
+	    						"SOURCE": "' . $source . '",
+	    						"FIRSTCAT": "None"
+	    					}
+						}')             					// attach a body/payload...
+			    ->send();                      				// and finally, fire that thing off!
+			    add_post_meta( 1, 'rgmcresponse', $response, false );
+
+		}
 
 		// TODO: Handle Already on list
 		
@@ -96,10 +118,15 @@ function process_rg_signup() {
     }
 }
 
-function rg_mailchimp_sign_up() {
+function rg_mailchimp_sign_up( $atts ) {
+	$atts = shortcode_atts( array(
+		'hidegenre' => false,
+		'buttontext' => 'Get Your Free Book',
+	), $atts, 'rgmcsignup' );
+
     ob_start();
     process_rg_signup();
-    rg_signup_form();
+    rg_signup_form( $atts['hidegenre'], $atts['buttontext'] );
     return ob_get_clean();
 }
 
