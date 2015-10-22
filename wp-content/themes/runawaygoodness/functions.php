@@ -191,6 +191,17 @@ genesis_register_sidebar( array(
 	'name'        => __( 'After Entry', 'centric' ),
 	'description' => __( 'This is the after entry widget area.', 'centric' ),
 ) );
+genesis_register_sidebar( array(
+	'id'          => 'home-like-1',
+	'name'        => __( 'Home Like 1', 'centric' ),
+	'description' => __( 'This is the first section of the home-like page.', 'centric' ),
+) );
+genesis_register_sidebar( array(
+	'id'          => 'home-like-2',
+	'name'        => __( 'Home Like 2', 'centric' ),
+	'description' => __( 'This is the second section of the home-like page.', 'centric' ),
+) );
+
 
 
 //* Customize the credits
