@@ -329,3 +329,14 @@ function front_page_signup_shortcode() {
 
 	echo $html;
 }
+
+function rg_mime_types($mime_types){
+	$mime_types['epub'] = 'application/epub+zip'; //Adding epub extension
+	$mime_types['mobi'] = 'application/x-mobipocket-ebook'; //Adding mobi files
+	$mime_types['prc'] = 'application/x-mobipocket-ebook'; // Adding prc files
+
+	
+	return $mime_types;
+}
+
+add_filter( 'upload_mimes', 'rg_mime_types', 1, 1);
