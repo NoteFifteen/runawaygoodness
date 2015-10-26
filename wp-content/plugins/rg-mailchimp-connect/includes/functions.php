@@ -42,7 +42,13 @@ function rg_signup_form( $hidegenre = false, $button_text ) {
     // pass through source if available
     
     if( isset( $_POST["lp-source"] ) ) {
-    	$source_id = esc_attr( $_POST["lp-source"] );
+    	$new_source = $_POST["lp-source"];
+		$remove_chars = array( ',', '@', '.', ' ', '$' );
+		foreach( $remove_chars as $k ) {
+			$new_source = str_replace( $k, "_", $new_source );
+		}
+
+    	$source_id = esc_attr( $new_source );
     } elseif ( isset( $_COOKIE["rgref"] ) ) {
     	$source_id = $_COOKIE["rgref"];
     } else {
