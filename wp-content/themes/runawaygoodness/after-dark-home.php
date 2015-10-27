@@ -60,7 +60,23 @@ $html.= '							<!-- real people should not fill this in and expect good things 
 $html.= '							<div style="position: absolute; left: -5000px;">';
 $html.= '								<input type="text" name="b_1c904fe9a0639b7e2464b65c4_159f7318a4" tabindex="-1" value="">';
 $html.= '							</div>';
-$html.= '							<input type="hidden" name="SOURCE" id="SOURCE" value="rg-ad-home" />';
+
+
+if( isset( $_GET["ref"] ) ) {
+	$new_source = $_GET["ref"];
+	$remove_chars = array( ',', '@', '.', ' ', '$' );
+	foreach( $remove_chars as $k ) {
+		$new_source = str_replace( $k, "_", $new_source );
+	}
+
+	$source_id = esc_attr( $new_source );
+} elseif ( isset( $_COOKIE["rgref"] ) ) {
+	$source_id = $_COOKIE["rgref"];
+} else {
+	$source_id = 'rg-ad-home';
+}
+
+$html.= '							<input type="hidden" name="SOURCE" id="SOURCE" value="'. $source_id .'" />';
 $html.= '							<div id="" class="om-clearfix om-has-email" data-om-action="selectable" data-om-target="#optin-monster-saas-field-footer_bg">';
 $html.= '								<input type="email" value="" name="EMAIL" class="required email" id="bt-mce-EMAIL" aria-required="true" placeholder="Enter your email address here..."><br />';
 $html.= '								<input type="checkbox" name="over18" id="over18"> Yep, I\'m over 18<br />';
