@@ -305,14 +305,3 @@ function rg_mailchimp_genres() {
 }
 
 add_shortcode( 'rgmcthankyou' , 'rg_mailchimp_genres' );
-
-
-
-function rg_set_ref_cookie() {
-	if( isset( $_GET["ref"] ) ) {
-		// set cookie
-		setcookie( "rgref", esc_attr( $_GET["ref"] ), time() + 604800 );
-	}
-}
-
-add_action( 'init', 'rg_set_ref_cookie' );
