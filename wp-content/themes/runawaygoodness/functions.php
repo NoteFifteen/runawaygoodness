@@ -230,6 +230,10 @@ function rg_set_ref_cookie() {
 		// set cookie
 		setcookie( "rgref", esc_attr( $_GET["ref"] ), time() + 604800, "/" );
 	}
+
+	if( isset( $_GET["c"] ) ) {
+		setcookie( "rgfirstcat", esc_attr( $_GET["c"] ), time() + 604800, "/" );	
+	}
 }
 
 add_action( 'init', 'rg_set_ref_cookie' );

@@ -96,6 +96,101 @@ function process_rg_signup() {
 			    add_post_meta( 1, 'rgmcresponse', $response, false );
 		} else {
 			// no genres
+			switch( $_COOKIE["rgfirstcat"] ) {
+				case "8535224d0a";
+					$first_cat = "Creative Writing";
+				break;
+
+				case "48bfe6da8a";
+					$first_cat = "Business";
+				break;
+
+				case "1526319864";
+					$first_cat = "Horror";
+				break;
+
+				case "044e00b73e";
+					$first_cat = "WCF";
+				break;
+
+				case "c0f401a02f";
+					$first_cat = "Romantic Suspense";
+				break;
+
+				case "25862f090e";
+					$first_cat = "Literary Fiction";
+				break;
+
+				case "f870639656";
+					$first_cat = "Self Help";
+				break;
+
+				case "6c0e8d58fd";
+					$first_cat = "Thriller";
+				break;
+
+				case "d7adefae40";
+					$first_cat = "Romance";
+				break;
+
+				case "a8f230c4c1";
+					$first_cat = "Science Fiction";
+				break;
+
+				case "1b4528eaf1";
+					$first_cat = "Paranormal";
+				break;
+
+				case "cdc5a72605";
+					$first_cat = "Memoir";
+				break;
+
+				case "7a463d765b";
+					$first_cat = "Historical Romance";
+				break;
+
+				case "715b34ff18";
+					$first_cat = "New Adult";
+				break;
+
+				case "71fff6c086";
+					$first_cat = "Chick Lit";
+				break;
+
+				case "08d41db534";
+					$first_cat = "Mid-grade";
+				break;
+
+				case "5ef2b04121";
+					$first_cat = "Fantasy";
+				break;
+
+				case "2f5b7db69f";
+					$first_cat = "Mystery";
+				break;
+
+				case "c3103e3a92";
+					$first_cat = "LGBT";
+				break;
+
+				case "214df279b6";
+					$first_cat = "Young Adult";
+				break;
+
+				case "7e5b03badc";
+					$first_cat = "Christian";
+				break;
+
+				case "b5c00b76cf";
+					$first_cat = "Humor";
+				break;
+
+				default:
+					$first_cat = "None";
+				break;
+
+			}
+
 			$response = \Httpful\Request::post($url)		// Build a POST request...
 			    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
 			    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
@@ -103,7 +198,7 @@ function process_rg_signup() {
 	    					"status": "pending", 
 	    					"merge_fields": {
 	    						"SOURCE": "' . $source . '",
-	    						"FIRSTCAT": "None"
+	    						"FIRSTCAT": "'. $first_cat .'"
 	    					}
 						}')             					// attach a body/payload...
 			    ->send();                      				// and finally, fire that thing off!
