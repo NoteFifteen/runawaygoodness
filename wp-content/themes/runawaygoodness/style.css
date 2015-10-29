@@ -2133,18 +2133,19 @@ Theme Colors
 
 .signupblock {
 	width: 600px;
-	background-color: #000;
+	background-color: #987197;
 	padding: 40px 80px;
 	line-height: 1.2;
 }
 
 input#rgsignupbutton {
-	background-color: #aa0000;
+	background-color: #AA0000;
 	color: #FFF;
 }
 
 input#rgsignupbutton:hover {
-	background-color: #987197;
+	background-color: #2e2f33;
+	color: #FFF;
 }
 
 .singledeal {
