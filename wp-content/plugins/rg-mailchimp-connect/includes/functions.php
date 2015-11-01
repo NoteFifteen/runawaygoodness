@@ -18,6 +18,7 @@ function rg_signup_form( $hidegenre = false, $button_text ) {
 	foreach ($response->body->interests as $genre) {
 		if( isset( $_GET["c"] ) && ( $_GET["c"] == $genre->id ) ) {
 			$preselect = "selected";
+			$showhiddenc = '<input type="hidden" name="lp-genre" value="' . $genre->id . ':' . $genre->name . '">';
 		} else {
 			$preselect = '';
 		}
@@ -34,6 +35,8 @@ function rg_signup_form( $hidegenre = false, $button_text ) {
 		echo '	</option>';
 		echo '</select>';
 	   	echo '</p>';
+	} else {
+		echo $showhiddenc;
 	}
 
    	echo '<p>';
