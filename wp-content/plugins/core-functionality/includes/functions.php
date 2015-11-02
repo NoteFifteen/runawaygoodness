@@ -296,7 +296,7 @@ add_action( 'init', 'create_prefunkgenre_taxonomy', 0 );
 function create_prefunkgenre_taxonomy() {
 
 	$labels = array(
-	'name' => _x( 'Genres', 'taxonomy general name' ),
+	'name' => _x( 'Prefunk Genres', 'taxonomy general name' ),
 	'singular_name' => _x( 'Genre', 'taxonomy singular name' ),
 	'search_items' =>  __( 'Search Genres' ),
 	'popular_items' => __( 'Popular Genres' ),
@@ -310,7 +310,7 @@ function create_prefunkgenre_taxonomy() {
 	'separate_items_with_commas' => __( 'Separate Genres with commas' ),
 	'add_or_remove_items' => __( 'Add or remove Genres' ),
 	'choose_from_most_used' => __( 'Choose from the most used Genres' ),
-	'menu_name' => __( 'Genres' ),
+	'menu_name' => __( 'Prefunk Genres' ),
 	); 
 
 // Now register the non-hierarchical taxonomy like tag
