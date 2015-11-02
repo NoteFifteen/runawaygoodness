@@ -374,5 +374,6 @@ function rg_change_prefunk_postsperpage( $query ) {
 	
 	if( $query->is_main_query() && !is_admin() && is_post_type_archive( 'prefunk' ) ) {
 		$query->set( 'posts_per_page', '20' );
+		$query->set( 'orderby', 'rand' );
 	}
 }
