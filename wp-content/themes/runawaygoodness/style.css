@@ -2224,6 +2224,19 @@ fieldset {
 	color: #FF0000;
 }
 
+/* prefunk styles */
+.post-type-archive-prefunk .prefunk {
+	width: 210px;
+	height: 400px;
+	float: left;
+	margin-right: 10px;
+}
+
+.post-type-archive-prefunk .archive-pagination {
+	clear: both;
+}
+
+
 /*
 After Dark section
 ---------------------------------------------------------------------------------------------------- */

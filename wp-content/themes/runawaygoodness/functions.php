@@ -225,6 +225,18 @@ genesis_register_sidebar(array(
 	'after_title'   => "</span></h4>\n"
 ));
 
+
+/** Add Prefunk sidebar */
+genesis_register_sidebar(array(
+	'name'=>'Prefunk Sidebar',
+	'id' => 'sidebar-prefunk',
+	'description' => 'This is the Prefunk sidebar',
+	'before_widget' => '<div id="%1$s"><div class="widget %2$s">',
+	'after_widget'  => "</div></div>\n",
+	'before_title'  => '<h4><span>',
+	'after_title'   => "</span></h4>\n"
+));
+
 function rg_set_ref_cookie() {
 	if( isset( $_GET["ref"] ) ) {
 		// set cookie
