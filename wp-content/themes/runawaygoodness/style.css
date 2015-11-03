@@ -2335,6 +2335,10 @@ body.rgad {
 	background: #FF0000!important;
 }
 
+.facetwp-type-checkboxes {
+	max-height: 1000px!important;
+}
+
 /*
 Media Queries
 ---------------------------------------------------------------------------------------------------- */
