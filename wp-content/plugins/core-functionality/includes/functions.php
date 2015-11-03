@@ -374,6 +374,38 @@ function rg_change_prefunk_postsperpage( $query ) {
 	
 	if( $query->is_main_query() && !is_admin() && is_post_type_archive( 'prefunk' ) ) {
 		$query->set( 'posts_per_page', '20' );
-		$query->set( 'orderby', 'rand' );
+		$query->set( 'orderby', 'meta_value_num' );
+		$query->set( 'order', 'asc' );
+		$query->set( 'meta_key', 'pf_order' );
 	}
 }
+
+// Prefunk order builder
+
+function rg_prefunk_order() {
+	$args = array(
+		'post_type' => 'prefunk',
+		'orderby'	=> 'rand',
+		'posts_per_page' => -1
+	);
+
+	$the_query = new WP_Query( $args );
+
+	if ( $the_query->have_posts() ) {
+
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post();
+			$order_num++;
+			update_post_meta( $the_query->post->ID, 'pf_order', $order_num );
+		}
+	}
+}
+
+add_action( 'wp_login', 'rg_prefunk_order' );
+
+
+if ( ! wp_next_scheduled( 'pf_do_reorder' ) ) {
+  wp_schedule_event( time(), 'hourly', 'rg_prefunk_order' );
+}
+
+add_action( 'pf_do_reorder', 'rg_prefunk_order' );
