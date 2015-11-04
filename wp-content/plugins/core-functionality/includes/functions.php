@@ -401,11 +401,16 @@ function rg_prefunk_order() {
 	}
 }
 
-add_action( 'wp_login', 'rg_prefunk_order' );
+add_action( 'rg_prefunk_hook', 'rg_prefunk_order' );
 
+//prepping prefunk scheduler
+add_action( 'wp_login', 'rg_set_cron' );
 
-if ( ! wp_next_scheduled( 'pf_do_reorder' ) ) {
-  wp_schedule_event( time(), 'hourly', 'rg_prefunk_order' );
+function rg_set_cron() {
+	if ( ! wp_next_scheduled( 'rg_prefunk_hook' ) ) {
+		wp_schedule_event( time(), 'hourly', 'rg_prefunk_hook' );
+	}
 }
 
-add_action( 'pf_do_reorder', 'rg_prefunk_order' );
+
+
