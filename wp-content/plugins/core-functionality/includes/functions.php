@@ -373,7 +373,7 @@ add_action( 'pre_get_posts', 'rg_change_prefunk_postsperpage' );
 function rg_change_prefunk_postsperpage( $query ) {
 	
 	if( $query->is_main_query() && !is_admin() && is_post_type_archive( 'prefunk' ) ) {
-		$query->set( 'posts_per_page', '20' );
+		$query->set( 'posts_per_page', '40' );
 		$query->set( 'orderby', 'meta_value_num' );
 		$query->set( 'order', 'asc' );
 		$query->set( 'meta_key', 'pf_order' );
