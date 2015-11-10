@@ -1,0 +1,958 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Integral MailChimp\n"
+"POT-Creation-Date: 2015-03-18 16:19-0800\n"
+"PO-Revision-Date: 2015-03-18 16:20-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: controllers/admin-options.controller.php:185
+msgid "Invalid Submission"
+msgstr "Ugyldig innsending"
+
+#: controllers/admin-options.controller.php:205
+msgid "Invalid License Key provided"
+msgstr "Ugyldig License Key gitt"
+
+#: controllers/admin-options.controller.php:211
+#: controllers/admin-options.controller.php:214
+msgid "Error trying to activate the License Key provided"
+msgstr "Feil prøver å aktivere License Key gitt"
+
+#: controllers/admin-options.controller.php:237
+msgid "Error trying to save the MailChimp API Key, please try again."
+msgstr "Feil prøver å redde MailChimp API-nøkkel, prøv igjen."
+
+#: controllers/admin-options.controller.php:240
+msgid "That MailChimp API Key appears to be invalid."
+msgstr "At MailChimp API-nøkkel ser ut til å være ugyldig."
+
+#: controllers/admin-options.controller.php:269
+msgid "The settings have been updated"
+msgstr "Innstillingene har blitt oppdatert"
+
+#: controllers/admin-options.controller.php:305
+msgid "The License Key was Deactivated for this plugin on this site"
+msgstr "License Key ble deaktivert for denne plugin på dette nettstedet"
+
+#: controllers/admin-options.controller.php:307
+#: controllers/admin-options.controller.php:310
+msgid "There was an issue deactivating the License Key"
+msgstr "Det var et problem å deaktivere License Key"
+
+#: controllers/admin-options.controller.php:325
+msgid "The API Key was Deactivated"
+msgstr "API Key ble Deaktivert"
+
+#: controllers/admin-options.controller.php:327
+msgid "There was an issue deactivating the API Key"
+msgstr "Det var et problem å deaktivere API-nøkkel"
+
+#: controllers/admin-options.controller.php:338
+msgid "The API Data was Reset"
+msgstr "API Data ble Tilbakestill"
+
+#: controllers/admin-options.controller.php:348
+msgid "There was an issue deactivating the Key"
+msgstr "Det var et problem å deaktivere Key"
+
+#: controllers/admin-options.controller.php:542
+msgid "Something went wrong, please try again"
+msgstr "Noe gikk galt, prøv igjen"
+
+#: controllers/admin-options.controller.php:559
+msgid "The user syncing process has been skipped"
+msgstr "Brukeren synkronisering prosessen har blitt hoppet over"
+
+#: controllers/admin-options.controller.php:608
+#: controllers/admin-options.controller.php:638
+#: controllers/admin-options.controller.php:668
+#: controllers/admin-options.controller.php:726
+#: controllers/admin-options.controller.php:782
+msgid "SETUP WIZARD"
+msgstr "Setup Wizard"
+
+#: controllers/admin-options.controller.php:608
+#, php-format
+msgid "Step 1 - %1$s Plugin License Key"
+msgstr "Trinn 1 - %1$s Plugin License Key"
+
+#: controllers/admin-options.controller.php:608
+#, php-format
+msgid "Please click here to %1$s set your %2$s Plugin License key %3$s"
+msgstr "Vennligst klikk her for å %1$s stille inn %2$s Plugin Lisensnøkkel %3$s"
+
+#: controllers/admin-options.controller.php:638
+msgid "Step 2 - MailChimp API Key"
+msgstr "Trinn 2 - MailChimp API Key"
+
+#: controllers/admin-options.controller.php:638
+#, php-format
+msgid "Please click here to %1$s set your MailChimp API key %2$s (%3$s What is this? %4$s)"
+msgstr "Vennligst klikk her for å %1$s sette MailChimp API-nøkkel %2$s ( %3$s Hva er dette? %4$s )"
+
+#: controllers/admin-options.controller.php:668
+msgid "Step 3 - Default Email List "
+msgstr "Trinn 3 - Standard e-postliste "
+
+#: controllers/admin-options.controller.php:668
+#, php-format
+msgid "Please click here to %1$s select a default MailChimp Email List %2$s"
+msgstr "Vennligst klikk her for å %1$s velge en standard MailChimp e-postliste %2$s"
+
+#: controllers/admin-options.controller.php:675
+#: controllers/admin-options.controller.php:731
+msgid "An Error Occurred"
+msgstr "En feil oppstod"
+
+#: controllers/admin-options.controller.php:726
+msgid "Step 4 - Merge Tags and User Syncing"
+msgstr "Trinn 4 - Merge Tags og User Synkronisering"
+
+#: controllers/admin-options.controller.php:726
+#, php-format
+msgid "Please click here to %1$s sync your Merge Tags and Users %2$s to your MailChimp Email List or %3$s skip this process %4$s"
+msgstr "Vennligst klikk her for å %1$s synkronisere Merge Tags og brukere %2$s til MailChimp e-postliste eller %3$s hoppe over denne prosessen %4$s"
+
+#: controllers/admin-options.controller.php:782
+msgid "Step 5 - MailChimp Event Webhooks"
+msgstr "Trinn 5 - MailChimp Hendelses Webhooks"
+
+#: controllers/admin-options.controller.php:782
+#, php-format
+msgid "Please click here to %1$s register the MailChimp webhooks %2$s for your site or %3$s skip this process (%4$s What is this? %5$s)"
+msgstr "Vennligst klikk her for å %1$s registrere MailChimp webhooks %2$s for nettstedet ditt eller %3$s hoppe over denne prosessen ( %4$s Hva er dette? %5$s )"
+
+#: controllers/debug-log.controller.php:36
+#, php-format
+msgid "%1$s Debug Log"
+msgstr "%1$s Debug Logg"
+
+#: controllers/debug-log.controller.php:40
+#, php-format
+msgid "DEBUGGING IS NOT CURRENTLY ENABLED. ENABLE DEBUG LOGGING %1$s HERE %2$s"
+msgstr "Feilsøking er for øyeblikket ikke aktivert. Aktiver feilsøkings LOGGE %1$s HER %2$s"
+
+#: controllers/debug-log.controller.php:124
+msgid "Submit Issue with Debug Log"
+msgstr "Send Issue med Debug Logg"
+
+#: controllers/debug-log.controller.php:125
+#, php-format
+msgid "Use the following form to submit an issue along with the debug log directly to the %1$s Team"
+msgstr "Bruk følgende skjema for å sende inn en sak sammen med debug log direkte til %1$s team"
+
+#: controllers/debug-log.controller.php:125
+msgid "View the Debug Log below"
+msgstr "Vise Debug Logg nedenfor"
+
+#: controllers/debug-log.controller.php:130
+msgid "Debug Log"
+msgstr "Debug Logg"
+
+#: controllers/debug-log.controller.php:133
+msgid "Clear Log"
+msgstr "Slett logg"
+
+#: controllers/debug-log.controller.php:157
+msgid "Issue Description"
+msgstr "Beskrivelse av problemet"
+
+#: controllers/debug-log.controller.php:161
+#, php-format
+msgid "Provide a description, as detailed as possible, about: %1$s What you were doing before the issue happened %2$s and %3$s What happened when the issue occured %4$s"
+msgstr "Gi en beskrivelse, så detaljert som mulig, om: %1$s Hva du gjorde før problemet skjedde %2$s og %3$s Hva skjedde da problemet oppstod %4$s"
+
+#: controllers/debug-log.controller.php:163
+#: controllers/debug-log.controller.php:314
+msgid "Please provide an issue description"
+msgstr "Vennligst gi et problem beskrivelse"
+
+#: controllers/debug-log.controller.php:164
+msgid "Please provide a useful issue description"
+msgstr "Vennligst gi en nyttig sak beskrivelse"
+
+#: controllers/debug-log.controller.php:170
+msgid "Issue Priority"
+msgstr "Problemet Priority"
+
+#: controllers/debug-log.controller.php:174
+msgid "Please be gentle with this"
+msgstr "Vær forsiktig med dette"
+
+#: controllers/debug-log.controller.php:184
+#: controllers/email-campaign-cpt.controller.php:687
+msgid "From Name"
+msgstr "Fra navn"
+
+#: controllers/debug-log.controller.php:188
+msgid "Your name"
+msgstr "Ditt navn"
+
+#: controllers/debug-log.controller.php:195
+#: controllers/email-campaign-cpt.controller.php:696
+msgid "From Email"
+msgstr "Fra e-post"
+
+#: controllers/debug-log.controller.php:199
+msgid "The email address for us to reply to"
+msgstr "Epostadressen for oss å svare på"
+
+#: controllers/debug-log.controller.php:201
+#: controllers/debug-log.controller.php:318
+msgid "Please provide an email address for us to reply to"
+msgstr "Vennligst oppgi en e-postadresse for oss å svare på"
+
+#: controllers/debug-log.controller.php:202
+#: controllers/debug-log.controller.php:321
+msgid "Please provide a valid email address for us to reply to"
+msgstr "Vennligst oppgi en gyldig e-postadresse for oss å svare på"
+
+#: controllers/debug-log.controller.php:216
+#: controllers/debug-log.controller.php:227
+msgid "Submit Issue and Debug Log"
+msgstr "Send Issue og Debug Logg"
+
+#: controllers/debug-log.controller.php:272
+msgid "ERROR LOADING DEBUG LOG"
+msgstr "ERROR LOADING DEBUG LOG"
+
+#: controllers/email-campaign-cpt.controller.php:111
+msgid "Choose a List Segment"
+msgstr "Velg en liste Segment"
+
+#: controllers/email-campaign-cpt.controller.php:115
+msgid "To send to an existing saved list segment, select it from the choices above"
+msgstr "Å sende til en eksisterende lagret liste segmentet, velger du den fra valgene ovenfor"
+
+#: controllers/email-campaign-cpt.controller.php:182
+msgid "Please provide a valid Test Email"
+msgstr "Vennligst oppgi en gyldig Test Email"
+
+#: controllers/email-campaign-cpt.controller.php:191
+msgid "Please provide a valid Campaign Name"
+msgstr "Vennligst oppgi en gyldig Kampanjenavn"
+
+#: controllers/email-campaign-cpt.controller.php:195
+msgid "The message portion of your email is empty"
+msgstr "Meldingsdelen av e-posten er tom"
+
+#: controllers/email-campaign-cpt.controller.php:200
+msgid "Please provide a valid Email Subject"
+msgstr "Vennligst oppgi en gyldig e-post Subject"
+
+#: controllers/email-campaign-cpt.controller.php:201
+msgid "Please select a Subscriber List"
+msgstr "Vennligst velg en abonnent listen"
+
+#: controllers/email-campaign-cpt.controller.php:202
+msgid "Please provide a valid From Email"
+msgstr "Vennligst oppgi en gyldig Fra e-post"
+
+#: controllers/email-campaign-cpt.controller.php:203
+msgid "Please provide a From Name"
+msgstr "Vennligst gi et Fra navn"
+
+#: controllers/email-campaign-cpt.controller.php:350
+msgid "The Email Campaign was successfully saved!"
+msgstr "E-post-kampanje ble lagret!"
+
+#: controllers/email-campaign-cpt.controller.php:362
+#, php-format
+msgid "There was an error creating the Email Campaign (%1$s)"
+msgstr "Det oppsto en feil under opprettelsen av postkampanjen ( %1$s )"
+
+#: controllers/email-campaign-cpt.controller.php:431
+msgid "The Test Email was successfully sent!"
+msgstr "Test E-post ble vellykket sendt!"
+
+#: controllers/email-campaign-cpt.controller.php:453
+msgid "The Email Campaign was successfully sent!"
+msgstr "E-post-kampanje ble vellykket sendt!"
+
+#: controllers/email-campaign-cpt.controller.php:567
+msgid "The Campaign appears to be ready!"
+msgstr "Kampanje ser ut til å være klar!"
+
+#: controllers/email-campaign-cpt.controller.php:583
+msgid "MailChimp Email Campaign"
+msgstr "MailChimp postkampanjen"
+
+#: controllers/email-campaign-cpt.controller.php:584
+msgid "MailChimp Email Campaigns"
+msgstr "MailChimp e-postkampanjer"
+
+#: controllers/email-campaign-cpt.controller.php:593
+msgid "Campaign Name"
+msgstr "Kampanjenavn"
+
+#: controllers/email-campaign-cpt.controller.php:600
+msgid "Email Categories"
+msgstr "E-post Kategorier"
+
+#: controllers/email-campaign-cpt.controller.php:602
+#: controllers/email-campaign-cpt.controller.php:850
+msgid "Email Category"
+msgstr "E-post Kategori"
+
+#: controllers/email-campaign-cpt.controller.php:603
+msgid "Add New Email Category"
+msgstr "Legg til ny e-post kategori"
+
+#: controllers/email-campaign-cpt.controller.php:618
+#: controllers/email-campaign-cpt.controller.php:848
+msgid "Email Subject"
+msgstr "E-post Subject"
+
+#: controllers/email-campaign-cpt.controller.php:628
+msgid "Email Subject Line"
+msgstr "E emnefeltet"
+
+#: controllers/email-campaign-cpt.controller.php:637
+msgid "Email Recipients"
+msgstr "E-postmottakere"
+
+#: controllers/email-campaign-cpt.controller.php:644
+msgid "Choose a List"
+msgstr "Velg en liste"
+
+#: controllers/email-campaign-cpt.controller.php:680
+msgid "Email Sending Options"
+msgstr "E-post Sending Options"
+
+#: controllers/email-campaign-cpt.controller.php:705
+msgid "To Name"
+msgstr "Til Navn"
+
+#: controllers/email-campaign-cpt.controller.php:721
+msgid "Email Template"
+msgstr "E-post Mal"
+
+#: controllers/email-campaign-cpt.controller.php:728
+msgid "Your Saved Templates"
+msgstr "Dine lagrede maler"
+
+#: controllers/email-campaign-cpt.controller.php:741
+msgid "MailChimp Templates"
+msgstr "MailChimp Maler"
+
+#: controllers/email-campaign-cpt.controller.php:771
+msgid "Email Test and Send"
+msgstr "Email Test og Send"
+
+#: controllers/email-campaign-cpt.controller.php:784
+msgid "Save as Draft"
+msgstr "Lagre som utkast"
+
+#: controllers/email-campaign-cpt.controller.php:791
+msgid "Save Draft"
+msgstr "Lagre Draft"
+
+#: controllers/email-campaign-cpt.controller.php:796
+msgid "Enter an Email Address to Send a Test To"
+msgstr "Skriv inn en e-postadresse for å sende en test for å"
+
+#: controllers/email-campaign-cpt.controller.php:807
+msgid "Send Test Email"
+msgstr "Send Test E-post"
+
+#: controllers/email-campaign-cpt.controller.php:814
+msgid "Send Test"
+msgstr "Send Test"
+
+#: controllers/email-campaign-cpt.controller.php:819
+msgid "Send Email to All Selected Subscribers"
+msgstr "Send e-post til alle valgte Abonnenter"
+
+#: controllers/email-campaign-cpt.controller.php:827
+msgid "Send Email Now!"
+msgstr "Send e-post nå!"
+
+#: controllers/email-campaign-cpt.controller.php:849
+msgid "Date Sent"
+msgstr "Dato Sendte"
+
+#: controllers/email-campaign-cpt.controller.php:851
+msgid "# Subscribers"
+msgstr "# Abonnenter"
+
+#: controllers/email-campaign-cpt.controller.php:852
+msgid "Opens"
+msgstr "Åpner"
+
+#: controllers/email-campaign-cpt.controller.php:853
+msgid "Bounces"
+msgstr "Spretter"
+
+#: controllers/email-campaign-cpt.controller.php:854
+msgid "Clicks"
+msgstr "Klikk"
+
+#: controllers/email-campaign-cpt.controller.php:898
+msgid "Unpublished"
+msgstr "Upublisert"
+
+#: controllers/email-campaign-cpt.controller.php:901
+msgid "Y/m/d g:i:s A"
+msgstr "Y / m / dg: i: s A"
+
+#: controllers/email-campaign-cpt.controller.php:908
+#, php-format
+msgid "%1$s ago"
+msgstr "%1$s siden"
+
+#: controllers/email-campaign-cpt.controller.php:910
+msgid "m/d/Y"
+msgstr "m / d / Y"
+
+#: controllers/email-campaign-cpt.controller.php:919
+msgid "Sent"
+msgstr "Sendte"
+
+#: controllers/email-campaign-cpt.controller.php:922
+msgid "Missed schedule"
+msgstr "Tapte tidsplan"
+
+#: controllers/email-campaign-cpt.controller.php:924
+msgid "Scheduled"
+msgstr "Planlagt"
+
+#: controllers/email-campaign-cpt.controller.php:927
+msgid "Last Modified"
+msgstr "Sist endret"
+
+#: controllers/list-groups.controller.php:39
+#, php-format
+msgid "%s Lists"
+msgstr "%s Lister"
+
+#: controllers/list-groups.controller.php:186
+#: controllers/user-lists.controller.php:497
+msgid "Merge Tag"
+msgstr "Fusjonere Tag"
+
+#: controllers/list-groups.controller.php:186
+#: controllers/user-lists.controller.php:497
+msgid "Field Type"
+msgstr "Felttype"
+
+#: controllers/list-groups.controller.php:186
+#: controllers/user-lists.controller.php:497
+msgid "Source"
+msgstr "Kilde"
+
+#: controllers/list-groups.controller.php:241
+#: controllers/user-lists.controller.php:554
+msgid "The Merge Tag was Deactivated"
+msgstr "Flett Tag ble Deaktivert"
+
+#: controllers/list-groups.controller.php:248
+#: controllers/user-lists.controller.php:561
+msgid "The Merge Tag was Activated"
+msgstr "Flett Tag ble Aktivert"
+
+#: controllers/list-groups.controller.php:272
+msgid "The Merge Tag was updated in MailChimp"
+msgstr "Flett Tag ble oppdatert i MailChimp"
+
+#: controllers/list-groups.controller.php:276
+msgid "The Merge Tag was added to MailChimp"
+msgstr "Flett Tag ble lagt til MailChimp"
+
+#: controllers/list-groups.controller.php:282
+#: controllers/list-groups.controller.php:286
+#: controllers/user-lists.controller.php:595
+#: controllers/user-lists.controller.php:603
+msgid "Error Processing Merge Tag"
+msgstr "Feil Processing Merge Tag"
+
+#: controllers/subscribe-widget.controller.php:47
+#, php-format
+msgid "%1$s Widget Description"
+msgstr "%1$s Widget Beskrivelse"
+
+#: controllers/subscribe-widget.controller.php:186
+#, php-format
+msgid "%1$s Subscribe"
+msgstr "%1$s Abonner"
+
+#: controllers/subscribe-widget.controller.php:190
+msgid "Email List Subscribe Form"
+msgstr "Email List Abonner Form"
+
+#: controllers/subscribe-widget.controller.php:226
+msgid "Title"
+msgstr "Tittel"
+
+#: controllers/subscribe-widget.controller.php:235
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: controllers/subscribe-widget.controller.php:241
+msgid "Register new Subscribers as new WordPress Users"
+msgstr "Registrere nye abonnenter som nye WordPress Brukere"
+
+#: controllers/subscribe-widget.controller.php:267
+msgid "Select a List"
+msgstr "Velg en liste"
+
+#: controllers/subscribe-widget.controller.php:283
+msgid "No Interest Group"
+msgstr "Ingen Interest Group"
+
+#: controllers/subscribe-widget.controller.php:293
+msgid "Select an Interest Grouping"
+msgstr "Velg en foretaksgruppe"
+
+#: controllers/subscribe-widget.controller.php:333
+msgid "Select Merge Tags"
+msgstr "Velg Integrer Tags"
+
+#: controllers/subscribe-widget.controller.php:515
+msgid "Email"
+msgstr "E-post"
+
+#: controllers/subscribe-widget.controller.php:517
+msgid "The email is invalid, please provide a valid email."
+msgstr "E-posten er ugyldig, må du oppgi en gyldig e-post."
+
+#: controllers/subscribe-widget.controller.php:518
+msgid "Please provide a valid email."
+msgstr "Vennligst oppgi en gyldig e-post."
+
+#: controllers/subscribe-widget.controller.php:546
+msgid "Please fill in a"
+msgstr "Fyll ut en"
+
+#: controllers/subscribe-widget.controller.php:641
+msgid "Subscribe"
+msgstr "Abonner"
+
+#: controllers/subscribe-widget.controller.php:667
+msgid "Please configure widget"
+msgstr "Vennligst konfigurere widget"
+
+#: controllers/subscribe-widget.controller.php:844
+msgid "Invalid Email"
+msgstr "Ugyldig E-post"
+
+#: controllers/subscribe-widget.controller.php:855
+msgid "Invalid Value"
+msgstr "Ugyldig verdi"
+
+#: controllers/subscribe-widget.controller.php:965
+#: controllers/subscribe-widget.controller.php:977
+#: controllers/subscribe-widget.controller.php:987
+#: controllers/subscribe-widget.controller.php:1029
+#: controllers/subscribe-widget.controller.php:1036
+msgid "There was an error subscribing you. Please contact the site administrator for assistance."
+msgstr "Det oppstod en feil ved å abonnere deg. Ta kontakt med nettstedets administrator for å få hjelp."
+
+#: controllers/subscribe-widget.controller.php:999
+msgid "This email is already subscribed"
+msgstr "Denne e-posten er allerede abonnerer"
+
+#: controllers/subscribe-widget.controller.php:1053
+msgid "Thank you for subscribing!"
+msgstr "Takk for at du abonnerer!"
+
+#: controllers/user-lists.controller.php:43
+#, php-format
+msgid "%1$s Lists"
+msgstr "%1$s Lister"
+
+#: controllers/user-lists.controller.php:97
+msgid "Indicates a matching Merge Tag in MailChimp"
+msgstr "Indikerer en matchende Merge Tag i MailChimp"
+
+#: controllers/user-lists.controller.php:107
+msgid "Active"
+msgstr "Aktiv"
+
+#: controllers/user-lists.controller.php:107
+msgid "Merge Tags that will be synced with MailChimp"
+msgstr "Fusjonere tagger som vil bli synkronisert med MailChimp"
+
+#: controllers/user-lists.controller.php:108
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: controllers/user-lists.controller.php:108
+msgid "Merge Tags that will not be synced with MailChimp"
+msgstr "Fusjonere tagger som ikke vil bli synkronisert med MailChimp"
+
+#: controllers/user-lists.controller.php:109
+msgid "Unused"
+msgstr "Ubrukt"
+
+#: controllers/user-lists.controller.php:109
+msgid "Merge Tags that are currently unavailable for syncing to MailChimp"
+msgstr "Fusjonere tagger som ikke er tilgjengelige for synkronisering til MailChimp"
+
+#: controllers/user-lists.controller.php:114
+msgid "No MailChimp Email Lists found!"
+msgstr "Ingen MailChimp E-postlister funnet!"
+
+#: controllers/user-lists.controller.php:128
+msgid "Select User Role"
+msgstr "Velg Bruker Rolle"
+
+#: controllers/user-lists.controller.php:156
+msgid "SYNC NOW"
+msgstr "SYNC NÅ"
+
+#: controllers/user-lists.controller.php:160
+msgid "Error Loading User Roles"
+msgstr "Feil ved lasting av brukerroller"
+
+#: controllers/user-lists.controller.php:163
+msgid "Error Loading Sync Button"
+msgstr "Feil Laster Sync Button"
+
+#: controllers/user-lists.controller.php:167
+msgid "Batch Update"
+msgstr "Batch Update"
+
+#: controllers/user-lists.controller.php:179
+msgid "Please select a User Role"
+msgstr "Vennligst velg en Brukerrolle"
+
+#: controllers/user-lists.controller.php:586
+msgid "The Merge Tag was Updated in MailChimp"
+msgstr "Flett Tag ble oppdatert i MailChimp"
+
+#: controllers/user-lists.controller.php:590
+msgid "The Merge Tag was Added to MailChimp"
+msgstr "Flett merket ble lagt til MailChimp"
+
+#: controllers/user-lists.controller.php:629
+msgid "First Name"
+msgstr "Fornavn"
+
+#: controllers/user-lists.controller.php:634
+msgid "Last Name"
+msgstr "Etternavn"
+
+#: controllers/user-lists.controller.php:639
+msgid "Nickname"
+msgstr "Kallenavn"
+
+#: controllers/user-lists.controller.php:644
+msgid "User Role"
+msgstr "Brukerrolle"
+
+#: controllers/user-lists.controller.php:822
+#, php-format
+msgid "The user's email (%1$s) was successfully subscribed to the '%2$s' MailChimp list."
+msgstr "Brukerens e-post ( %1$s ) ble nå påmeldt til ' %2$s 'MailChimp liste."
+
+#: controllers/user-lists.controller.php:829
+#: controllers/user-lists.controller.php:1058
+#, php-format
+msgid "%1$s is already subscribed to the '%2$s' MailChimp list."
+msgstr "%1$s er allerede abonnerer på « %2$s 'MailChimp liste."
+
+#: controllers/user-lists.controller.php:832
+#, php-format
+msgid "There was an error subscribing the user's email (%1$s) to the '%2$s' MailChimp list."
+msgstr "Det var en feil å abonnere brukerens e-post ( %1$s ) til ' %2$s 'MailChimp liste."
+
+#: controllers/user-lists.controller.php:928
+#, php-format
+msgid "The user's email (%1$s) was successfully unsubscribed from the '%2$s' MailChimp list."
+msgstr "Brukerens e-post ( %1$s ) var avsluttet abonnementet fra ' %2$s 'MailChimp liste."
+
+#: controllers/user-lists.controller.php:934
+msgid "There was a generic error during the unsubscribe process"
+msgstr "Det var en generisk feil under unsubscribe prosessen"
+
+#: controllers/user-lists.controller.php:1051
+#, php-format
+msgid "The user (%1$s) was successfully updated in the '%2$s' MailChimp list."
+msgstr "Brukeren ( %1$s ) ble oppdatert i ' %2$s 'MailChimp liste."
+
+#: controllers/user-lists.controller.php:1061
+#, php-format
+msgid "There was an error updating the user (%1$s) in the '%2$s' MailChimp list."
+msgstr "Det oppsto en feil under oppdatering brukeren ( %1$s ) i ' %2$s 'MailChimp liste."
+
+#: controllers/webhooks.controller.php:168
+msgid "The webhook registration process has been skipped"
+msgstr "Den webhook registreringsprosessen har blitt hoppet over"
+
+#: controllers/webhooks.controller.php:205
+msgid "The webhooks were successfully registered!"
+msgstr "De webhooks ble registrert!"
+
+#: controllers/webhooks.controller.php:210
+msgid "Although it is inadvisable, you may also choose to"
+msgstr "Selv om det er utilrådelig, kan du også velge å"
+
+#: controllers/webhooks.controller.php:210
+msgid "skip this process"
+msgstr "hoppe over denne prosessen"
+
+#: controllers/webhooks.controller.php:210
+msgid "What is this?"
+msgstr "Hva er dette?"
+
+#: controllers/webhooks.controller.php:221
+#: controllers/webhooks.controller.php:237
+msgid "An error occured attempting to register the MailChimp Webhooks."
+msgstr "Det oppstod en feil å forsøke å registrere MailChimp Webhooks."
+
+#: controllers/webhooks.controller.php:222
+#: controllers/webhooks.controller.php:238
+#, php-format
+msgid "Please refer to the %1$s debug %2$s logs for more information."
+msgstr "Vennligst referer til %1$s debug %2$s logger for mer informasjon."
+
+#: controllers/webhooks.controller.php:222
+#: controllers/webhooks.controller.php:238
+#, php-format
+msgid "For additional information about this issue, enable debugging %1$s here %2$s and attempt the webhook registration again."
+msgstr "For ytterligere informasjon om dette problemet, aktiverer debugging %1$s her %2$s og forsøke webhook registrering igjen."
+
+#: forms/admin-options.form.php:23
+msgid "MailChimp Account Settings"
+msgstr "MailChimp kontoinnstillinger"
+
+#: forms/admin-options.form.php:34
+msgid "Plugin License Key"
+msgstr "Plugin License Key"
+
+#: forms/admin-options.form.php:36
+msgid "The license key that was emailed to you"
+msgstr "Lisensnøkkelen som ble sendt til deg"
+
+#: forms/admin-options.form.php:38
+msgid "Invalid License Key. The key must be at least 32 characters"
+msgstr "Ugyldig License Key. Nøkkelen må være minst 32 tegn"
+
+#: forms/admin-options.form.php:39
+msgid "Invalid License Key. The key cannot be greater than 36 characters"
+msgstr "Ugyldig License Key. Nøkkelen kan ikke være større enn 36 tegn"
+
+#: forms/admin-options.form.php:48
+msgid "MailChimp API Key"
+msgstr "MailChimp API Key"
+
+#: forms/admin-options.form.php:50
+#, php-format
+msgid "You can find this key by %1$s logging into your MailChimp account %2$s and then going %3$s here %4$s. %5$s (What is a MailChimp API Key?) %6$s"
+msgstr "Du kan finne denne nøkkelen ved %1$s logging inn dine MailChimp konto %2$s og deretter går %3$s her %4$s . %5$s (Hva er en MailChimp API Key?) %6$s"
+
+#: forms/admin-options.form.php:52
+msgid "Invalid MailChimp API Key. The key must be at least 32 characters"
+msgstr "Ugyldig MailChimp API-nøkkel. Nøkkelen må være minst 32 tegn"
+
+#: forms/admin-options.form.php:53
+msgid "Invalid MailChimp API Key. The key cannot be greater than 36 characters"
+msgstr "Ugyldig MailChimp API-nøkkel. Nøkkelen kan ikke være større enn 36 tegn"
+
+#: forms/admin-options.form.php:70
+msgid "Select the Default Mailing List"
+msgstr "Velg Standard mailingliste"
+
+#: forms/admin-options.form.php:72
+msgid "New members will be automatically added to this list"
+msgstr "Nye medlemmer vil bli automatisk lagt til i denne listen"
+
+#: forms/admin-options.form.php:80
+#: library/framework/integral-plugin-form.class.php:230
+msgid "Submit"
+msgstr "Send inn"
+
+#: forms/admin-options.form.php:88
+msgid "Clears all cached data in the system. This happens every hour anyway, but is useful when MailChimp List changes have occurred recently."
+msgstr "Sletter alle bufrede data i systemet. Dette skjer hver time uansett, men er nyttig når MailChimp List endringer har skjedd nylig."
+
+#: forms/admin-options.form.php:89
+msgid "Reset API Data"
+msgstr "Tilbakestill API data"
+
+#: forms/admin-options.form.php:97
+#, php-format
+msgid "Registers the API Webhooks with MailChimp. %1$s (What is this?) %2$s"
+msgstr "Registrerer API Webhooks med MailChimp. %1$s (Hva er dette?) %2$s"
+
+#: forms/admin-options.form.php:98
+msgid "Register Webhooks"
+msgstr "Registrer Webhooks"
+
+#: forms/admin-options.form.php:105
+msgid "Turn on debugging mode"
+msgstr "Slå på feilsøking modus"
+
+#: forms/admin-options.form.php:106
+#, php-format
+msgid "Enabling debug mode will write errors and some useful status info regarding the MailChimp API requests to two places: %1$s 1) A log file in %2$s (or on a multi-site install, %3$s ); and %4$s 2) The Chrome browser console. (Note: You will need the Chrome Logger extension to view the log)"
+msgstr "Aktivering av debug-modus vil skrive feil og noen nyttige status info angående MailChimp API-forespørsler til to steder: %1$s 1) En loggfil i %2$s (eller på et multi-site installere, %3$s ); og %4$s 2) The Chrome nettleseren konsoll. (Merk: Du trenger Chrome Logger forlengelse for å se logg)"
+
+#: forms/admin-options.form.php:120
+msgid "General Options"
+msgstr "Generelle alternativer"
+
+#: forms/admin-options.form.php:125
+msgid "Setup"
+msgstr "Setup"
+
+#: forms/admin-options.form.php:130
+msgid "Debug Options"
+msgstr "Debug Alternativer"
+
+#: forms/admin-options.form.php:143
+msgid "Deactivate License"
+msgstr "Deaktiver License"
+
+#: forms/admin-options.form.php:147
+msgid "Deactivate API Key"
+msgstr "Deaktiver API-nøkkel"
+
+#: library/framework/integral-plugin-cpt.class.php:397
+msgid "Duplicate this item"
+msgstr "Duplisere dette elementet"
+
+#: library/framework/integral-plugin-cpt.class.php:397
+msgid "Duplicate"
+msgstr "Duplisere"
+
+#: library/framework/integral-plugin-cpt.class.php:435
+msgid "Missing Post ID"
+msgstr "Mangler Post ID"
+
+#: library/framework/integral-plugin-cpt.class.php:498
+msgid "Could not create new post, original post not found: "
+msgstr "Klarte ikke å lage nytt innlegg, opprinnelige innlegget ikke funnet: "
+
+#: library/framework/integral-plugin-logger.class.php:40
+#: library/framework/integral-plugin-master.class.php:26
+#, php-format
+msgid "%1$s is a singleton class. Creating a second instance is prohibited."
+msgstr "%1$s er en enkelt klasse. Opprette en ny forekomst er forbudt."
+
+#: library/framework/integral-plugin-master.class.php:110
+#, php-format
+msgid "You must update to at least WordPress version %1$s to use this version of the %2$s plugin!"
+msgstr "Du må oppdatere til minst WordPress versjon %1$s for å bruke denne versjonen av %2$s plugin!"
+
+#: library/utility/integral-edd-updater.utility.php:165
+#, php-format
+msgid "There is a new version of %1$s available. %2$s View version %3$s details %4$s."
+msgstr "Det er en ny versjon av %1$s tilgjengelig. %2$s Vis versjon %3$s detaljer %4$s ."
+
+#: library/utility/integral-edd-updater.utility.php:169
+#, php-format
+msgid "There is a new version of %1$s available. %2$s View version %3$s details %4$s or %5$s update now %6$s."
+msgstr "Det er en ny versjon av %1$s tilgjengelig. %2$s Vis versjon %3$s detaljer %4$s eller %5$s oppdatere nå %6$s ."
+
+#: library/utility/integral-edd-updater.utility.php:313
+msgid "You do not have permission to install plugin updates"
+msgstr "Du har ikke tillatelse til å installere plugin oppdateringer"
+
+#: library/utility/integral-edd-updater.utility.php:313
+msgid "Error"
+msgstr "Feil"
+
+#: library/utility/integral-mailchimp-api.utility.php:540
+msgid "Invalid_Template"
+msgstr "Invalid_Template"
+
+#: library/utility/integral-mailchimp-api.utility.php:541
+msgid "Invalid Template ID provided"
+msgstr "Ugyldig Mal ID gitt"
+
+#: library/utility/integral-mailchimp-api.utility.php:601
+msgid "A generic system error occured!"
+msgstr "Et generisk system feil oppstod!"
+
+#: library/utility/integral-mailchimp-base.utility.php:31
+msgid "Must preload Integral_MailChimp_API class"
+msgstr "Må preload Integral_MailChimp_API klasse"
+
+#: library/utility/integral-mailchimp-campaigns.utility.php:50
+msgid "Missing 1 of these required options (list_id, subject, from_email, to_name)"
+msgstr "Mangler en av disse nødvendige alternativer (list_id, emne, FROM_EMAIL, TO_NAME)"
+
+#: library/utility/integral-mailchimp-campaigns.utility.php:56
+msgid "Please provide only 1 of these content fields (html, sections, text, url, archive)"
+msgstr "Vennligst oppgi bare en av disse innholds felt (html, seksjoner, tekst, url, arkiv)"
+
+#: library/utility/integral-mailchimp-lists.utility.php:44
+msgid "recipients"
+msgstr "mottakere"
+
+#: library/utility/integral-mailchimp-lists.utility.php:340
+#, php-format
+msgid "There was a problem loading the segments for this list (%1$s)."
+msgstr "Det var et problem med å laste segmentene for denne listen ( %1$s )."
+
+#: library/utility/integral-mailchimp-lists.utility.php:487
+msgid "subscribers"
+msgstr "abonnenter"
+
+#: library/utility/integral-mailchimp-lists.utility.php:523
+#, php-format
+msgid "Interest Groups have not been enabled for this list (%1$s)."
+msgstr "Interessegrupper har ikke blitt aktivert for denne listen ( %1$s )."
+
+#: library/utility/integral-mailchimp-lists.utility.php:767
+#, php-format
+msgid "MailChimp was unable to validate the URL that was provided (%1$s). Please confirm that the url is live and available to the web."
+msgstr "MailChimp var ute av stand til å validere nettadressen som ble levert ( %1$s ). Vennligst bekreft at url er levende og tilgjengelig på Internett."
+
+#: library/utility/integral-tools.utility.php:145
+msgid "Invalid File Path Provided"
+msgstr "Ugyldig Filbane Forut"
+
+#: library/utility/integral-tools.utility.php:427
+msgid "Invalid Permissions."
+msgstr "Ugyldige Tillatelser."
+
+#: views/forms/admin-options.phtml:10
+msgid "Are you sure you want to deactivate the License Key for this plugin on this site?"
+msgstr "Er du sikker på at du ønsker å deaktivere lisensnøkkelen for denne plugin på dette området?"
+
+#: views/forms/admin-options.phtml:11 views/forms/admin-options.phtml:14
+msgid "Continue Deactivation"
+msgstr "Fortsett Deaktivering"
+
+#: views/forms/admin-options.phtml:13
+msgid "Are you sure you want to deactivate the API Key?"
+msgstr "Er du sikker på at du ønsker å deaktivere API-nøkkel?"
+
+#: views/forms/admin-options.phtml:16
+msgid "Are you sure you want to reset all API data?"
+msgstr "Er du sikker på at du vil tilbakestille alle API-data?"
+
+#: views/forms/admin-options.phtml:17
+msgid "Continue Data Reset"
+msgstr "Fortsett data Reset"
+
+#: views/forms/admin-options.phtml:19
+msgid "Are you sure you want to register the API webhooks with MailChimp?"
+msgstr "Er du sikker på at du vil registrere API webhooks med MailChimp?"
+
+#: views/forms/admin-options.phtml:20
+msgid "Continue Webhook Registration"
+msgstr "Fortsett Webhook Registrering"
+
+#: views/forms/admin-options.phtml:22
+msgid "Please Confirm"
+msgstr "Vennligst Bekreft"
+
+#: views/forms/admin-options.phtml:23
+msgid "Cancel"
+msgstr "Avbryt"
+

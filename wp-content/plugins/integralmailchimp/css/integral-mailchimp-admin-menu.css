@@ -1,0 +1,174 @@
+
+/*********************************************** Admin Menu */
+ul > li > ul > li div.separator {
+    background-color: #555555;
+    margin: 5px auto;
+    width: 90%;
+}
+
+/********************************************* Setup Wizard */
+.imc-setup-wizard.update-nag {
+    border-left: 4px solid #ffba00 !important;
+}
+
+.imc-setup-wizard h3 {
+    margin-bottom: 20px;
+    margin-top: 0px;
+    font-size: 24px;
+}
+
+.imc-setup-wizard h3:before {
+    content: "\f111";
+    color: #555;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    margin-top: 1px;
+    font-size: 24px;
+    line-height: 1;
+    font-family: dashicons;
+    text-decoration: inherit;
+    font-weight: 400;
+    font-style: normal;
+    vertical-align: top;
+    text-align: center;
+    -webkit-transition: color .1s ease-in 0;
+    transition: color .1s ease-in 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.imc-setup-wizard h4 {    
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+.imc-setup-wizard h5 {
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.imc-setup-wizard h5:after {
+    content: "\f345";
+    font-family: dashicons;
+    font-size: 14px;
+    line-height: 1;
+    display: inline-block;
+    vertical-align: middle;
+    height: 16px;
+}
+
+.imc-setup-wizard .wizard-message {
+    margin-left: 20px;
+    font-size: 14px;
+}
+
+.imc-setup-wizard .wizard-message p {
+    font-size: 14px;
+}
+
+.imc-setup-wizard .wizard-message p a {
+    text-decoration: none;
+}
+
+
+
+/********************************************* Widget Page */
+.imc-widget-config-wrapper .imc-widget-form-item {
+    padding: 15px;
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.imc-widget-config-wrapper .imc-widget-form-item li {
+    margin-left: 20px;
+}
+
+.imc-widget-config-wrapper {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.imc-widget-config-wrapper .imc-widget-form-item label {
+    margin: 0 10px 0 0;
+}
+
+.imc-widget-config-wrapper .imc-widget-form-item input[type=checkbox] {
+    margin-right: 10px;
+}
+
+.imc-widget-config-wrapper .imc-widget-form-item.imc-widget-select-mergetags label:first-child {
+    margin-bottom: 15px;
+}
+
+.imc-widget-config-wrapper .imc-widget-form-item.well > li:first-child {
+    margin-left: 0px;
+}
+
+.imc-subscribe-widget-wrapper {
+    -webkit-animation: glow 800ms ease-out infinite alternate;
+    -moz-animation: glow 800ms ease-out infinite alternate;
+    -o-animation: glow 800ms ease-out infinite alternate;
+    -ms-animation: glow 800ms ease-out infinite alternate;
+    animation: glow 800ms ease-out infinite alternate;
+    border-color: #393;
+}
+
+/********************************************** Glow Effect */
+
+@-webkit-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 0px rgba(0,255,0,.2), inset 0 0 0px rgba(0,255,0,.1), 0 0px 0 #000;
+    }	
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 0px rgba(0,255,0,.4), 0 0px 0 #000;
+    }
+}
+
+@-moz-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 0px rgba(0,255,0,.2), inset 0 0 0px rgba(0,255,0,.1), 0 0px 0 #000;
+    }	
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 0px rgba(0,255,0,.4), 0 0px 0 #000;
+    }
+}
+
+@-o-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 0px rgba(0,255,0,.2), inset 0 0 0px rgba(0,255,0,.1), 0 0px 0 #000;
+    }	
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 0px rgba(0,255,0,.4), 0 0px 0 #000;
+    }
+}
+
+@-ms-keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 0px rgba(0,255,0,.2), inset 0 0 0px rgba(0,255,0,.1), 0 0px 0 #000;
+    }	
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 0px rgba(0,255,0,.4), 0 0px 0 #000;
+    }
+}
+
+@keyframes glow {
+    0% {
+        border-color: #393;
+        box-shadow: 0 0 0px rgba(0,255,0,.2), inset 0 0 0px rgba(0,255,0,.1), 0 0px 0 #000;
+    }	
+    100% {
+        border-color: #6f6;
+        box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 0px rgba(0,255,0,.4), 0 0px 0 #000;
+    }
+}

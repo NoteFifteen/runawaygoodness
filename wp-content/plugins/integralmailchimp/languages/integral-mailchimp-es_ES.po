@@ -1,0 +1,957 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Integral MailChimp\n"
+"POT-Creation-Date: 2015-02-19 19:37-0800\n"
+"PO-Revision-Date: 2015-03-18 16:07-0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.5\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: controllers/admin-options.controller.php:185
+msgid "Invalid Submission"
+msgstr "Presentación válida"
+
+#: controllers/admin-options.controller.php:205
+msgid "Invalid License Key provided"
+msgstr "Clave de licencia no válida proporcionado"
+
+#: controllers/admin-options.controller.php:211
+#: controllers/admin-options.controller.php:214
+msgid "Error trying to activate the License Key provided"
+msgstr "Error al intentar activar la clave de licencia proporcionada"
+
+#: controllers/admin-options.controller.php:237
+msgid "Error trying to save the MailChimp API Key, please try again."
+msgstr "Error tratando de salvar la clave de API de MailChimp, por favor vuelva a intentarlo."
+
+#: controllers/admin-options.controller.php:240
+msgid "That MailChimp API Key appears to be invalid."
+msgstr "Esa clave MailChimp API no parece ser válida."
+
+#: controllers/admin-options.controller.php:269
+msgid "The settings have been updated"
+msgstr "La configuración se ha actualizado"
+
+#: controllers/admin-options.controller.php:305
+msgid "The License Key was Deactivated for this plugin on this site"
+msgstr "La clave de licencia fue desactivado para este plugin en este sitio"
+
+#: controllers/admin-options.controller.php:307
+#: controllers/admin-options.controller.php:310
+msgid "There was an issue deactivating the License Key"
+msgstr "Había un problema desactivando la clave de licencia"
+
+#: controllers/admin-options.controller.php:325
+msgid "The API Key was Deactivated"
+msgstr "La clave de API fue desactivado"
+
+#: controllers/admin-options.controller.php:327
+msgid "There was an issue deactivating the API Key"
+msgstr "Había un problema desactivando la clave de API"
+
+#: controllers/admin-options.controller.php:338
+msgid "The API Data was Reset"
+msgstr "El API de datos fue Restablecer"
+
+#: controllers/admin-options.controller.php:348
+msgid "There was an issue deactivating the Key"
+msgstr "Había un problema desactivando la tecla"
+
+#: controllers/admin-options.controller.php:542
+msgid "Something went wrong, please try again"
+msgstr "Algo salió mal, por favor intente de nuevo"
+
+#: controllers/admin-options.controller.php:559
+msgid "The user syncing process has been skipped"
+msgstr "El proceso de sincronización de usuarios se ha omitido"
+
+#: controllers/admin-options.controller.php:608
+#: controllers/admin-options.controller.php:638
+#: controllers/admin-options.controller.php:668
+#: controllers/admin-options.controller.php:726
+#: controllers/admin-options.controller.php:782
+msgid "SETUP WIZARD"
+msgstr "ASISTENTE DE CONFIGURACIÓN"
+
+#: controllers/admin-options.controller.php:608
+#, php-format
+msgid "Step 1 - %1$s Plugin License Key"
+msgstr "Paso 1 - %1$s Plugin clave de licencia"
+
+#: controllers/admin-options.controller.php:608
+#, php-format
+msgid "Please click here to %1$s set your %2$s Plugin License key %3$s"
+msgstr "Haga clic aquí para %1$s fijan su %2$s clave de licencia Plugin %3$s"
+
+#: controllers/admin-options.controller.php:638
+msgid "Step 2 - MailChimp API Key"
+msgstr "Paso 2 - MailChimp API Key"
+
+#: controllers/admin-options.controller.php:638
+#, php-format
+msgid "Please click here to %1$s set your MailChimp API key %2$s (%3$s What is this? %4$s)"
+msgstr "Haga clic aquí para %1$s te ponen la API de MailChimp tecla %2$s ( %3$s ¿Qué es esto? %4$s )"
+
+#: controllers/admin-options.controller.php:668
+msgid "Step 3 - Default Email List "
+msgstr "Paso 3 - Default lista de correo electrónico "
+
+#: controllers/admin-options.controller.php:668
+#, php-format
+msgid "Please click here to %1$s select a default MailChimp Email List %2$s"
+msgstr "Haga clic aquí para %1$s seleccione una lista de correo electrónico por defecto MailChimp %2$s"
+
+#: controllers/admin-options.controller.php:675
+#: controllers/admin-options.controller.php:731
+msgid "An Error Occurred"
+msgstr "Se produjo un error"
+
+#: controllers/admin-options.controller.php:726
+msgid "Step 4 - Merge Tags and User Syncing"
+msgstr "Paso 4 - Combinar etiquetas y usuario Sincronización"
+
+#: controllers/admin-options.controller.php:726
+#, php-format
+msgid "Please click here to %1$s sync your Merge Tags and Users %2$s to your MailChimp Email List or %3$s skip this process %4$s"
+msgstr "Haga clic aquí para %1$s sincronizan sus Combinar etiquetas y Usuarios %2$s a tu lista de correo electrónico MailChimp o %3$s omitir este proceso %4$s"
+
+#: controllers/admin-options.controller.php:782
+msgid "Step 5 - MailChimp Event Webhooks"
+msgstr "Paso 5 - MailChimp Evento WebHooks"
+
+#: controllers/admin-options.controller.php:782
+#, php-format
+msgid "Please click here to %1$s register the MailChimp webhooks %2$s for your site or %3$s skip this process (%4$s What is this? %5$s)"
+msgstr "Por favor haga clic aquí para %1$s registrar el MailChimp WebHooks %2$s para su sitio o %3$s omitir este proceso ( %4$s ¿Qué es esto? %5$s )"
+
+#: controllers/debug-log.controller.php:36
+#, php-format
+msgid "%1$s Debug Log"
+msgstr "%1$s Registro de depuración"
+
+#: controllers/debug-log.controller.php:40
+#, php-format
+msgid "DEBUGGING IS NOT CURRENTLY ENABLED. ENABLE DEBUG LOGGING %1$s HERE %2$s"
+msgstr "DEPURACIÓN actualmente no está habilitada. Habilitar el registro de DEBUG %1$s AQUÍ %2$s"
+
+#: controllers/debug-log.controller.php:124
+msgid "Submit Issue with Debug Log"
+msgstr "Enviar Problema con registro de depuración"
+
+#: controllers/debug-log.controller.php:125
+#, php-format
+msgid "Use the following form to submit an issue along with the debug log directly to the %1$s Team"
+msgstr "Utilice el siguiente formulario para enviar un tema junto con el registro de depuración directamente a los %1$s Equipo"
+
+#: controllers/debug-log.controller.php:125
+msgid "View the Debug Log below"
+msgstr "Ver el registro de depuración de abajo"
+
+#: controllers/debug-log.controller.php:130
+msgid "Debug Log"
+msgstr "Registro de depuración"
+
+#: controllers/debug-log.controller.php:133
+msgid "Clear Log"
+msgstr "Borrar registro"
+
+#: controllers/debug-log.controller.php:157
+msgid "Issue Description"
+msgstr "Descripción del problema"
+
+#: controllers/debug-log.controller.php:161
+#, php-format
+msgid "Provide a description, as detailed as possible, about: %1$s What you were doing before the issue happened %2$s and %3$s What happened when the issue occured %4$s"
+msgstr "Proporcionar una descripción, lo más detallada posible, sobre: %1$s Lo que estaba haciendo antes de que el problema ocurrió %2$s y %3$s ¿Qué sucedió cuando el problema ocurrió %4$s"
+
+#: controllers/debug-log.controller.php:163
+#: controllers/debug-log.controller.php:314
+msgid "Please provide an issue description"
+msgstr "Por favor, proporcione una descripción cuestión"
+
+#: controllers/debug-log.controller.php:164
+msgid "Please provide a useful issue description"
+msgstr "Por favor, proporcione una descripción cuestión útil"
+
+#: controllers/debug-log.controller.php:170
+msgid "Issue Priority"
+msgstr "Tema Prioridad"
+
+#: controllers/debug-log.controller.php:174
+msgid "Please be gentle with this"
+msgstr "Por favor, sé amable con este"
+
+#: controllers/debug-log.controller.php:184
+#: controllers/email-campaign-cpt.controller.php:687
+msgid "From Name"
+msgstr "Desde nombre"
+
+#: controllers/debug-log.controller.php:188
+msgid "Your name"
+msgstr "Su nombre"
+
+#: controllers/debug-log.controller.php:195
+#: controllers/email-campaign-cpt.controller.php:696
+msgid "From Email"
+msgstr "Desde el correo electrónico"
+
+#: controllers/debug-log.controller.php:199
+msgid "The email address for us to reply to"
+msgstr "La dirección de correo electrónico para nosotros la contestación a"
+
+#: controllers/debug-log.controller.php:201
+#: controllers/debug-log.controller.php:318
+msgid "Please provide an email address for us to reply to"
+msgstr "Proporcione una dirección de correo electrónico para nosotros la contestación a"
+
+#: controllers/debug-log.controller.php:202
+#: controllers/debug-log.controller.php:321
+msgid "Please provide a valid email address for us to reply to"
+msgstr "Por favor ingrese su dirección de correo electrónico válida para nosotros la contestación a"
+
+#: controllers/debug-log.controller.php:216
+#: controllers/debug-log.controller.php:227
+msgid "Submit Issue and Debug Log"
+msgstr "Enviar Emisión y Registro de depuración"
+
+#: controllers/debug-log.controller.php:272
+msgid "ERROR LOADING DEBUG LOG"
+msgstr "ERROR DE CARGA DEBUG LOG"
+
+#: controllers/email-campaign-cpt.controller.php:111
+msgid "Choose a List Segment"
+msgstr "Elige un Segmento Lista"
+
+#: controllers/email-campaign-cpt.controller.php:115
+msgid "To send to an existing saved list segment, select it from the choices above"
+msgstr "Para enviar a un segmento lista guardada existente, selecciónelo de las opciones anteriores"
+
+#: controllers/email-campaign-cpt.controller.php:182
+msgid "Please provide a valid Test Email"
+msgstr "Por favor introduce un correo electrónico de prueba válido"
+
+#: controllers/email-campaign-cpt.controller.php:191
+msgid "Please provide a valid Campaign Name"
+msgstr "Por favor ingrese su nombre de campaña válido"
+
+#: controllers/email-campaign-cpt.controller.php:195
+msgid "The message portion of your email is empty"
+msgstr "La parte de mensaje de su correo electrónico está vacía"
+
+#: controllers/email-campaign-cpt.controller.php:200
+msgid "Please provide a valid Email Subject"
+msgstr "Sírvanse proporcionar una válida Asunto del correo"
+
+#: controllers/email-campaign-cpt.controller.php:201
+msgid "Please select a Subscriber List"
+msgstr "Por favor seleccione una lista de suscriptores"
+
+#: controllers/email-campaign-cpt.controller.php:202
+msgid "Please provide a valid From Email"
+msgstr "Sírvanse proporcionar una válida Del Email"
+
+#: controllers/email-campaign-cpt.controller.php:203
+msgid "Please provide a From Name"
+msgstr "Por favor ingrese su Nombre De"
+
+#: controllers/email-campaign-cpt.controller.php:350
+msgid "The Email Campaign was successfully saved!"
+msgstr "La campaña de correo electrónico se ha guardado correctamente!"
+
+#: controllers/email-campaign-cpt.controller.php:362
+#, php-format
+msgid "There was an error creating the Email Campaign (%1$s)"
+msgstr "Se ha producido un error al crear la campaña de correo electrónico (%1$s)"
+
+#: controllers/email-campaign-cpt.controller.php:431
+msgid "The Test Email was successfully sent!"
+msgstr "La Prueba de correo electrónico se ha enviado correctamente!"
+
+#: controllers/email-campaign-cpt.controller.php:453
+msgid "The Email Campaign was successfully sent!"
+msgstr "La campaña de correo electrónico se ha enviado correctamente!"
+
+#: controllers/email-campaign-cpt.controller.php:567
+msgid "The Campaign appears to be ready!"
+msgstr "La campaña parece estar listo!"
+
+#: controllers/email-campaign-cpt.controller.php:583
+msgid "MailChimp Email Campaign"
+msgstr "MailChimp Campaña Email"
+
+#: controllers/email-campaign-cpt.controller.php:584
+msgid "MailChimp Email Campaigns"
+msgstr "MailChimp Campañas de Email"
+
+#: controllers/email-campaign-cpt.controller.php:593
+msgid "Campaign Name"
+msgstr "Nombre de la campaña"
+
+#: controllers/email-campaign-cpt.controller.php:600
+msgid "Email Categories"
+msgstr "Email Categorías"
+
+#: controllers/email-campaign-cpt.controller.php:602
+#: controllers/email-campaign-cpt.controller.php:850
+msgid "Email Category"
+msgstr "Email Categoría"
+
+#: controllers/email-campaign-cpt.controller.php:603
+msgid "Add New Email Category"
+msgstr "Agregar nuevo Email Categoría"
+
+#: controllers/email-campaign-cpt.controller.php:618
+#: controllers/email-campaign-cpt.controller.php:848
+msgid "Email Subject"
+msgstr "Asunto del correo"
+
+#: controllers/email-campaign-cpt.controller.php:628
+msgid "Email Subject Line"
+msgstr "Asunto del correo Línea"
+
+#: controllers/email-campaign-cpt.controller.php:637
+msgid "Email Recipients"
+msgstr "Destinatarios de correo electrónico"
+
+#: controllers/email-campaign-cpt.controller.php:644
+msgid "Choose a List"
+msgstr "Elija una Lista"
+
+#: controllers/email-campaign-cpt.controller.php:680
+msgid "Email Sending Options"
+msgstr "Email Opciones de envío"
+
+#: controllers/email-campaign-cpt.controller.php:705
+msgid "To Name"
+msgstr "Para Nombre"
+
+#: controllers/email-campaign-cpt.controller.php:721
+msgid "Email Template"
+msgstr "Plantilla de correo electrónico"
+
+#: controllers/email-campaign-cpt.controller.php:728
+msgid "Your Saved Templates"
+msgstr "Sus plantillas guardadas"
+
+#: controllers/email-campaign-cpt.controller.php:741
+msgid "MailChimp Templates"
+msgstr "Plantillas MailChimp"
+
+#: controllers/email-campaign-cpt.controller.php:771
+msgid "Email Test and Send"
+msgstr "Enviar Prueba y Enviar"
+
+#: controllers/email-campaign-cpt.controller.php:784
+msgid "Save as Draft"
+msgstr "Guardar como borrador"
+
+#: controllers/email-campaign-cpt.controller.php:791
+msgid "Save Draft"
+msgstr "Guardar borrador"
+
+#: controllers/email-campaign-cpt.controller.php:796
+msgid "Enter an Email Address to Send a Test To"
+msgstr "Introduzca una dirección de correo electrónico para enviar una prueba para"
+
+#: controllers/email-campaign-cpt.controller.php:807
+msgid "Send Test Email"
+msgstr "Enviar correo electrónico de prueba"
+
+#: controllers/email-campaign-cpt.controller.php:814
+msgid "Send Test"
+msgstr "Send Test"
+
+#: controllers/email-campaign-cpt.controller.php:819
+msgid "Send Email to All Selected Subscribers"
+msgstr "Enviar correo electrónico a todos los suscriptores seleccionados"
+
+#: controllers/email-campaign-cpt.controller.php:827
+msgid "Send Email Now!"
+msgstr "Enviar email ahora!"
+
+#: controllers/email-campaign-cpt.controller.php:849
+msgid "Date Sent"
+msgstr "Fecha de envío"
+
+#: controllers/email-campaign-cpt.controller.php:851
+msgid "# Subscribers"
+msgstr "# Suscriptores"
+
+#: controllers/email-campaign-cpt.controller.php:852
+msgid "Opens"
+msgstr "Abre"
+
+#: controllers/email-campaign-cpt.controller.php:853
+msgid "Bounces"
+msgstr "Rebotes"
+
+#: controllers/email-campaign-cpt.controller.php:854
+msgid "Clicks"
+msgstr "Clicks"
+
+#: controllers/email-campaign-cpt.controller.php:898
+msgid "Unpublished"
+msgstr "Inédito"
+
+#: controllers/email-campaign-cpt.controller.php:901
+msgid "Y/m/d g:i:s A"
+msgstr "Y/m/d g:i:s A"
+
+#: controllers/email-campaign-cpt.controller.php:908
+#, php-format
+msgid "%1$s ago"
+msgstr "%1$s hace"
+
+#: controllers/email-campaign-cpt.controller.php:910
+msgid "m/d/Y"
+msgstr "m/d/Y"
+
+#: controllers/email-campaign-cpt.controller.php:919
+msgid "Sent"
+msgstr "Enviado"
+
+#: controllers/email-campaign-cpt.controller.php:922
+msgid "Missed schedule"
+msgstr "Horario omitida"
+
+#: controllers/email-campaign-cpt.controller.php:924
+msgid "Scheduled"
+msgstr "Programado"
+
+#: controllers/email-campaign-cpt.controller.php:927
+msgid "Last Modified"
+msgstr "La última actualización"
+
+#: controllers/list-groups.controller.php:39
+#, php-format
+msgid "%s Lists"
+msgstr "%s Listas"
+
+#: controllers/list-groups.controller.php:186
+#: controllers/user-lists.controller.php:497
+msgid "Merge Tag"
+msgstr "Combinar Tag"
+
+#: controllers/list-groups.controller.php:186
+#: controllers/user-lists.controller.php:497
+msgid "Field Type"
+msgstr "Tipo de campo"
+
+#: controllers/list-groups.controller.php:186
+#: controllers/user-lists.controller.php:497
+msgid "Source"
+msgstr "Fuente"
+
+#: controllers/list-groups.controller.php:241
+#: controllers/user-lists.controller.php:554
+msgid "The Merge Tag was Deactivated"
+msgstr "El Tag Combinar fue desactivado"
+
+#: controllers/list-groups.controller.php:248
+#: controllers/user-lists.controller.php:561
+msgid "The Merge Tag was Activated"
+msgstr "El Tag Combinar fue activado"
+
+#: controllers/list-groups.controller.php:272
+msgid "The Merge Tag was updated in MailChimp"
+msgstr "El Tag Merge se actualizó en MailChimp"
+
+#: controllers/list-groups.controller.php:276
+msgid "The Merge Tag was added to MailChimp"
+msgstr "El Tag Combinar esta en MailChimp"
+
+#: controllers/list-groups.controller.php:282
+#: controllers/list-groups.controller.php:286
+#: controllers/user-lists.controller.php:595
+#: controllers/user-lists.controller.php:603
+msgid "Error Processing Merge Tag"
+msgstr "Error Combinar Procesamiento Tag"
+
+#: controllers/subscribe-widget.controller.php:46
+#, php-format
+msgid "%1$s Widget Description"
+msgstr "%1$s Widget Descripción"
+
+#: controllers/subscribe-widget.controller.php:169
+#, php-format
+msgid "%1$s Subscribe"
+msgstr "%1$s Suscribirse"
+
+#: controllers/subscribe-widget.controller.php:173
+msgid "Email List Subscribe Form"
+msgstr "Lista de Correo Suscribirse Formulario"
+
+#: controllers/subscribe-widget.controller.php:208
+msgid "Title"
+msgstr "Título"
+
+#: controllers/subscribe-widget.controller.php:217
+msgid "Description"
+msgstr "Descripción"
+
+#: controllers/subscribe-widget.controller.php:223
+msgid "Register new Subscribers as new WordPress Users"
+msgstr "Registrar nuevos suscriptores como nuevos usuarios de WordPress"
+
+#: controllers/subscribe-widget.controller.php:237
+msgid "Select a List"
+msgstr "Seleccione una lista"
+
+#: controllers/subscribe-widget.controller.php:253
+msgid "No Interest Group"
+msgstr "No Interest Group"
+
+#: controllers/subscribe-widget.controller.php:263
+msgid "Select an Interest Grouping"
+msgstr "Seleccione una Agrupación de Interés"
+
+#: controllers/subscribe-widget.controller.php:303
+msgid "Select Merge Tags"
+msgstr "Seleccione Combinar etiquetas"
+
+#: controllers/subscribe-widget.controller.php:442
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: controllers/subscribe-widget.controller.php:444
+msgid "The email is invalid, please provide a valid email."
+msgstr "El correo electrónico no es válida, por favor introduce un correo electrónico válido."
+
+#: controllers/subscribe-widget.controller.php:445
+msgid "Please provide a valid email."
+msgstr "Por favor introduce un correo electrónico válido."
+
+#: controllers/subscribe-widget.controller.php:473
+msgid "Please fill in a"
+msgstr "Por favor, rellene un"
+
+#: controllers/subscribe-widget.controller.php:568
+msgid "Subscribe"
+msgstr "Suscribir"
+
+#: controllers/subscribe-widget.controller.php:594
+msgid "Please configure widget"
+msgstr "Por favor, configure el widget"
+
+#: controllers/subscribe-widget.controller.php:764
+msgid "Invalid Email"
+msgstr "No válida de correo electrónico"
+
+#: controllers/subscribe-widget.controller.php:775
+msgid "Invalid Value"
+msgstr "Valor no válido"
+
+#: controllers/subscribe-widget.controller.php:885
+#: controllers/subscribe-widget.controller.php:897
+#: controllers/subscribe-widget.controller.php:907
+#: controllers/subscribe-widget.controller.php:949
+#: controllers/subscribe-widget.controller.php:956
+msgid "There was an error subscribing you. Please contact the site administrator for assistance."
+msgstr "Hubo un error al suscribirse usted. Por favor, póngase en contacto con el administrador del sitio para obtener ayuda."
+
+#: controllers/subscribe-widget.controller.php:919
+msgid "This email is already subscribed"
+msgstr "Este correo electrónico ya está suscrito"
+
+#: controllers/subscribe-widget.controller.php:973
+msgid "Thank you for subscribing!"
+msgstr "Gracias por suscribirse!"
+
+#: controllers/user-lists.controller.php:43
+#, php-format
+msgid "%1$s Lists"
+msgstr "%1$s Listas"
+
+#: controllers/user-lists.controller.php:97
+msgid "Indicates a matching Merge Tag in MailChimp"
+msgstr "Indica una etiqueta Combinar correspondencia en MailChimp"
+
+#: controllers/user-lists.controller.php:107
+msgid "Active"
+msgstr "Activo"
+
+#: controllers/user-lists.controller.php:107
+msgid "Merge Tags that will be synced with MailChimp"
+msgstr "Combinar etiquetas que se sincronizarán con MailChimp"
+
+#: controllers/user-lists.controller.php:108
+msgid "Inactive"
+msgstr "Inactivo"
+
+#: controllers/user-lists.controller.php:108
+msgid "Merge Tags that will not be synced with MailChimp"
+msgstr "Combinar etiquetas que no se sincronizan con MailChimp"
+
+#: controllers/user-lists.controller.php:109
+msgid "Unused"
+msgstr "No usado"
+
+#: controllers/user-lists.controller.php:109
+msgid "Merge Tags that are currently unavailable for syncing to MailChimp"
+msgstr "Combinar etiquetas que actualmente no están disponibles para la sincronización de MailChimp"
+
+#: controllers/user-lists.controller.php:114
+msgid "No MailChimp Email Lists found!"
+msgstr "No hay listas de correo electrónico MailChimp encontrado!"
+
+#: controllers/user-lists.controller.php:128
+msgid "Select User Role"
+msgstr "Seleccione la función del usuario"
+
+#: controllers/user-lists.controller.php:156
+msgid "SYNC NOW"
+msgstr "SYNC NOW"
+
+#: controllers/user-lists.controller.php:160
+msgid "Error Loading User Roles"
+msgstr "Error al cargar las funciones de usuario"
+
+#: controllers/user-lists.controller.php:163
+msgid "Error Loading Sync Button"
+msgstr "Error al cargar sincronización Botón"
+
+#: controllers/user-lists.controller.php:167
+msgid "Batch Update"
+msgstr "Actualización de lote"
+
+#: controllers/user-lists.controller.php:179
+msgid "Please select a User Role"
+msgstr "Por favor seleccione una función de usuario"
+
+#: controllers/user-lists.controller.php:586
+msgid "The Merge Tag was Updated in MailChimp"
+msgstr "El Tag Merge se actualizó en MailChimp"
+
+#: controllers/user-lists.controller.php:590
+msgid "The Merge Tag was Added to MailChimp"
+msgstr "El Tag Combinar esta en MailChimp"
+
+#: controllers/user-lists.controller.php:629
+msgid "First Name"
+msgstr "Nombre De Pila"
+
+#: controllers/user-lists.controller.php:634
+msgid "Last Name"
+msgstr "Apellido"
+
+#: controllers/user-lists.controller.php:639
+msgid "Nickname"
+msgstr "Apodo"
+
+#: controllers/user-lists.controller.php:644
+msgid "User Role"
+msgstr "Función de usuario"
+
+#: controllers/user-lists.controller.php:805
+#, php-format
+msgid "The user's email (%1$s) was successfully subscribed to the '%2$s' MailChimp list."
+msgstr "Correo electrónico del usuario (%1$s) fue suscrito con éxito a la '%2$s' lista MailChimp."
+
+#: controllers/user-lists.controller.php:812
+#: controllers/user-lists.controller.php:1022
+#, php-format
+msgid "%1$s is already subscribed to the '%2$s' MailChimp list."
+msgstr "%1$s ya está suscrito a la ' %2$s 'lista MailChimp."
+
+#: controllers/user-lists.controller.php:815
+#, php-format
+msgid "There was an error subscribing the user's email (%1$s) to the '%2$s' MailChimp list."
+msgstr "Hubo un error al suscribirse correo electrónico del usuario (%1$s) a la '%2$s' lista MailChimp."
+
+#: controllers/user-lists.controller.php:892
+#, php-format
+msgid "The user's email (%1$s) was successfully unsubscribed from the '%2$s' MailChimp list."
+msgstr "Correo electrónico del usuario (%1$s) fue exitosamente inscrita en los '%2$s' lista MailChimp."
+
+#: controllers/user-lists.controller.php:898
+msgid "There was a generic error during the unsubscribe process"
+msgstr "Hubo un error genérico durante el proceso de darse de baja"
+
+#: controllers/user-lists.controller.php:1015
+#, php-format
+msgid "The user (%1$s) was successfully updated in the '%2$s' MailChimp list."
+msgstr "El usuario (%1$s) se ha actualizado correctamente en los '%2$s' lista MailChimp."
+
+#: controllers/user-lists.controller.php:1025
+#, php-format
+msgid "There was an error updating the user (%1$s) in the '%2$s' MailChimp list."
+msgstr "Hubo un error al actualizar el usuario (%1$s) en el '%2$s' lista MailChimp."
+
+#: controllers/webhooks.controller.php:168
+msgid "The webhook registration process has been skipped"
+msgstr "El proceso de registro webhook se ha omitido"
+
+#: controllers/webhooks.controller.php:205
+msgid "The webhooks were successfully registered!"
+msgstr "Los WebHooks se registraron con éxito!"
+
+#: controllers/webhooks.controller.php:210
+msgid "Although it is inadvisable, you may also choose to"
+msgstr "Aunque no es recomendable, también puede optar por"
+
+#: controllers/webhooks.controller.php:210
+msgid "skip this process"
+msgstr "omitir este proceso"
+
+#: controllers/webhooks.controller.php:210
+msgid "What is this?"
+msgstr "Qué es esto?"
+
+#: controllers/webhooks.controller.php:221
+#: controllers/webhooks.controller.php:237
+msgid "An error occured attempting to register the MailChimp Webhooks."
+msgstr "Se produjo un error intentar registrar los WebHooks MailChimp."
+
+#: controllers/webhooks.controller.php:222
+#: controllers/webhooks.controller.php:238
+#, php-format
+msgid "Please refer to the %1$s debug %2$s logs for more information."
+msgstr "Por favor refiérase a las %1$s depuración %2$s registros para obtener más información."
+
+#: controllers/webhooks.controller.php:222
+#: controllers/webhooks.controller.php:238
+#, php-format
+msgid "For additional information about this issue, enable debugging %1$s here %2$s and attempt the webhook registration again."
+msgstr "Para obtener información adicional acerca de este problema, habilite la depuración de %1$s aquí %2$s e intentar el registro webhook nuevo."
+
+#: forms/admin-options.form.php:23
+msgid "MailChimp Account Settings"
+msgstr "Configuración de la cuenta de MailChimp"
+
+#: forms/admin-options.form.php:34
+msgid "Plugin License Key"
+msgstr "Clave de licencia Plugin"
+
+#: forms/admin-options.form.php:36
+msgid "The license key that was emailed to you"
+msgstr "La clave de licencia que recibió por correo electrónico"
+
+#: forms/admin-options.form.php:38
+msgid "Invalid License Key. The key must be at least 32 characters"
+msgstr "Clave de licencia no válida. La clave debe tener al menos 32 caracteres"
+
+#: forms/admin-options.form.php:39
+msgid "Invalid License Key. The key cannot be greater than 36 characters"
+msgstr "Clave de licencia no válida. La llave no puede ser mayor que 36 caracteres"
+
+#: forms/admin-options.form.php:48
+msgid "MailChimp API Key"
+msgstr "MailChimp API Key"
+
+#: forms/admin-options.form.php:50
+#, php-format
+msgid "You can find this key by %1$s logging into your MailChimp account %2$s and then going %3$s here %4$s. %5$s (What is a MailChimp API Key?) %6$s"
+msgstr "Usted puede encontrar esta clave por %1$s ingresando a su cuenta de MailChimp %2$s y luego ir %3$s aquí %4$s . %5$s (¿Qué es un MailChimp clave API?) %6$s"
+
+#: forms/admin-options.form.php:52
+msgid "Invalid MailChimp API Key. The key must be at least 32 characters"
+msgstr "Clave no válida API MailChimp. La clave debe tener al menos 32 caracteres"
+
+#: forms/admin-options.form.php:53
+msgid "Invalid MailChimp API Key. The key cannot be greater than 36 characters"
+msgstr "Clave no válida API MailChimp. La llave no puede ser mayor que 36 caracteres"
+
+#: forms/admin-options.form.php:70
+msgid "Select the Default Mailing List"
+msgstr "Seleccione la lista de correo predeterminado"
+
+#: forms/admin-options.form.php:72
+msgid "New members will be automatically added to this list"
+msgstr "Los nuevos miembros se añadirán automáticamente a la lista"
+
+#: forms/admin-options.form.php:80
+#: library/framework/integral-plugin-form.class.php:230
+msgid "Submit"
+msgstr "Presentar"
+
+#: forms/admin-options.form.php:88
+msgid "Clears all cached data in the system. This happens every hour anyway, but is useful when MailChimp List changes have occurred recently."
+msgstr "Borra todos los datos almacenados en caché en el sistema. Esto ocurre cada hora de todos modos, pero es útil cuando se han producido cambios Lista MailChimp recientemente."
+
+#: forms/admin-options.form.php:89
+msgid "Reset API Data"
+msgstr "Restablecer datos API"
+
+#: forms/admin-options.form.php:97
+#, php-format
+msgid "Registers the API Webhooks with MailChimp. %1$s (What is this?) %2$s"
+msgstr "Registra los WebHooks API con MailChimp. %1$s (¿Qué es esto?) %2$s"
+
+#: forms/admin-options.form.php:98
+msgid "Register Webhooks"
+msgstr "Registro WebHooks"
+
+#: forms/admin-options.form.php:105
+msgid "Turn on debugging mode"
+msgstr "Activar el modo de depuración"
+
+#: forms/admin-options.form.php:106
+#, php-format
+msgid "Enabling debug mode will write errors and some useful status info regarding the MailChimp API requests to two places: %1$s 1) A log file in %2$s (or on a multi-site install, %3$s ); and %4$s 2) The Chrome browser console. (Note: You will need the Chrome Logger extension to view the log)"
+msgstr "Al activar el modo debug escribirá errores y algo de información de estado útil con respecto a las solicitudes de la API de MailChimp a dos lugares: %1$s 1) Un archivo de registro en %2$s (o en un multi-sitio de instalación, %3$s ); y %4$s 2) La consola navegador Chrome. (Nota: Usted tendrá la extensión de Chrome Logger para ver el registro)"
+
+#: forms/admin-options.form.php:120
+msgid "General Options"
+msgstr "Opciones generales"
+
+#: forms/admin-options.form.php:125
+msgid "Setup"
+msgstr "Preparar"
+
+#: forms/admin-options.form.php:130
+msgid "Debug Options"
+msgstr "Opciones de depuración"
+
+#: forms/admin-options.form.php:143
+msgid "Deactivate License"
+msgstr "Desactivar Licencia"
+
+#: forms/admin-options.form.php:147
+msgid "Deactivate API Key"
+msgstr "Desactivar Clave API"
+
+#: library/framework/integral-plugin-cpt.class.php:397
+msgid "Duplicate this item"
+msgstr "Duplicar este artículo"
+
+#: library/framework/integral-plugin-cpt.class.php:397
+msgid "Duplicate"
+msgstr "Duplicar"
+
+#: library/framework/integral-plugin-cpt.class.php:435
+msgid "Missing Post ID"
+msgstr "Missing ID del anuncio"
+
+#: library/framework/integral-plugin-cpt.class.php:498
+msgid "Could not create new post, original post not found: "
+msgstr "No se pudo crear nuevo puesto, post original no encontrado: "
+
+#: library/framework/integral-plugin-logger.class.php:40
+#: library/framework/integral-plugin-master.class.php:26
+#, php-format
+msgid "%1$s is a singleton class. Creating a second instance is prohibited."
+msgstr "%1$s es una clase singleton. La creación de una segunda instancia está prohibido."
+
+#: library/framework/integral-plugin-master.class.php:110
+#, php-format
+msgid "You must update to at least WordPress version %1$s to use this version of the %2$s plugin!"
+msgstr "Debe actualizar por lo menos a WordPress versión %1$s para utilizar esta versión de los %2$s Plugin!"
+
+#: library/utility/integral-edd-updater.utility.php:165
+#, php-format
+msgid "There is a new version of %1$s available. %2$s View version %3$s details %4$s."
+msgstr "Hay una nueva versión de %1$s disponibles. %2$s Ver versión %3$s detalles %4$s ."
+
+#: library/utility/integral-edd-updater.utility.php:169
+#, php-format
+msgid "There is a new version of %1$s available. %2$s View version %3$s details %4$s or %5$s update now %6$s."
+msgstr "Hay una nueva versión de %1$s disponibles. %2$s Ver versión %3$s detalles %4$s u %5$s de actualización ahora %6$s ."
+
+#: library/utility/integral-edd-updater.utility.php:313
+msgid "You do not have permission to install plugin updates"
+msgstr "Usted no tiene permiso para instalar actualizaciones de plugins"
+
+#: library/utility/integral-edd-updater.utility.php:313
+msgid "Error"
+msgstr "Error"
+
+#: library/utility/integral-mailchimp-api.utility.php:540
+msgid "Invalid_Template"
+msgstr "Invalid_Template"
+
+#: library/utility/integral-mailchimp-api.utility.php:541
+msgid "Invalid Template ID provided"
+msgstr "ID de plantilla no válida siempre"
+
+#: library/utility/integral-mailchimp-api.utility.php:601
+msgid "A generic system error occured!"
+msgstr "Un error de sistema genérico ocurrió!"
+
+#: library/utility/integral-mailchimp-base.utility.php:31
+msgid "Must preload Integral_MailChimp_API class"
+msgstr "Debe precargar clase Integral_MailChimp_API"
+
+#: library/utility/integral-mailchimp-campaigns.utility.php:50
+msgid "Missing 1 of these required options (list_id, subject, from_email, to_name)"
+msgstr "Falta 1 de estas opciones requeridas (list_id, tema, from_email, TO_NAME)"
+
+#: library/utility/integral-mailchimp-campaigns.utility.php:56
+msgid "Please provide only 1 of these content fields (html, sections, text, url, archive)"
+msgstr "Sírvanse proporcionar sólo 1 de estos campos de contenido (html, secciones, texto, URL, archivo)"
+
+#: library/utility/integral-mailchimp-lists.utility.php:44
+msgid "recipients"
+msgstr "destinatarios"
+
+#: library/utility/integral-mailchimp-lists.utility.php:340
+#, php-format
+msgid "There was a problem loading the segments for this list (%1$s)."
+msgstr "Hubo un problema al cargar los segmentos para esta lista (%1$s)."
+
+#: library/utility/integral-mailchimp-lists.utility.php:487
+msgid "subscribers"
+msgstr "suscriptores"
+
+#: library/utility/integral-mailchimp-lists.utility.php:523
+#, php-format
+msgid "Interest Groups have not been enabled for this list (%1$s)."
+msgstr "Grupos de interés no se han habilitado para esta lista (%1$s)."
+
+#: library/utility/integral-mailchimp-lists.utility.php:767
+#, php-format
+msgid "MailChimp was unable to validate the URL that was provided (%1$s). Please confirm that the url is live and available to the web."
+msgstr "MailChimp no pudo validar la URL facilitada (%1$s). Por favor, confirme que la url es en vivo y disponible en la web."
+
+#: library/utility/integral-tools.utility.php:145
+msgid "Invalid File Path Provided"
+msgstr "Ruta del archivo inválida proporcionada"
+
+#: library/utility/integral-tools.utility.php:427
+msgid "Invalid Permissions."
+msgstr "Permisos válidos."
+
+#: views/forms/admin-options.phtml:10
+msgid "Are you sure you want to deactivate the License Key for this plugin on this site?"
+msgstr "¿Seguro que desea desactivar la clave de licencia para este plugin en este sitio?"
+
+#: views/forms/admin-options.phtml:11 views/forms/admin-options.phtml:14
+msgid "Continue Deactivation"
+msgstr "Continuar Desactivación"
+
+#: views/forms/admin-options.phtml:13
+msgid "Are you sure you want to deactivate the API Key?"
+msgstr "¿Seguro que desea desactivar la clave de API?"
+
+#: views/forms/admin-options.phtml:16
+msgid "Are you sure you want to reset all API data?"
+msgstr "¿Seguro que desea restablecer todos los datos de la API?"
+
+#: views/forms/admin-options.phtml:17
+msgid "Continue Data Reset"
+msgstr "Continuar Reposición de datos"
+
+#: views/forms/admin-options.phtml:19
+msgid "Are you sure you want to register the API webhooks with MailChimp?"
+msgstr "¿Seguro que desea registrar los WebHooks API con MailChimp?"
+
+#: views/forms/admin-options.phtml:20
+msgid "Continue Webhook Registration"
+msgstr "Continuar Webhook Registro"
+
+#: views/forms/admin-options.phtml:22
+msgid "Please Confirm"
+msgstr "Confirme por favor"
+
+#: views/forms/admin-options.phtml:23
+msgid "Cancel"
+msgstr "Cancelar"

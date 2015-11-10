@@ -1,0 +1,360 @@
+/** some Bootstrap over rides */
+#imc_email_category-adder h4 {
+    font-size: 13px;
+}
+
+.post-type-imc_email_campaign .modal-body {
+}
+
+img.imc-loading-spinner {
+    margin: 4px;
+    display: inline-block;
+}
+
+.imc-admin-page .help-block {
+    margin-bottom: 30px;
+}
+
+/******************************************** Admin Options */
+#imc-admin-options fieldset legend {
+    width: auto;
+    border-bottom: none;
+}
+
+#imc-admin-options fieldset li.admin {
+    margin-bottom: 20px;
+}
+
+/********************************************* Plugin Forms */
+.imc-admin-page input, 
+.imc-admin-page input[type="email"], 
+.imc-admin-page input[type="number"], 
+.imc-admin-page input[type="password"], 
+.imc-admin-page input[type="search"], 
+.imc-admin-page input[type="text"], 
+.imc-admin-page input[type="url"], 
+.imc-admin-page textarea {
+    -moz-box-sizing: content-box !important;
+}
+
+.imc-admin-page #imc_opt_apikey, 
+.imc-admin-page #imc_opt_default_user_list, 
+.imc-admin-page #imc_opt_licensekey {
+    width: 280px;
+}
+
+.imc-admin-page .form-horizontal .control-group.error {
+    margin-top: 20px !important;
+}
+
+.imc-admin-page legend + .control-group.error {
+    margin-top: 20px !important;
+}
+
+.wrap .imc-admin-page #message {
+    margin: 5px 0 15px;
+}
+
+.imc-admin-page label {
+    display: block;
+}
+
+.imc-admin-page .imc-tag-group{
+    min-height: 186px;
+}
+
+.imc-admin-page #message li {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+}
+
+
+/*********************************************** Admin Menu */
+ul > li > ul > li div.separator {
+    background-color: #555555;
+    margin: 5px auto;
+    width: 90%;
+}
+
+
+/************************ User List Management (Merge Tags) */
+#imc-user-lists .tab-content .nav-tabs li a {
+    font-size: 20px;
+}
+
+#imc-user-lists .tab-pane {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-width: 0px 1px 1px 1px;
+}
+
+#imc-user-lists .tab-pane h4 {
+    font-size: 16px;
+    display: inline-block;
+}
+
+#imc-user-lists .tab-pane .imc-tag-description {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+#imc-user-lists .tab-pane .imc-tag-description .imc-exists-legend {
+    display: inline-block;
+    margin-left: 20px;
+    width: 16px;
+    height: 16px;
+    background-color: #2C9AB7;
+    vertical-align: middle;
+    margin-top: -2px;
+}
+
+#imc-user-lists .tab-pane .imc-tag-description.imc-desc-unused .imc-exists-legend {
+    background-color: #B1E0EC;
+}
+
+.imc-tag-info-box {
+    position: relative;
+}
+
+.imc-tag-info-box .imc-drag-handle:before {
+    content: "\f214";
+    color: #888;
+    font-family: dashicons;
+    font-size: 20px;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 900;
+    width: 20px;
+    height: 20px;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.imc-tag-info-box.well.active .imc-drag-handle:before {
+    color: #449A88;
+}
+
+.imc-tag-info-box.well.inactive .imc-drag-handle:before {
+    color: #BBB;
+}
+
+.imc-tag-info-box.well.unused .imc-drag-handle:before {
+    content: "";
+}
+
+.imc-tag-info-box.well.exists_in_mailchimp .imc-drag-handle:before {
+    top: -19px;
+    color: #f5f5f5;
+}
+
+.imc-tag-info-box.well {
+    display: inline-block;
+    cursor: move;
+    margin-bottom: 0px;
+}
+
+.imc-tag-group-unused .imc-tag-info-box {
+    cursor: auto;
+}
+
+.imc-tag-info-box.well.active {
+    background-color: #449A88;
+    color: #fff;
+}
+
+.imc-tag-info-box.well.unused {
+    color: #bbb;
+}
+
+.imc-tag-info-box.well.exists_in_mailchimp {
+    border-top: 20px solid #2C9AB7;
+    padding-top: 0px;
+}
+
+.imc-tag-info-box.well.unused.exists_in_mailchimp {
+    border-top: 20px solid #B1E0EC;
+    padding-top: 0px;
+}
+
+.imc-tag-info-box.mergetag-syncing { 
+    color: #444444 !important;
+    background-color: #ffffff !important;
+    background-image: url(images/pulse.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.imc_sync_wrapper.well h4 {
+    font-size: 18px;
+    float: left;
+    margin-top: 10px;
+}
+
+.imc_sync_wrapper.well .imc_sync_form {
+    float: left;
+    padding-left: 50px;
+    margin-top: 8px;
+}
+
+.imc_sync_wrapper.well .imc_sync_form div {
+    display: inline-block;
+}
+
+.imc_sync_wrapper.well .imc_sync_form div.imc-sync-button-wrapper {
+    padding-left: 20px;
+}
+
+.imc_sync_wrapper.well .imc_sync_form div.imc_sync_count {
+    padding-left: 20px;
+    font-size: 16px;
+    vertical-align: middle;
+}
+
+.imc_sync_wrapper.well .imc_sync_form div.imc_loading {
+    margin-left: 10px;
+    height: 23px;
+    width: 23px;
+    background-image: url(images/pulse.png);
+    background-size: contain;
+    visibility: hidden;
+}
+
+.imc_sync_wrapper.well .imc-progressbar  {
+    clear: both;
+    padding-top: 10px;
+}
+
+.imc_sync_wrapper.well .imc-progressbar .ui-progressbar-value {
+    height: 20px;
+    background-color: green;
+}
+
+
+/************************** Email Campaign Custom Post Type */
+div.imc-meta{
+    margin: 5px 0;
+    padding: 10px 0;
+}
+
+div.imc-meta.clearfix, label.clearfix{
+    clear: both;
+}
+
+label.center-block {
+    display: block;
+    text-align: center;
+}
+
+div.imc-meta.pull-left { 
+    margin-right: 20px;
+}
+
+div.imc-meta label {
+    font-weight: 800;
+    margin-right: 20px;
+}
+
+#template_holder { 
+    padding: 30px 0;
+}
+
+.post-type-imc_email_campaign div.inside {
+    position: relative;
+}
+
+.post-type-imc_email_campaign .postarea {
+    display: none;
+}
+
+.post-type-imc_email_campaign .empty-container {
+    border: 0px!important;
+}
+
+.template-loading { 
+    position: relative;
+    width: 95%; 
+    top: 0;
+    height: 100%; 
+    background: #ffffff url(images/pulse.png) 50% 50% no-repeat; 
+    background-size: contain;
+    opacity: 0.8; 
+    filter: alpha(opacity=80);
+    z-index: 9999;
+}
+
+.imc_sync_wrapper {
+    margin-top: 20px;
+}
+
+.imc_email_campaign_editor_modal,
+.modal-dialog {
+    width: 50% !important;
+}
+
+.post-type-imc_email_campaign .modal-header {
+    border-bottom: 0px;
+}
+
+.post-type-imc_email_campaign .wp-editor-tools:after {
+    clear: none;
+}
+
+.post-type-imc_email_campaign .modal-header *,
+.post-type-imc_email_campaign .modal-header *:before,
+.post-type-imc_email_campaign .modal-header *:after {
+    -webkit-box-sizing: content-box !important;
+    -moz-box-sizing: content-box !important;
+    box-sizing: content-box !important;
+}
+
+.post-type-imc_email_campaign.wp-editor {
+    border: 1px solid #e3e3e3;
+}
+
+#imc-email-campaign-message {
+    padding: 20px;
+    font-size: 16px;
+    margin: 0px auto;
+    width: 70%;
+    display: none;
+}
+
+.imc-message.well{background-color:white;border:0px;}
+
+#imc-email-campaign-message div {
+    padding: 5px;
+}
+
+input.highlight-error {
+    border-color: rgba(200, 100, 100, 0.5);
+}
+
+/** fix spacing for hidden elements on the campaign page */
+
+#titlediv div.inside{
+    display:none;
+}
+div#post-body-content{
+    margin-bottom:20px;
+}
+
+/***************************************** Debug Log Viewer */
+.imc-log-viewer {
+    height: 600px;
+    overflow: auto;
+}
+
+.imc-hr {
+    border-color: #aaaaaa;
+}
+
+.imc-primary-button {
+    margin-bottom: 20px;
+}
+
+.imc_debug_send {
+    margin-bottom: 20px;
+}

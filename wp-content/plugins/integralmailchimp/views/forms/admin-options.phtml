@@ -1,0 +1,284 @@
+<?php
+
+namespace IMC\Views\Forms;
+
+use IMC\Library\Framework\Integral_Plugin_View;
+
+$spinner_url = admin_url('images/wpspin_light-2x.gif');
+$message_id  = 'message';
+
+$deactivate_license_confirm_message = __('Are you sure you want to deactivate the License Key for this plugin on this site?', 'integral-mailchimp');
+$deactivate_license_confirm_button = __('Continue Deactivation', 'integral-mailchimp');
+
+$deactivate_apikey_confirm_message = __('Are you sure you want to deactivate the API Key?', 'integral-mailchimp');
+$deactivate_apikey_confirm_button = __('Continue Deactivation', 'integral-mailchimp');
+
+$api_reset_confirm_message = __('Are you sure you want to reset all API data?', 'integral-mailchimp');
+$api_reset_confirm_button = __('Continue Data Reset', 'integral-mailchimp');
+
+$register_webhook_confirm_message = __('Are you sure you want to register the API webhooks with MailChimp?', 'integral-mailchimp');
+$register_webhook_confirm_button = __('Continue Webhook Registration', 'integral-mailchimp');
+
+$please_confirm_title = __('Please Confirm', 'integral-mailchimp');
+$please_confirm_cancel = __('Cancel', 'integral-mailchimp');
+
+$javascript = <<<SCRIPT
+    
+    function preloadImages() {
+        for (var i = 0; i < arguments.length; i++) {
+            $("<img />").attr("src", arguments[i]);
+        }
+    }
+
+    preloadImages('{$spinner_url}');
+    
+    var imc_message_spinner = ' <img alt="WordPress loading spinner" class="imc-loading-spinner" src="{$spinner_url}"> ';
+    
+    $('form.{$form_name}').ajaxForm({
+        beforeSubmit: function() {
+            //- Clear the message html element
+            $('#{$message_id}').html(imc_message_spinner).css('opacity', 1);
+    
+            //- Scroll to the top of the page
+            $('html, body').animate({
+                scrollTop: $('body').offset().top
+            }, 500);
+    
+            $('form.{$form_name}').validate({
+                debug: false,
+                errorLabelContainer: "#message",
+                wrapper: "li",
+                rules: {$rules},
+                messages: {$imc_messages},
+                invalidHandler: function(event, validator) {
+                        $('#{$message_id}').removeClass('updated')
+                            .addClass('error')
+                            .css('opacity', 1);
+                    }
+              });
+                
+            var is_valid = $('form.{$form_name}').valid();
+            
+            if (!is_valid) {
+                $('#{$message_id}').html('').css('opacity', 0);
+            }
+            
+            return is_valid;
+        },
+        success: function(resp) {
+            $('#{$message_id}').html('');
+            var message_class = 'updated';
+            if (resp instanceof Array || resp instanceof Object) {
+                for (var key in resp) {
+                    if (key == 'msg') {
+                        //- This assumes everything went fine
+                        var this_message = resp[key] + imc_message_spinner;
+                        
+                        //- Refresh the page to go to the next step in the Setup Wizard
+                        setTimeout(function() {location.reload(true);}, 500);
+                        
+                    } else {
+                        var this_message = resp[key];
+                        message_class = 'error';
+                        $('#'+ key).addClass('highlight-error');
+                    }
+            
+                    if (this_message) {
+                        $('#{$message_id}').append('<li>'+ this_message + '</li>');
+                        $('.imc-loading-spinner').hide().delay(1000).show(0);
+                    }
+                }
+            }
+                
+            $('#{$message_id}').css('opacity', 0)
+                .removeClass('error')
+                .removeClass('updated')
+                .addClass(message_class)
+                .css('opacity', 1)
+                .show();
+                        
+                
+        }
+    });
+            
+            
+    $('.imc-options-key').click(function() {
+            
+            var item_action    = $(this).data('keyItem');
+            var confirm_string = '';
+            var confirm_button = '';
+            var item_id        = '';
+            
+            switch (item_action) {
+                case 'imc-deactivate-license':
+                    confirm_string = "{$deactivate_license_confirm_message}";
+                    confirm_button = "{$deactivate_license_confirm_button}";
+                    item_id = 'imc_opt_licensekey';
+                    break;
+            
+                case 'imc-deactivate-apikey':
+                    confirm_string = "{$deactivate_apikey_confirm_message}";
+                    confirm_button = "{$deactivate_apikey_confirm_button}";
+                    item_id = 'imc_opt_apikey';
+                    break;            
+            
+                case 'imc-reset-data':
+                    confirm_string = "{$api_reset_confirm_message}";
+                    confirm_button = "{$api_reset_confirm_button}";
+                    item_id = 'imc_reset_data';
+                    break;            
+            
+                case 'imc-register-webhooks':
+                    confirm_string = "{$register_webhook_confirm_message}";
+                    confirm_button = "{$register_webhook_confirm_button}";
+                    item_id = 'imc_register_webhooks';
+                    break;            
+            }
+            
+            if (item_id != '') {
+
+                $('body').append("<div class='modal fade' id='imc_confirm_option' class='' role='dialog' aria-hidden='true'><div class='modal-dialog'><div class='modal-content wp-core-ui'><div class='modal-header'><h3>{$please_confirm_title}</h3></div><div class='modal-body'><p>"+ confirm_string +"</p></div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>{$please_confirm_cancel}</button><button type='button' id='imc_option_submit' data-item-id='"+ item_id +"' class='btn btn-primary'>"+ confirm_button +"</button></div></div></div></div>");
+
+
+                $('#imc_confirm_option').modal();
+
+                $('#imc_confirm_option').on('hide.bs.modal', function () {
+                    $('#imc_confirm_option').remove();            
+                    $('.modal-backdrop').remove();
+                });
+            
+                
+                $('#imc_option_submit').click(function() {
+                    $('#imc_confirm_option').modal('hide').remove();            
+                    $('.modal-backdrop').remove();
+
+                    //- Clear the message html element
+                    $('#{$message_id}').html(imc_message_spinner).css('opacity', 1);
+
+                    //- Scroll to the top of the page
+                    $('html, body').animate({
+                        scrollTop: $('body').offset().top
+                    }, 500);
+
+                    var item_id = $(this).data('itemId');
+
+                    $.getJSON(
+                            ajaxurl,
+                            {
+                                action: 'general_options_process_key',
+                                item_key: item_id,
+                                item_value: $('#'+ item_id).val()
+                            }).done(function (resp) {
+                                $('#{$message_id}').html('');
+                                var message_class = 'updated';
+                                if (resp instanceof Array || resp instanceof Object) {
+                                    for (var key in resp) {
+                                        var this_message = '';
+                                        if (key == 'msg') {
+                                            //- This assumes everything went fine
+                                            this_message = resp[key] + imc_message_spinner;
+
+                                            //- Refresh the page to go to the next step in the Setup Wizard
+                                            setTimeout(function() {location.reload(true);}, 2500);
+
+                                        } else {
+                                            this_message = resp[key];
+                                            message_class = 'error';
+                                            $('#'+ key).addClass('highlight-error');
+                                        }
+
+                                        if (this_message) {
+                                            $('#{$message_id}').append('<li>'+ this_message + '</li>');
+                                            $('.imc-loading-spinner').hide().delay(1000).show(0);
+                                        }
+                                    }
+                                }
+
+                                $('#{$message_id}').css('opacity', 0)
+                                    .removeClass('error')
+                                    .removeClass('updated')
+                                    .addClass(message_class)
+                                    .css('opacity', 1)
+                                    .show();
+                    });
+                });
+            }
+            
+    });
+           
+    $('#imc_register_webhooks').click(function(event) {
+        event.preventDefault();
+            
+        //- Clear the message html element
+        $('#{$message_id}').html(imc_message_spinner).css('opacity', 1);
+
+        //- Scroll to the top of the page
+        $('html, body').animate({
+            scrollTop: $('body').offset().top
+        }, 500);
+            
+        $.post(
+                ajaxurl,
+                {'action': 'webhook_registration',
+                 'override': 1},
+        //- On Success
+        function (resp) {
+            var message_class = 'updated';
+            $('#{$message_id}').html('');
+            if (resp instanceof Array || resp instanceof Object) {
+                for (var key in resp) {
+                    var this_message = '';
+                    if (key == 'msg') {
+                        //- This assumes everything went fine
+                        this_message = resp[key] + imc_message_spinner;
+
+                        //- Refresh the page to go to the next step in the Setup Wizard
+                        setTimeout(function() {location.reload(true);}, 2500);
+
+                    } else {
+                        this_message = resp[key];
+                        message_class = 'error';
+                        $('#'+ key).addClass('highlight-error');
+                    }
+
+                    if (this_message) {
+                        $('#{$message_id}').append('<li>'+ this_message + '</li>');
+                        $('.imc-loading-spinner').hide().delay(1500).show(0);
+                    }
+                }
+            }
+
+            $('#{$message_id}').css('opacity', 0)
+                .removeClass('error')
+                .removeClass('updated')
+                .addClass(message_class)
+                .css('opacity', 1)
+                .show();
+        });
+
+        return false;
+    });
+    
+        
+    
+    
+SCRIPT;
+
+$javascript = Integral_Plugin_View::format_inline_javascript($javascript);
+
+
+$form = <<<FORM
+    <form name='{$form_name}' class='{$form_name}' method='{$form_method}' action='{$form_action}'>
+    {$fieldsets}
+    {$submit}
+    </form>
+
+FORM;
+
+
+print $javascript;
+
+print $form;
+
+
+
