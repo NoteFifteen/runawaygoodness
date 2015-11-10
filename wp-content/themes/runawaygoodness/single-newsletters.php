@@ -82,7 +82,8 @@ function rg_display_newsletter() {
 										
 										$html .= '<tr>';
 											$html .= '<td class="container-padding item" align="left" style="padding-left:10px;padding-right:10px;padding-top:10px;padding-bottom:0;">';
-												$html .= '<table id="book'. $row_counter.'" cellpadding="0" cellspacing="0" width="580" style="width:580px;max-width:580px;background-color:#ffffff;border-radius:5px;" bgcolor="#ffffff">';
+											$html .= '<a id="book'. $row_counter.'" class="anchor"></a>';
+												$html .= '<table cellpadding="0" cellspacing="0" width="580" style="width:580px;max-width:580px;background-color:#ffffff;border-radius:5px;" bgcolor="#ffffff">';
 													$html .= '<tbody>';
 														$html .= '<tr>';
 															$html .= '<td style="padding:10px"><!--[if mso]>';
