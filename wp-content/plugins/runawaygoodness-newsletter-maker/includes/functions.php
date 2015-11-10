@@ -49,4 +49,4 @@ global $post;
 	return $single_template;
 }
 
-add_filter( 'single_template', 'bt_get_newsletter_template' );
+// add_filter( 'single_template', 'bt_get_newsletter_template' );
