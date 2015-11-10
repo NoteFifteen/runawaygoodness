@@ -3,6 +3,43 @@
 if(function_exists("register_field_group"))
 {
 	register_field_group(array (
+		'id' => 'acf_newsletter_details',
+		'title' => 'Newsletter Details',
+		'fields' => array (
+			array (
+				'key' => 'field_ounthoeurh45nth',
+				'label' => 'Newsletter Send Date',
+				'name' => 'newsletter_send_date',
+				'type' => 'text',
+				'default_value' => '',
+				'placeholder' => '',
+				'prepend' => '',
+				'append' => '',
+				'formatting' => 'html',
+				'maxlength' => '',
+			),
+		),
+		'location' => array (
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'newsletters',
+					'order_no' => 1,
+					'group_no' => 0,
+				),
+			),
+		),
+		'options' => array (
+			'position' => 'normal',
+			'layout' => 'default',
+			'hide_on_screen' => array (
+			),
+		),
+		'menu_order' => 0,
+	));
+
+	register_field_group(array (
 		'id' => 'acf_hero',
 		'title' => 'Hero Details',
 		'fields' => array (
