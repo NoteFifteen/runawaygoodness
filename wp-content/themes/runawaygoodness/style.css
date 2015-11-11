@@ -2112,12 +2112,19 @@ Theme Colors
 	line-height: 1.2;
 }
 
-input#rgsignupbutton {
+.single-prefunk .button {
+	text-decoration: none;
+	margin-top: 10px;
+}
+
+input#rgsignupbutton,
+.single-prefunk .button {
 	background-color: #AA0000;
 	color: #FFF;
 }
 
-input#rgsignupbutton:hover {
+input#rgsignupbutton:hover,
+.single-prefunk .button:hover {
 	background-color: #2e2f33;
 	color: #FFF;
 }
