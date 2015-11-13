@@ -6,7 +6,9 @@ remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
 function rg_display_newsletter() {
 	if( have_rows('book') ) {
 		echo '<body style="background-color:#AB8BAA;">';
-			$html = '<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF;" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">';
+			$html = '<p id="top-newsletter-links" style="text-align:center;font-size:11px;">Were you forwarded this email? <a href="https://runawaygoodness.com/?ref=emailforward">Click here to subscribe</a><br />';
+			$html .= '<a href="'. get_permalink( get_the_ID() ) .'">View this email in a browser</a></p>';
+			$html .= '<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF;" leftmargin="0" rightmargin="0" marginwidth="0" marginheight="0">';
 				$html .= '<tbody>';
 					$html .= '<tr>';
 						$html .= '<td align="center" valign="top" bgcolor="#FFFFFF" style="background-color:#FFFFFF">';
@@ -96,21 +98,20 @@ function rg_display_newsletter() {
 																						$html .= '<td class="col" valign="top" style="padding:0;width:100%">';
 																							if( get_sub_field( 'amazon_asin' ) ) {
 																								if( get_sub_field( 'book_price' ) == '0' ) {
-																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin' ) . '/"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
+																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin' ) . '/"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
 																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/';
 																								} else {
-																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=rgnewsletter-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left"></a>';
+																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=rgnewsletter-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
 																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/?tag=rgnewsletter-20';
 																								}
 																							} else {
-																								$html .= '<img src="' . get_sub_field( 'book_cover' ) . '" alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px" align="left">';
+																								$html .= '<img src="' . get_sub_field( 'book_cover' ) . '" alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left">';
 																							}
 
-																							$html .= '<div style="width:100%;text-align:center;display:inline;">';
-																							$html .= '<p>Share the Deal<br />';
+																							$html .= '<div style="width:100%;text-align:center;display:block;">';
+																							$html .= '<div align="center" style="font-size:14px;font-weight:bold;">Share the Deal<br />';
 																							$html .= '<a href="'. $facebook_share_link .'" target="_blank"><img height="24px" width="24px" src="https://runawaygoodness.com/wp-content/plugins/social-media-feather/synved-social/image/social/regular/48x48/facebook.png"></a>&nbsp;';
-																							$html .= '<a href="'. $twitter_share_link .'" target="_blank"><img height="24px" width="24px" src="https://runawaygoodness.com/wp-content/plugins/social-media-feather/synved-social/image/social/regular/48x48/twitter.png"></a></p>';
-
+																							$html .= '<a href="'. $twitter_share_link .'" target="_blank"><img height="24px" width="24px" src="https://runawaygoodness.com/wp-content/plugins/social-media-feather/synved-social/image/social/regular/48x48/twitter.png"></a></div>';
 																							$html .= '</div>';
 																						$html .= '</td>';
 																					$html .= '</tr>';
@@ -141,7 +142,7 @@ function rg_display_newsletter() {
 																								$html .= '<div style="font-family:Trebuchet MS;color:#8C001A;font-size:20px;line-height:1.38">New Lower Price!</div><br />';
 																							} else {
 																								if( get_sub_field( 'book_original_price' ) ) {
-																									$html .= '<div style="font-family:Trebuchet MS;color:#8C001A;font-size:20px;line-height:1.38">Originally: <s>$'. get_sub_field( 'book_original_price' ) .'</s></div><br />';
+																									$html .= '<div style="font-family:Trebuchet MS;color:#8C001A;font-size:20px;line-height:1.38">Originally: <span style="text-decoration:line-through;">$'. get_sub_field( 'book_original_price' ) .'</span></div><br />';
 																								}
 																							}
 
