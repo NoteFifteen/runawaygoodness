@@ -59,7 +59,7 @@ function rg_signup_form( $hidegenre = false, $button_text ) {
     }
 
    	echo '<input type="hidden" name="lp-source" value="' . $source_id . '" />';
-   	echo '<p><input id="rgsignupbutton" type="submit" name="lp-submitted" value="'. $button_text .'"/></p>';
+   	echo '<p class="subformwrapper"><input id="rgsignupbutton" type="submit" name="lp-submitted" value="'. $button_text .'"/></p>';
    	echo '</form>';
 }
 
@@ -86,7 +86,7 @@ function process_rg_signup() {
 			    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
 			    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
 			    ->body('{	"email_address": "' . $email . '", 
-	    					"status": "pending", 
+	    					"status": "subscribed", 
 	    					"merge_fields": {
 	    						"SOURCE": "' . $source . '",
 	    						"FIRSTCAT": "' . $genre_name . '"
@@ -198,7 +198,7 @@ function process_rg_signup() {
 			    ->sendsJson()								// tell it we're sending (Content-Type) JSON...
 			    ->authenticateWith(API_KEY, API_KEY)		// authenticate with basic auth...
 			    ->body('{	"email_address": "' . $email . '", 
-	    					"status": "pending", 
+	    					"status": "subscribed", 
 	    					"merge_fields": {
 	    						"SOURCE": "' . $source . '",
 	    						"FIRSTCAT": "'. $first_cat .'"
@@ -210,14 +210,17 @@ function process_rg_signup() {
 		}
 
 		// TODO: Handle Already on list
+		/*
+		ANDY - Need Your Help Here!
 		
 		if ($response->body->status == "400") {
 			 echo '<script type="text/javascript">';
-    		echo 'window.location.href = "' . get_site_url() . "/" . get_page_uri( get_option( 'already_in_page' ) ) . "/" . '"';;
+    		echo 'window.location.href = "' . get_site_url() . "/" . get_page_uri( get_option( 'already_in_page' ) ) . "/?e=" . $email .'&l=216"';;
 			echo '</script>';
 			//echo $response->body->status;
 			//print_r($response);
 		}
+		*/
 
     }
 }
@@ -255,7 +258,7 @@ function rg_mailchimp_genres_form() {
 
    	if( isset( $_POST["resetemail"] ) ) {
    		// send email with reset link
-   		$reset_link = get_site_url() . '/' . get_page_uri( get_option( 'already_in_page' ) ) . '/?e='. esc_attr( $_POST["resetemail"] );
+   		$reset_link = get_site_url() . '/' . get_page_uri( get_option( 'already_in_page' ) ) . '/?e='. esc_attr( $_POST["resetemail"] .'&l=258' );
 
    		$to = esc_attr( $_POST["resetemail"] );
    		$subject = 'Update Runaway Goodness subscription';
@@ -381,11 +384,11 @@ function process_rg_genres() {
  			// redirect based on where the visitor came from
  			if( $_POST["frompage"] == get_post( get_option( 'almost_done_page' ) )->post_name ) {
 	 			echo '<script type="text/javascript">';
-	    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'thank_you_page' ) ) . "/" . '"';
+	    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'thank_you_page' ) ) . "/";
 				echo '</script>';
 			} else {
 	 			echo '<script type="text/javascript">';
-	    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'already_in_page' ) ) . "/?e=" . $email . '&st=up"';
+	    		echo 'window.location.href = "' . get_site_url() . '/' . get_page_uri( get_option( 'already_in_page' ) ) . "/?e=" . $email . '&st=up&l=388"';
 				echo '</script>';			
 			}
  		}
@@ -403,3 +406,28 @@ function rg_mailchimp_genres() {
 }
 
 add_shortcode( 'rgmcthankyou' , 'rg_mailchimp_genres' );
+
+
+// used to ONLY process the signups
+function rg_mailchimp_only_signup() {
+    ob_start();
+    process_rg_signup();
+    return ob_get_clean();
+}
+
+add_shortcode( 'rgmsignuponly' , 'rg_mailchimp_only_signup' );
+
+
+
+function rg_update_sub_link() {
+	if( isset($_POST['lp-email'] ) ) {
+		$link = get_site_url() . '/' . get_page_uri( get_option( 'update_sub_page' ) ) . "/?e=" . $_POST['lp-email'] .'&l=421';
+	} else {
+		$link = get_site_url() . '/' . get_page_uri( get_option( 'update_sub_page' ) ) . "/";
+	}
+
+	$html = '<a href="'.$link.'" class="button">Update Subscription</a>';
+
+	return $html;
+}
+add_shortcode( 'rgupdatesublink', 'rg_update_sub_link' );

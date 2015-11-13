@@ -413,4 +413,21 @@ function rg_set_cron() {
 }
 
 
+add_filter('wpseo_opengraph_image', 'rg_prefunk_seo_image', 10, 1);
+
+function rg_prefunk_seo_image($og_image) {
+    if( is_post_type_archive('prefunk') )
+        $og_image = 'http://runawaygoodness.com/wp-content/uploads/2015/11/FB_wk2.png';
+
+   return $og_image;
+};
+
+
+add_action( 'wp_head', 'rg_prefunk_description' );
+
+function rg_prefunk_description() {
+	if( is_post_type_archive('prefunk') ) {
+		echo '<meta property="og:description" content="Prefunk the Holidays with 200+ books, all Free!" />';
+	}
+}
 

@@ -2112,19 +2112,23 @@ Theme Colors
 	line-height: 1.2;
 }
 
-.single-prefunk .button {
+.single-prefunk .button,
+.button,
+.entry-content a.button {
 	text-decoration: none;
 	margin-top: 10px;
 }
 
 input#rgsignupbutton,
-.single-prefunk .button {
+.single-prefunk .button,
+.button {
 	background-color: #AA0000;
 	color: #FFF;
 }
 
 input#rgsignupbutton:hover,
-.single-prefunk .button:hover {
+.single-prefunk .button:hover,
+.button:hover {
 	background-color: #2e2f33;
 	color: #FFF;
 }
@@ -2221,6 +2225,26 @@ a.anchor {
     display: block;
     position: relative;
     top: -70px;
+}
+
+#top-newsletter-links {
+	display: none;
+}
+
+
+.rgsidebarsignup {
+	background-color: #987197;
+	padding: 20px!important;
+	color: #fff;
+	border: 3px solid #2e2f33;
+}
+
+.rgsidebarsignup #lp-genre {
+	width: 100%;
+}
+
+.subformwrapper {
+	text-align: center;
 }
 
 /*

@@ -10,6 +10,7 @@ function rgmc_register_settings() {
 	register_setting( 'rgmc_settings', 'almost_done_page' );
 	register_setting( 'rgmc_settings', 'thank_you_page' );
 	register_setting( 'rgmc_settings', 'already_in_page' );
+	register_setting( 'rgmc_settings', 'update_sub_page' );
 }
 
 function rgmc_add_menu() {
@@ -47,6 +48,12 @@ function rgmc_settings_page() {
 		'show_option_none'	=> 'Please Select'
 	);
 
+	$args_update_sub = array(
+		'selected'			=> get_option( 'update_sub_page' ),
+		'name'				=> 'update_sub_page',
+		'show_option_none'	=> 'Please Select'
+	);
+
 	?>
 	<table class="form-table">
 		<tr valign="top">
@@ -62,6 +69,11 @@ function rgmc_settings_page() {
 		<tr valign="top">
 		<th scope="row">Already In Page</th>
 		<td><?php wp_dropdown_pages( $args_already_in ); ?></td>
+		</tr>
+
+		<tr valign="top">
+		<th scope="row">Update Subscription Page</th>
+		<td><?php wp_dropdown_pages( $args_update_sub ); ?></td>
 		</tr>
 	</table>
 
