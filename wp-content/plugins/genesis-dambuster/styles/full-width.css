@@ -1,0 +1,31 @@
+.gd-full-width,
+.gd-full-width .site-container,
+.gd-full-width .site-container .site-inner,
+.gd-full-width .site-container .site-inner .wrap,
+.gd-full-width .site-container .content-sidebar-wrap,
+.gd-full-width .site-container main.content,
+.gd-full-width .site-container main.content > article.entry,
+.gd-full-width .site-container main.content > article.entry .entry-content {
+    max-width: 100%;
+    width: 100%;
+	 background: none;
+    border: 0;
+    float: none;
+    margin: 0 auto;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -webkit-box-shadow: none;
+}
+
+body.gd-transparent-background { background-color: transparent!important; }
+
+@media screen and (max-width: 500px) {
+   .gd-full-width .fl-row-bg-video video {
+       left:0 !important;    
+    }
+  .gd-full-width .fl-row-bg-video {
+    min-width: 360px;
+  }
+}
