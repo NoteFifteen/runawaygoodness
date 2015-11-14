@@ -257,6 +257,7 @@ register_field_group(array (
 						'formatting' => 'html',
 						'maxlength' => '',
 					),
+					/*
 					array (
 						'key' => 'field_5554366cdb572',
 						'label' => 'Barnes & Noble URL',
@@ -274,6 +275,34 @@ register_field_group(array (
 						'key' => 'field_55543685db573',
 						'label' => 'iBook URL',
 						'name' => 'ibook_url',
+						'type' => 'text',
+						'column_width' => '',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'html',
+						'maxlength' => '',
+					),
+					*/
+				
+					array (
+						'key' => 'field_86234598673jej',
+						'label' => 'H/T Site Name',
+						'name' => 'ht_site_name',
+						'type' => 'text',
+						'column_width' => '',
+						'default_value' => '',
+						'placeholder' => '',
+						'prepend' => '',
+						'append' => '',
+						'formatting' => 'html',
+						'maxlength' => '',
+					),
+					array (
+						'key' => 'field_2348g189gjuo',
+						'label' => 'H/T Site URL',
+						'name' => 'ht_site_url',
 						'type' => 'text',
 						'column_width' => '',
 						'default_value' => '',
