@@ -179,6 +179,12 @@ class InstapageApi extends instapage {
 			return self::getInstance()->includes[ 'admin' ]->formatError( "Instapage says: Page Not found!" );
 		}
 
-		return $this->fixHtmlHead( $page['body'] );
+		$return = array
+		(
+			'body' => $this->fixHtmlHead( $page[ 'body' ] ),
+			'status' => $page[ 'response' ][ 'code' ]
+		);
+
+		return $return;
 	}
 }

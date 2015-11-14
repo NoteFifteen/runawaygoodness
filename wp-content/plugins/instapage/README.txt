@@ -28,6 +28,13 @@ Step 3: Sync your masterpiece to wordpress with one click.
 
 == Changelog ==
 
+= 2.12 =
+- Fixed: WP search doesn't works if landing page is set to homepage
+- Fixed: publishing bug
+
+= 2.11 =
+- Fixed: 410 header status on unpublished landing page
+
 = 2.10 =
 - Fixed: instapage landing page appears on /blog for no reason
 

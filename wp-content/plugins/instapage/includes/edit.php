@@ -7,6 +7,37 @@ class InstapageEdit extends instapage
 		add_action( 'add_meta_boxes', array( &$this, 'addCustomMetaBox' ) );
 		add_action( 'save_post', array( &$this, 'saveCustomMeta' ), 10, 2 );
 		add_action( 'save_post', array( &$this, 'validateCustomMeta' ), 20, 2 );
+		add_action( 'wp_trash_post', array( &$this, 'trashInstapagePost' ) );
+	}
+
+	public function trashInstapagePost( $post_id )
+	{
+		global $post;
+
+		if ( $post->post_type != 'instapage_post' )
+		{
+			return $post_id;
+		}
+
+		$page_id = get_post_meta( $post->ID, 'instapage_my_selected_page', true );
+
+		$data = array
+		(
+			'user_id' => get_option( 'instapage.user_id' ),
+			'plugin_hash' => get_option( 'instapage.plugin_hash' ),
+			'page_id' => $page_id,
+			'url' => '',
+			'secure' => is_ssl()
+		);
+
+		try
+		{
+			$this->updatePageDetails( $data );
+		}
+		catch( InstapageApiCallException $e )
+		{
+			error_log( $e->getMessage() );
+		}
 	}
 
 	// Add the Meta Box

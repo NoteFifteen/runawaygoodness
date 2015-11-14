@@ -156,7 +156,8 @@ class InstapagePage extends instapage
 			// draft mode
 			$post_id = $wpdb->get_var( "SELECT ID FROM `{$wpdb->posts}` WHERE post_name = '". $wpdb->escape( $_GET[ 'instapage_post' ] ) ."' LIMIT 1" );
 			$instapage_id = get_post_meta( (int)  $post_id, 'instapage_my_selected_page' );
-			$html = self::getInstance()->includes[ 'api' ]->getPageHtml( $instapage_id[ 0 ] );
+			$page_html = self::getInstance()->includes[ 'api' ]->getPageHtml( $instapage_id[ 0 ] );
+			$html = $page_html[ 'body' ];
 		}
 		else
 		{
@@ -168,7 +169,8 @@ class InstapagePage extends instapage
 				return $posts;
 			}
 
-			$html = self::getInstance()->includes[ 'api' ]->getPageHtml( $requested_page[ 'id' ] );
+			$page_html = self::getInstance()->includes[ 'api' ]->getPageHtml( $requested_page[ 'id' ] );
+			$html = $page_html[ 'body' ];
 		}
 
 		if ( ob_get_length() > 0 )
@@ -176,7 +178,7 @@ class InstapagePage extends instapage
 			ob_end_clean();
 		}
 
-		status_header( '200' );
+		status_header( $page_html[ 'status' ] );
 
 		header( 'Access-Control-Allow-Origin: *' );
 
@@ -283,6 +285,12 @@ class InstapagePage extends instapage
 			return;
 		}
 
+		// check if WP search results page should be displayed instead of landing page
+		if( isset( $_GET[ 's' ] ) )
+		{
+			return;
+		}
+
 		$home_url = str_replace( array( 'http://', 'https://' ), '', rtrim( get_home_url(), '/' ) );
 		$home_url_segments = explode( '/', $home_url );
 		$uri_segments = explode( '?', $_SERVER[ 'REQUEST_URI' ] );
@@ -302,7 +310,8 @@ class InstapagePage extends instapage
 				if ( $mp !== false && $mp->post_status == 'publish' )
 				{
 					// get and display the page at root
-					$html = self::getInstance()->includes[ 'api' ]->getPageHtml( $mp->lp_id );
+					$page_html = self::getInstance()->includes[ 'api' ]->getPageHtml( $mp->lp_id );
+					$html = $page_html[ 'body' ];
 
 					if ( ob_get_length() > 0 )
 					{
@@ -315,7 +324,7 @@ class InstapagePage extends instapage
 						ob_start();
 					}
 
-					status_header( '200' );
+					status_header( $page_html[ 'status' ] );
 					print $html;
 					ob_end_flush();
 					die();
@@ -347,7 +356,8 @@ class InstapagePage extends instapage
 	{
 		// show the instapage
 		$mp = $this->getPageById( $id_404 );
-		$html = self::getInstance()->includes[ 'api' ]->getPageHtml( $mp->lp_id );
+		$page_html = self::getInstance()->includes[ 'api' ]->getPageHtml( $mp->lp_id );
+		$html = $page_html[ 'body' ];
 
 		if ( ob_get_length() > 0 )
 		{
