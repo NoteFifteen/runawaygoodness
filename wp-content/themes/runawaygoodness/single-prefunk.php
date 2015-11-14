@@ -24,7 +24,7 @@ function rg_prefunk_single() {
 		echo '<div>Genre(s): ' . $term_list .'</div>';
 	}
 
-	echo '<div><a href="http://amazon.com/dp/'. get_field('amazon_asin').'" class="button">Download Now</a></div>';
+	echo '<div><a href="http://amazon.com/dp/'. get_field('amazon_asin').'/?tag=prefunk-20" class="button">Download Now</a></div>';
 }
 
 
