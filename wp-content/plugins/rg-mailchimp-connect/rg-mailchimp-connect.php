@@ -15,7 +15,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-define( RG_INCLUDE_PATH, plugin_dir_path( __FILE__ ) . 'includes' );
+define( 'RG_INCLUDE_PATH', plugin_dir_path( __FILE__ ) . 'includes' );
 
 // point to where you downloaded the REST libarary phar
 include( RG_INCLUDE_PATH . '/httpful.phar' );
