@@ -168,7 +168,7 @@ function rg_display_newsletter() {
 																								$html .= '</tbody>';
 																							$html .= '</table><br />';
 																							if( get_sub_field( 'ht_site_name' ) && get_sub_field( 'ht_site_url' ) ) {
-																								$html .= '<div style="font-size:16px;font-weight:bold;">Hat Tip: <a href="'. get_sub_field( 'ht_site_url' ) .'">'. get_sub_field( 'ht_site_name' ) .'</a></div>';
+																								$html .= '<div style="font-size:16px;font-weight:bold;">Hat Tip: <a href="'. get_sub_field( 'ht_site_url' ) .'" target="_blank">'. get_sub_field( 'ht_site_name' ) .'</a></div>';
 																							}
 																						$html .= '</td>';
 																					$html .= '</tr>';
@@ -305,5 +305,20 @@ function bt_cta( $cta_num, $image ) {
 		return $data;
 }
 
+add_action( 'genesis_entry_content', 'rg_share_the_deals', 1 );
+
+function rg_share_the_deals() {
+	echo '<div style="text-align:center;width:100%;">';
+		echo '<div style="width:600px; background-color: #AB8BAA; margin: 0 auto 20px;padding:10px 0;">';
+			echo '<h2 style="color:#FFF;">Share Today\'s Newsletter</h2>';
+				echo '<a href="https://www.facebook.com/sharer/sharer.php?u='. urlencode( get_permalink( get_the_ID() ) ) .'" target="_blank"><img src="http://runawaygoodness.com/wp-content/uploads/2015/09/facebook.jpg"></a> ';
+				echo '<a href="https://twitter.com/home?status='. urlencode( 'Check out the amazing book deals from the Runaway Goodness newsletter! ' . get_permalink( get_the_ID() ) . ' @runawaygoodness' ) .'" target="_blank"><img src="http://runawaygoodness.com/wp-content/uploads/2015/09/twitter.jpg"></a> ';
+				echo '<a href="https://plus.google.com/share?url='. urlencode( get_permalink( get_the_ID() ) ) .'" target="_blank"><img src="http://runawaygoodness.com/wp-content/uploads/2015/09/googleplus.jpg"></a> ';
+				echo '<a href="mailto:?subject='. urlencode( 'Runaway Goodness ' . get_the_title() ).'&body=Check out these great deals I found in the Runaway Goodness newsletter!%0A%0A'. get_permalink( get_the_ID() ) .'" target="_blank"><img src="https://runawaygoodness.com/wp-content/uploads/2015/11/email-icon.jpg"></a>';
+		echo '</div>';
+	echo '</div>';
+}
 
 genesis();
+
+
