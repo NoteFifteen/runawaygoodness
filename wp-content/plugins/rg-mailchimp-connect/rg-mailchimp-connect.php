@@ -26,6 +26,9 @@ include( RG_INCLUDE_PATH . '/functions.php' );
 // Include Settings page
 include( RG_INCLUDE_PATH . '/settings-page.php' );
 
+// Include the Widget API
+include( RG_INCLUDE_PATH . '/widget-api.php' );
+
 define( 'API_KEY', '19970225f9c849e9cf2b472d76604739-us11' ); // RAG 
 
 // Set which list you want to use
