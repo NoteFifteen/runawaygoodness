@@ -40,7 +40,7 @@ RunawayGoodness.SubscribeForm.buildForm = function() {
             .css('background', 'black')
             .css('color', 'white')
             .css('font-family', "'Lato', sans-serif")
-            .css('font-size', '14pt')
+            .css('font-size', '12pt')
             .css('text-align','center')
             .css('margin', '4px')
             .css('padding', '5px');
@@ -84,7 +84,10 @@ RunawayGoodness.SubscribeForm.buildForm = function() {
         this.email_input.setAttribute('name', 'rg-email');
         this.email_input.setAttribute('class', 'rg-email');
         this.email_input.setAttribute('placeholder', 'Enter your email address');
-        $(this.email_input).css('width', '200px').css('padding', '2px');
+        $(this.email_input)
+            .css('font-size', '9pt')
+            .css('width', '200px')
+            .css('padding', '2px');
         email_input_p.appendChild(this.email_input);
 
         var submit_button_p = document.createElement('p');
