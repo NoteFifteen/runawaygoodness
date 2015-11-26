@@ -431,3 +431,77 @@ function rg_prefunk_description() {
 	}
 }
 
+// display shareasale tracking pixel
+add_action( 'wp_footer', 'rg_shareasale_pixel' );
+
+function rg_shareasale_pixel() {
+	if( is_page( '2991' ) ) {
+		if( isset( $_POST['lp-source']) && $_POST['lp-source'] == 'sas' ) {
+			echo '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='. $_POST['lp-email'] .'&transtype=lead&merchantID=62529" width="1" height="1">';
+		}
+	}
+}
+
+
+
+// Latest Newsletter shortcode
+add_shortcode( 'latest_newsletters', 'latest_newsletters_shortcode' );
+
+function latest_newsletters_shortcode() {
+	$args = array(
+		'post_type' => 'newsletters',
+		'posts_per_page' => 5
+	);
+
+	$the_query = new WP_Query( $args );
+
+	if ( $the_query->have_posts() ) {
+
+		while ( $the_query->have_posts() ) {
+			$the_query->the_post();
+			
+			// deal with title
+			$title = get_the_title();
+
+			$newsletter_type = strstr( $title, ' Newsletter ', true );
+
+			$row_count = 1;
+			while ( have_rows('book') ) : the_row();
+				if( $row_count == 1 ) {
+					// grab some image information first
+					$image = get_sub_field( 'book_cover' );
+
+					if( !empty($image) ) {
+
+						// vars
+						$url = $image['url'];
+						$title = $image['title'];
+						$alt = $image['alt'];
+						$caption = $image['caption'];
+
+						// thumbnail
+						$size = 'homedeal';
+						$thumb = $image['sizes'][ $size ];
+						$width = $image['sizes'][ $size . '-width' ];
+						$height = $image['sizes'][ $size . '-height' ];
+					}
+				}
+				$row_count++;
+			endwhile;
+
+
+
+			$html .= '<div class="newsletter_box">';
+				$html .= '<strong><a href="' . get_the_permalink() . '">' . $newsletter_type . '</a></strong><br />';
+				$html .= '<a href="' . get_the_permalink() . '"><img src="'. $thumb .'"></a><br />';
+				$html .= get_field( 'newsletter_send_date' ) . '<br />';
+				$html .= '<a href="' . get_the_permalink() . '" class="button">Click To View</a>';
+			$html .= '</div>';
+
+
+		}
+	}
+
+	return $html;
+
+}

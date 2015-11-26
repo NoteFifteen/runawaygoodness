@@ -101,8 +101,8 @@ function rg_display_newsletter() {
 																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin' ) . '/"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
 																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/';
 																								} else {
-																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=rgnewsletter-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
-																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/?tag=rgnewsletter-20';
+																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=runawaygoodness-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
+																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/?tag=runawaygoodness-20';
 																								}
 																							} else {
 																								$html .= '<img src="' . get_sub_field( 'book_cover' ) . '" alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left">';
@@ -146,7 +146,11 @@ function rg_display_newsletter() {
 																								}
 																							}
 
-																							$html .= '<div style="font-family:Trebuchet MS;color:#555555;font-size:14px;line-height:1.38">Available for a limited time</div>';
+																							$urgency = array( 'Available for a limited time', 'Ending Soon', 'Almost Gone', 'Offer Ending Soon' );
+																							// $rand_urgency = array_rand( $urgency, 1 );
+																							$rand_urgency = $urgency[mt_rand(0, count($urgency) - 1)];
+
+																							$html .= '<div style="font-family:Trebuchet MS;color:#555555;font-size:14px;line-height:1.38">'. $rand_urgency .'</div>';
 
 																							if( get_sub_field( 'book_price' ) == '0' || get_sub_field( 'book_price' ) == '0.00' ) {
 																								// $html .= '<div style="font-family:Trebuchet MS;color:#ff2800;font-size:32px;line-height:1.38"><strong>Download Free!</strong></div><br />';
@@ -236,6 +240,9 @@ function rg_display_newsletter() {
 
 	if( current_user_can( 'manage_options' ) ) {
 		echo '<br /><br /><br />';
+
+		$html = str_replace('runawaygoodness-20', 'rgnewsletter-20', $html );
+
 		echo '<textarea rows="25" cols="100">' . $html .'</textarea>';
 	}
 

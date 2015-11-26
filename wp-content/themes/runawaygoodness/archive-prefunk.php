@@ -21,7 +21,7 @@ add_action( 'genesis_before_loop', 'rg_prefunk_head' );
 function rg_prefunk_head() {
 	echo '<div class="prefunkhead">';
 	echo '<h1>Prefunk The Holidays!</h1>';
-	echo '<h2>200+ Books, All Free!</h2>';
+	echo '<h2>200+ Books, Each just $2.99!</h2>';
 	echo '</div>';
 }
 

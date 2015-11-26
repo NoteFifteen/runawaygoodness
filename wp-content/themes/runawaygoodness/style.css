@@ -2247,6 +2247,12 @@ a.anchor {
 	text-align: center;
 }
 
+.newsletter_box {
+	float: left;
+	width: 220px;
+	margin: 5px;
+}
+
 /*
 After Dark section
 ---------------------------------------------------------------------------------------------------- */
