@@ -2,7 +2,7 @@
 /*
 Plugin Name: Instapage
 Description: Instapage Wordpress Plugin
-Version: 2.12
+Version: 2.21
 Plugin URI: http://www.instapage.com/
 Author: instapage
 Author URI: http://www.instapage.com/
@@ -28,17 +28,11 @@ function files_to_include()
 		'main',
 		'page',
 		'service',
-		'view'
+		'view',
+		'log'
 	);
 
 	return $files_to_include;
-}
-
-$files_to_include = files_to_include();
-
-foreach( $files_to_include as $file_to_include )
-{
-	require_once( INSTAPAGE_PLUGIN_DIR . '/includes/' . $file_to_include . '.php' );
 }
 
 class instapage
@@ -50,6 +44,7 @@ class instapage
 	const php_version_required = '5.2';
 	const endpoint = 'http://app.myinstapage.com';
 	const cached_service_lifetime = 86400;
+	const instapage_support_link = 'https://help.instapage.com';
 
 	protected $my_pages = false;
 	protected $plugin_details = false;
@@ -215,10 +210,15 @@ class instapage
 
 		foreach( $files_to_include as $file_to_include )
 		{
+			require_once( INSTAPAGE_PLUGIN_DIR . '/includes/' . $file_to_include . '.php' );
+
 			$class_name = 'Instapage' . str_replace( ' ', '', ucwords( str_replace( array( '-', '.php' ), array( ' ', '' ), $file_to_include ) ) );
 			$class_name_short = strtolower( str_replace( 'Instapage', '', $class_name ) );
 			$this->includes[ $class_name_short ] = new $class_name();
 		}
+
+		//include static helpers
+		require_once( INSTAPAGE_PLUGIN_DIR . '/includes/helpers.php' );
 	}
 }
 

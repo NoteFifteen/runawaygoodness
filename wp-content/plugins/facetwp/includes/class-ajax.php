@@ -320,7 +320,7 @@ class FacetWP_Ajax
         if ( 'export' == $action_type ) {
             $items = $_POST['items'];
 
-            if ( !empty( $items ) ) {
+            if ( ! empty( $items ) ) {
                 foreach ( $items as $item ) {
                     if ( 'facet' == substr( $item, 0, 5 ) ) {
                         $item_name = substr( $item, 6 );

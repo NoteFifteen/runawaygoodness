@@ -36,12 +36,15 @@ class InstapageIndex extends instapage
 		}
 
 		$post_id = get_the_ID();
+		$instapage_slug = get_post_meta( $post_id, 'instapage_slug', true );
 		$page_url = self::getInstance()->includes[ 'page' ]->getPageUrl( $post_id );
 		$page_preview = self::getInstance()->includes[ 'page' ]->getPageScreenshot( $post_id );
 		$page_edit_url = self::getInstance()->includes[ 'page' ]->getPageEditUrl( $post_id );
 		$page_name = self::getInstance()->includes[ 'page' ]->getPageName( $post_id );
+		$delete_link = get_delete_post_link( $post_id, null, true );
 
 		$page_stats = self::getInstance()->includes[ 'page' ]->getPageStats( $post_id );
+		$additional_class = '';
 
 		switch ( $column )
 		{
@@ -57,8 +60,27 @@ class InstapageIndex extends instapage
 				break;
 
 			case 'instapage_post_name':
-				echo '<div class="instapage-post-name"><strong><a href="' . $page_edit_url .'">' .  $page_name . '</a></strong></div>';
+				$wp_post_id = url_to_postid( $page_url );
+
+				if( $wp_post_id )
+				{
+					$wp_post_edit_url = get_edit_post_link( $wp_post_id );
+					echo '<div class="error">' . sprintf( __( '<p>Instapage URL (<a href="%s">%s</a>) is duplicated. Instapage plugin will override post settings, Instapage will be displayed.</p><p>To avoid permalink overriding <a href="%s">edit the post</a> and change permalink or <a href="%s">edit Instapage</a> and change custom URL.' ), $page_url, $page_url, $wp_post_edit_url, $page_edit_url ) . '</p></div>';
+					$additional_class = ' instapage-warning ';
+
+				}
+
+				$test_path = get_home_path() . $instapage_slug;
+
+				if( $instapage_slug != '' && is_dir( $test_path ) )
+				{
+					echo '<div class="error"><p>' . sprintf( '<strong>' . __( 'Custom URL' ) . '</strong>' . __( ' is incorrect, it leads to an existing directory (%s). <a href="%s">Edit Instapage</a> and change custom URL to prevent 403 server error. ' ), $test_path, $page_edit_url ) . '</p></div>';
+					$additional_class = ' instapage-warning ';
+				}
+
+				echo '<div class="instapage-post-name ' . $additional_class . '"><strong><a href="' . $page_edit_url .'">' .  $page_name . '</a></strong></div>';
 				echo '<div class="instapage-post-url">Landing Page URL: <a href="' . $page_url . '" target="_blank">' . $page_url . '</a></div>';
+				echo '<div class="instapage-delete"><a class="submitdelete" href="' . $delete_link . '">' . __( 'Delete from WP' ) . '</a></div>';
 				break;
 
 			case 'instapage_post_stats':

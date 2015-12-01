@@ -1,7 +1,6 @@
-/**
- * This is for convenience of developing only. The minified result should go into
- * the _css var in iris.js. Run grunt cssmin to generate.
- */
+/* Iris Base
+---------------------------------------------------- */
+
 .fl-color-picker-ui .iris-picker {
 	width: 200px;
 	height: 215px;
@@ -167,9 +166,10 @@
 	height: 1px;
 }
 
-/* Beaver Picker Stuff ---------------------------------------------- */
+/* Beaver Picker 
+---------------------------------------------------- */
 
-.fl-color-picker-wrapper{
+.fl-color-picker-wrapper {
 	position: relative;
 	width: 48px;
 	height: 32px;
@@ -203,6 +203,7 @@
 
 .fl-color-picker-ui{
 	display: inline-block;
+	font-family: Helvetica, Verdana, sans-serif;
 	z-index: 999999;
 	position: fixed;
 	overflow: hidden;
@@ -240,7 +241,13 @@
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
-
+.fl-color-picker-ui .iris-square-value {
+	-webkit-transition: none;
+	-moz-transition:    none;
+	-ms-transition:     none;
+	-o-transition:      none;
+	transition:         none;
+}
 .fl-color-picker-preset-add{
 	position: absolute;
 	top: 8px;
@@ -418,7 +425,8 @@
 			transform: translate(-50%,-50%);
 }
 
-/* CSS icons ========================================= */
+/* Color Picker Icons
+---------------------------------------------------- */
 
 .fl-color-picker-icon-check{
 	position: relative;

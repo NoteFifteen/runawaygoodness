@@ -3,7 +3,7 @@
 Plugin Name: FacetWP
 Plugin URI: https://facetwp.com/
 Description: Advanced Filtering for WordPress
-Version: 2.2.7
+Version: 2.2.8
 Author: Matt Gibbs
 
 Copyright 2015 Matt Gibbs
@@ -38,7 +38,7 @@ class FacetWP
     function __construct() {
 
         // setup variables
-        define( 'FACETWP_VERSION', '2.2.7' );
+        define( 'FACETWP_VERSION', '2.2.8' );
         define( 'FACETWP_DIR', dirname( __FILE__ ) );
         define( 'FACETWP_URL', plugins_url( basename( FACETWP_DIR ) ) );
         define( 'FACETWP_BASENAME', plugin_basename( __FILE__ ) );

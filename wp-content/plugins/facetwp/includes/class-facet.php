@@ -245,10 +245,12 @@ class FacetWP_Facet
         global $wpdb;
 
         // Only get relevant post IDs
-        $args = $this->query_args;
-        $args['fields'] = 'ids';
-        $args['posts_per_page'] = -1;
-        $args['paged'] = 1;
+        $args = array_merge( $this->query_args, array(
+            'fields'            => 'ids',
+            'posts_per_page'    => -1,
+            'paged'             => 1,
+            'cache_results'     => false,
+        ) );
 
         $query = new WP_Query( $args );
         $post_ids = (array) $query->posts;

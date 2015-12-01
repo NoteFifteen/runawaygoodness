@@ -570,11 +570,23 @@ final class FLBuilderAdminSettings {
 	{
 		if ( isset( $_POST['fl-branding-nonce'] ) && wp_verify_nonce( $_POST['fl-branding-nonce'], 'branding' ) ) {
 			
+			// Get the plugin branding data.
 			$branding		= wp_kses_post( $_POST['fl-branding'] );
 			$branding_icon	= sanitize_text_field( $_POST['fl-branding-icon'] );
 			
+			// Get the theme branding data.
+			$theme_data = array(
+				'name' 				=> wp_kses_post( $_POST['fl-theme-branding-name'] ),
+				'description' 		=> wp_kses_post( $_POST['fl-theme-branding-description'] ),
+				'company_name' 		=> wp_kses_post( $_POST['fl-theme-branding-company-name'] ),
+				'company_url' 		=> sanitize_text_field( $_POST['fl-theme-branding-company-url'] ),
+				'screenshot_url' 	=> sanitize_text_field( $_POST['fl-theme-branding-screenshot-url'] ),
+			);
+			
+			// Save the data.
 			FLBuilderModel::update_admin_settings_option( '_fl_builder_branding', $branding, false );
 			FLBuilderModel::update_admin_settings_option( '_fl_builder_branding_icon', $branding_icon, false );
+			FLBuilderModel::update_admin_settings_option( '_fl_builder_theme_branding', $theme_data, false );
 		}
 	}
 	

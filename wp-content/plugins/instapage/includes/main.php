@@ -27,6 +27,11 @@ class InstapageMain extends instapage
 			'parent_item_colon'		=> ''
 		);
 
+		$capabilities = array
+		(
+			''
+		);
+
 		$args = array
 		(
 			'labels'				=> $labels,

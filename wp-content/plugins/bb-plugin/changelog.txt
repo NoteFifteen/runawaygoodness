@@ -1,3 +1,23 @@
+<h4>1.6.4.3 - 11/23/2015</h4>
+<p><strong>Enhancements</strong></p>
+<ul>
+	<li>Added theme branding to the page builder's branding settings for Agency customers.</li>
+	<li>Added show_remove option to photo fields for developers.</li>
+</ul>
+<p><strong>Bug Fixes</strong></p>
+<ul>
+	<li>Fixed CSS conflicts with third party themes and the core WordPress media uploader UI.</li>
+	<li>Fixed multiple color picker bugs.</li>
+	<li>Fixed a bug with the media library not showing on older versions of Safari.</li>
+	<li>Fixed a bug with the Accordion module not applying the correct class to all open items.</li>
+	<li>Fixed a bug caused by entering text strings into the Number Counter settings.</li>
+	<li>Fixed a bug with template assets not loading with the fl_builder_global_posts filter.</li>
+	<li>Fixed a bug with the Slideshow module where thumbnail pagination would disappear when two slideshows were on the same page.</li>
+	<li>Fixed a bug with module animations not running when positioned below a gallery module.</li>
+	<li>Fixed a bug with video background positions being messed up when images haven't fully loaded within a row.</li>
+	<li>Fixed a bug causing random sorting of posts in the Posts module not to work.</li>
+</ul>
+
 <h4>1.6.4.2 - 11/05/2015</h4>
 <p><strong>Enhancements</strong></p>
 <ul>

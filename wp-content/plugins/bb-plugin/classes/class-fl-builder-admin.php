@@ -264,4 +264,36 @@ final class FLBuilderAdmin {
 
 		return $plugins;
 	}
+
+	/**
+	 * White labels the builder theme on the themes page.
+	 *
+	 * @since 1.6.4.3
+	 * @param array $themes An array data for each theme.
+	 * @return array
+	 */
+	static public function white_label_themes_page( $themes )
+	{
+		if ( isset( $themes['bb-theme'] ) ) {
+			
+			$theme_data = FLBuilderModel::get_theme_branding();
+			
+			if ( ! empty( $theme_data['name'] ) ) {
+				$themes['bb-theme']['name'] = $theme_data['name'];
+			}
+			if ( ! empty( $theme_data['description'] ) ) {
+				$themes['bb-theme']['description'] = $theme_data['description'];
+			}
+			if ( ! empty( $theme_data['company_name'] ) ) {
+				$company_url = empty( $theme_data['company_url'] ) ? '#' : $theme_data['company_url'];
+				$themes['bb-theme']['author'] = $theme_data['company_name'];
+				$themes['bb-theme']['authorAndUri'] = '<a href="' . $company_url . '">' . $theme_data['company_name'] . '</a>';
+			}
+			if ( ! empty( $theme_data['screenshot_url'] ) ) {
+				$themes['bb-theme']['screenshot'] = array( $theme_data['screenshot_url'] );
+			}
+		}
+		
+		return $themes;
+	}
 }

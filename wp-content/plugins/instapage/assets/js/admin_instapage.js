@@ -1,5 +1,33 @@
 jQuery( document ).ready()
 {
+	jQuery( '#instapage_meta_box select[name="post-type"]' ).ready( function()
+	{
+		var disableEnter = function( e )
+		{
+			if( e.keyCode == 13 )
+			{
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+		}
+
+		jQuery( document ).keypress( function( e )
+		{
+			disableEnter( e );
+		} );
+		jQuery( '#instapage_slug' ).keypress( function( e )
+		{
+			disableEnter( e );
+		} );
+
+		jQuery( '#instapage_name' ).keypress( function( e )
+		{
+			disableEnter( e );
+		} );
+
+	} );
+
 	jQuery( 'a.instapage-hide-stats' ).ready( function()
 	{
 		jQuery( 'a.instapage-hide-stats' ).on( 'click', function( e )
@@ -70,15 +98,30 @@ jQuery( document ).ready()
 		});
 	});
 
+	jQuery( 'input#publish' ).ready( function()
+	{
+		jQuery( this ).click( function()
+		{
+			selected_value = jQuery( 'select[name="post-type"] option:selected' ).val();
+
+			if( selected_value == '404' || selected_value == 'home' )
+			{
+				jQuery( '#instapage_slug' ).val( '' );
+			}
+
+			return true;
+		} );
+	} );
+
 	jQuery( '#instapage_meta_box select[name="post-type"]' ).ready( function()
 	{
 		if ( jQuery( '#instapage_meta_box select[name="post-type"]' ).val() === 'home' || jQuery( '#instapage_meta_box select[name="post-type"]' ).val() === '404' )
 		{
-			jQuery( '.subsection_instapage_url' ).hide();
+			jQuery( '.subsection_instapage_url' ).addClass( 'hidden' );
 		}
 		else
 		{
-			jQuery( '.subsection_instapage_url' ).show();
+			jQuery( '.subsection_instapage_url' ).removeClass( 'hidden' );
 			resizeInstapageSlug();
 		}
 
@@ -86,11 +129,11 @@ jQuery( document ).ready()
 		{
 			if ( jQuery( this ).val() === 'home' || jQuery( this ).val() === '404' )
 			{
-				jQuery( '.subsection_instapage_url' ).hide();
+				jQuery( '.subsection_instapage_url' ).addClass( 'hidden' );
 			}
 			else
 			{
-				jQuery( '.subsection_instapage_url' ).show();
+				jQuery( '.subsection_instapage_url' ).removeClass( 'hidden' );
 				resizeInstapageSlug();
 			}
 		});

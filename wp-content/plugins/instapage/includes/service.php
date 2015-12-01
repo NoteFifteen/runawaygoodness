@@ -238,13 +238,13 @@ class InstapageService extends instapage
 
 		if ( !$response )
 		{
-			self::getInstance()->includes[ 'admin' ]->showMessage( false, 'Error while checking for update. Can\'t reach Instapage server. Please check your connection.' );
+			InstapageIO::addNotice( __( 'Error while checking for update. Can\'t reach Instapage server. Please check your connection.' ), 'error' ) ;
 			return;
 		}
 
-		if ( isset( $response->result ) && $response->result == 'ko' )
+		if ( isset( $response->result ) && $response->result == 'ok' )
 		{
-			self::getInstance()->includes[ 'admin' ]->showMessage( false, $response->message );
+			InstapageIO::addNotice( $response->message, 'error' );
 			return;
 		}
 

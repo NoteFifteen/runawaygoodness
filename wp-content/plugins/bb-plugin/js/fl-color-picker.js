@@ -1,30 +1,32 @@
-/*! Iris Color Picker - v1.0.7 - 2014-11-28
-* https://github.com/Automattic/Iris
-* Copyright (c) 2014 Matt Wiebe; Licensed GPLv2 */
+/**
+ * Custom color picker for Beaver Builder based on Iris by Matt Wiebe.
+ *
+ * Iris Color Picker - v1.0.7 - 2014-11-28
+ * https://github.com/Automattic/Iris
+ * Copyright (c) 2014 Matt Wiebe; Licensed GPLv2 
+ */
 
+/**
+ * Global variable for referencing the color picker.
+ */
 var FLBuilderColorPicker;
 
-(function( $, undef ){
+(function( $, undef ) {
 
-	// global variable to store color presets
-	var FLBuilderColorPresets = [];
-	var nonGradientIE, gradientType, vendorPrefixes, UA, isIE, IEVersion;
-
-	// Even IE9 doesn't support gradients. Elaborate sigh.
-	UA = navigator.userAgent.toLowerCase();
-	isIE = navigator.appName === 'Microsoft Internet Explorer';
-	IEVersion = isIE ? parseFloat( UA.match( /msie ([0-9]{1,}[\.0-9]{0,})/ )[1] ) : 0;
-	nonGradientIE = ( isIE && IEVersion < 10 );
-	gradientType = false;
-	// we don't bother with an unprefixed version, as it has a different syntax
-	vendorPrefixes = [ '-moz-', '-webkit-', '-o-', '-ms-' ];
+	var FLBuilderColorPresets 	= [],
+		UA 						= navigator.userAgent.toLowerCase(), 
+		isIE					= navigator.appName === 'Microsoft Internet Explorer', 
+		IEVersion				= isIE ? parseFloat( UA.match( /msie ([0-9]{1,}[\.0-9]{0,})/ )[1] ) : 0,
+		nonGradientIE			= ( isIE && IEVersion < 10 ),
+		gradientType			= false,
+		vendorPrefixes			= [ '-moz-', '-webkit-', '-o-', '-ms-' ];
 
 	/**
 	 * Run some tests to check if the current browser supports CSS3 gradients. 
 	 * Sets gradientType accordingly.
 	 *
 	 * @since 1.6.4
-	 * @return void 
+	 * @method testGradientType
 	 */
 	function testGradientType() {
 		var el, base,
@@ -34,21 +36,23 @@ var FLBuilderColorPicker;
 		if ( nonGradientIE ) {
 			// if yes, set gradientType to filter
 			gradientType = 'filter';
-
-		} else {
+		} 
+		else {
 
 			// if no, runs a quick test to check if the browser supports modern gradient syntax
 			el = $( '<div id="iris-gradtest" />' );
 			base = 'linear-gradient(top,#fff,#000)';
+			
 			$.each( vendorPrefixes, function( i, val ){
+				
 				el.css( bgImageString, val + base );
 
 				if ( el.css( bgImageString ).match( 'gradient' ) ) {
 					gradientType = i;
 					return false;
 				}
-
 			});
+			
 			// check for legacy webkit gradient syntax
 			if ( gradientType === false ) {
 				el.css( 'background', '-webkit-gradient(linear,0% 0%,0% 100%,from(#fff),to(#000))' );
@@ -58,33 +62,42 @@ var FLBuilderColorPicker;
 				}
 
 			}
+			
 			el.remove();
 		}
-
 	}
 
 	/**
-	* Only for CSS3 gradients. oldIE will use a separate function.
-	*
-	* Accepts as many color stops as necessary from 2nd arg on, or 2nd
-	* arg can be an array of color stops
-	*
-	* @param  {string} origin Gradient origin - top or left, defaults to left.
-	* @return {string}        Appropriate CSS3 gradient string for use in
-	*/
+	 * Only for CSS3 gradients. oldIE will use a separate function.
+	 *
+	 * Accepts as many color stops as necessary from 2nd arg on, or 2nd
+	 * arg can be an array of color stops
+	 *
+	 * @since 1.6.4
+	 * @method createGradient
+	 * @param  {String} origin Gradient origin - top or left, defaults to left.
+	 * @return {String}        Appropriate CSS3 gradient string for use in
+	 */
 	function createGradient( origin, stops ) {
-		origin = ( origin === 'top' ) ? 'top' : 'left';
-		stops = $.isArray( stops ) ? stops : Array.prototype.slice.call( arguments, 1 );
+		origin 	= ( origin === 'top' ) ? 'top' : 'left';
+		stops 	= $.isArray( stops ) ? stops : Array.prototype.slice.call( arguments, 1 );
+		
 		if ( gradientType === 'webkit' ) {
 			return legacyWebkitGradient( origin, stops );
-		} else {
+		} 
+		else {
 			return vendorPrefixes[ gradientType ] + 'linear-gradient(' + origin + ', ' + stops.join(', ') + ')';
 		}
 	}
 
 	/**
-	* Stupid gradients for a stupid browser.
-	*/
+	 * Gradients for stupid IE.
+	 *
+	 * @since 1.6.4
+	 * @method stupidIEGradient
+	 * @param  {String} origin
+	 * @return {Array} stops
+	 */
 	function stupidIEGradient( origin, stops ) {
 		var type, self, lastIndex, filter, startPosProp, endPosProp, dimensionProp, template, html;
 
@@ -101,13 +114,16 @@ var FLBuilderColorPicker;
 		dimensionProp = ( type === 1 ) ? 'height' : 'width';
 		template 	  = '<div class="iris-ie-gradient-shim" style="position:absolute;' + dimensionProp + ':100%;' + startPosProp + ':%start%;' + endPosProp + ':%end%;' + filter + ':%filter%;" data-color:"%color%"></div>';
 		html 		  = '';
+		
 		// need a positioning context
 		if ( self.css('position') === 'static' ) {
 			self.css( {position: 'relative' } );
 		}
 
 		stops = fillColorStops( stops );
+		
 		$.each(stops, function( i, startColor ) {
+			
 			var endColor, endStop, filterVal;
 
 			// we want two at a time. if we're on the last pair, bail.
@@ -116,6 +132,7 @@ var FLBuilderColorPicker;
 			}
 
 			endColor = stops[ i + 1 ];
+			
 			//if our pairs are at the same color stop, moving along.
 			if ( startColor.stop === endColor.stop ) {
 				return;
@@ -124,10 +141,10 @@ var FLBuilderColorPicker;
 			endStop = 100 - parseFloat( endColor.stop ) + '%';
 			startColor.octoHex = new Color( startColor.color ).toIEOctoHex();
 			endColor.octoHex = new Color( endColor.color ).toIEOctoHex();
-
 			filterVal = 'progid:DXImageTransform.Microsoft.Gradient(GradientType=' + type + ', StartColorStr=\'' + startColor.octoHex + '\', EndColorStr=\'' + endColor.octoHex + '\')';
 			html += template.replace( '%start%', startColor.stop ).replace( '%end%', endStop ).replace( '%filter%', filterVal );
 		});
+		
 		self.find( '.iris-ie-gradient-shim' ).remove();
 		$( html ).prependTo( self );
 	}
@@ -137,20 +154,30 @@ var FLBuilderColorPicker;
 	 *
 	 * @see fillColorStops
 	 * @since 1.6.4
+	 * @method legacyWebkitGradient
 	 * @param  {String} origin    Where the gradient starts.
-	 * @param  {type} colorList   [description]
+	 * @param  {Array} colorList   
 	 * @return {String}           The correct CSS gradient syntax.
 	 */
 	function legacyWebkitGradient( origin, colorList ) {
 		var stops = [];
+		
 		origin = ( origin === 'top' ) ? '0% 0%,0% 100%,' : '0% 100%,100% 100%,';
 		colorList = fillColorStops( colorList );
+		
 		$.each( colorList, function( i, val ){
 			stops.push( 'color-stop(' + ( parseFloat( val.stop ) / 100 ) + ', ' + val.color + ')' );
 		});
+		
 		return '-webkit-gradient(linear,' + origin + stops.join(',') + ')';
 	};
 
+	/**
+	 * @since 1.6.4
+	 * @method fillColorStops
+	 * @param  {Array} colorList
+	 * @return {Array}
+	 */
 	function fillColorStops( colorList ) {
 		var colors 		 = [],
 			percs 		 = [],
@@ -184,9 +211,16 @@ var FLBuilderColorPicker;
 		$.each( percs, function( i ){
 			newColorList[i] = { color: colors[i], stop: percs[i] };
 		});
+		
 		return newColorList;
 	}
 
+	/**
+	 * @since 1.6.4
+	 * @method backFillColorStops
+	 * @param  {Array} stops
+	 * @return {Array}
+	 */
 	function backFillColorStops( stops ) {
 		var first = 0,
 			last = stops.length - 1,
@@ -200,6 +234,7 @@ var FLBuilderColorPicker;
 		if ( stops.length <= 2 || $.inArray( false, stops ) < 0 ) {
 			return stops;
 		}
+		
 		while ( i < stops.length - 1 ) {
 			if ( ! foundFirst && stops[i] === false ) {
 				first = i - 1;
@@ -210,19 +245,27 @@ var FLBuilderColorPicker;
 			}
 			i++;
 		}
+		
 		steps = last - first;
 		firstVal = parseInt( stops[first].replace('%'), 10 );
 		incr = ( parseFloat( stops[last].replace('%') ) - firstVal ) / steps;
 		i = first + 1;
 		step = 1;
+		
 		while ( i < last ) {
 			stops[i] = ( firstVal + ( step * incr ) ) + '%';
 			step++;
 			i++;
 		}
+		
 		return backFillColorStops( stops );
 	}
 
+	/**
+	 * @since 1.6.4
+	 * @method $.fn.gradient
+	 * @return {Array}
+	 */
 	$.fn.gradient = function() {
 		var args = arguments;
 
@@ -237,6 +280,11 @@ var FLBuilderColorPicker;
 		});
 	};
 
+	/**
+	 * @since 1.6.4
+	 * @method $.fn.raninbowGradient
+	 * @return {Array}
+	 */
 	$.fn.raninbowGradient = function( origin, args ) {
 		var opts, template, i, steps;
 
@@ -245,19 +293,22 @@ var FLBuilderColorPicker;
 		template = 'hsl(%h%,' + opts.s + '%,' + opts.l + '%)';
 		i = 0;
 		steps = [];
+		
 		while ( i <= 360 ) {
 			steps.push( template.replace('%h%', i) );
 			i += 30;
 		}
+		
 		return this.each(function() {
 			$(this).gradient( origin, steps );
 		});
 	};
 
 	/**
-	 * Helper class for Color Picker.
+	 * Main color picker class for Beaver Builder's custom implementation.
 	 *
 	 * @class FLBuilderColorPicker
+	 * @param {Object} settings
 	 * @since 1.6.4
 	 */
 	FLBuilderColorPicker = function( settings )
@@ -302,6 +353,12 @@ var FLBuilderColorPicker;
 		
 	};
 
+	/**
+	 * Prototype for new instances.
+	 *
+	 * @since 1.6.4
+	 * @property {Object} prototype
+	 */ 
 	FLBuilderColorPicker.prototype = {
 
 		/**
@@ -319,18 +376,51 @@ var FLBuilderColorPicker;
 		 * @property {String} _color
 		 */
 		_color 				: '',
+		
+		/**
+		 * A reference to the current picker setting element.
+		 *
+		 * @since 1.6.4
+		 * @property {Object} _currentElement
+		 */
 		_currentElement 	: '',
+		
+		/**
+		 * Whether the picker has been initialized or not.
+		 *
+		 * @since 1.6.4
+		 * @property {Boolean} _inited
+		 */
 		_inited				: false,
+		
+		/**
+		 * Defaults for the HSL controls.
+		 *
+		 * @since 1.6.4
+		 * @property {Object} _defaultHSLControls
+		 */
 		_defaultHSLControls : {
 			horiz : 's',
 			vert  : 'l',
 			strip : 'h'
 		},
+		
+		/**
+		 * Defaults for the HSV controls.
+		 *
+		 * @since 1.6.4
+		 * @property {Object} _defaultHSVControls
+		 */
 		_defaultHSVControls : {
 			horiz : 'h',
 			vert  : 'v',
 			strip : 's'
 		},
+		
+		/**
+		 * @since 1.6.4
+		 * @property {Object} _scale
+		 */
 		_scale				: {
 			h: 360,
 			s: 100,
@@ -338,6 +428,12 @@ var FLBuilderColorPicker;
 			v: 100
 		},
 
+		/**
+		 * Initializes this instance.
+		 *
+		 * @since 1.6.4
+		 * @method _init
+		 */
 		_init: function(){
 
 			var self  = this,
@@ -399,7 +495,7 @@ var FLBuilderColorPicker;
 			// cache reference to the picker wrapper
 			this._ui 	  = $( '.fl-color-picker-ui' );
 			this._iris 	  = $( '.iris-picker' );
-			this._wrapper = $('.fl-lightbox-content-wrap');
+			this._wrapper = $( 'body' );
 
 			if( !$('html').hasClass( 'fl-color-picker-init' ) ){
 				this._ui
@@ -424,19 +520,22 @@ var FLBuilderColorPicker;
 			// bind picker control events
 			this._pickerControls();
 
-			if( !$('html').hasClass( 'fl-color-picker-init' ) ){
-				// bind presets control events
-				this._presetsControls();
-			}
+			// bind presets control events
+			this._presetsControls();
 
 			// now we know that the picker is already added to the body
 			$('html').addClass( 'fl-color-picker-init' );
 
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _prepareColorFields
+		 */
 		_prepareColorFields: function(){
 
 			var self = this;
+			
 			// append presets initial html and trigger that toggles the picker
 			$('.fl-color-picker-value').each( function(){
 
@@ -447,23 +546,14 @@ var FLBuilderColorPicker;
 					// set initial color
 					$colorTrigger.css({ backgroundColor: '#' + $this.val().toString() });
 				}
-
 			});
-
-			$('.fl-lightbox-content-wrap').on( 'click', '.fl-color-picker-color', function(){
-				var val = $( this ).next('.fl-color-picker-value').val();
-				self._color = new Color( val ).setHSpace( self.options.mode );
-				self.options.color = self._color.toString();
-				self._setColor( val );
-			} );
-
 		},
 
 		/**
 		 * Sets templates to build the color picker markup.
 		 *
 		 * @since  1.6.4
-		 * @return void 
+		 * @method _setTemplates
 		 */
 		_setTemplates: function(){
 
@@ -484,6 +574,13 @@ var FLBuilderColorPicker;
 
 		},
 
+		/**
+		 * @since  1.6.4
+		 * @method _has
+		 * @param {String} needle
+		 * @param {Object} haystack
+		 * @return {Boolean}
+		 */
 		_has: function( needle, haystack ) {
 			var ret = false;
 			$.each( haystack, function( i, v ){
@@ -501,7 +598,7 @@ var FLBuilderColorPicker;
 		 *
 		 * @see    _addPresetView
 		 * @since  1.6.4
-		 * @return void
+		 * @method _buildUI
 		 */
 		_buildUI: function(){
 			var self = this;
@@ -551,7 +648,7 @@ var FLBuilderColorPicker;
 		 * Shows a visual feedback when a color is added as a preset.
 		 *
 		 * @since  1.6.4
-		 * @return void
+		 * @method _addPresetFeedback
 		 */
 		_addPresetFeedback: function(){
 
@@ -571,47 +668,46 @@ var FLBuilderColorPicker;
 		 * Sets some triggers for positioning logic of the picker and color reset.
 		 *
 		 * @since  1.6.4
-		 * @return void
+		 * @method _pickerControls
 		 */
 		_pickerControls: function(){
 			var self = this;
 
 			// logic for picker positioning
-			this._wrapper.on( 'click', '.fl-color-picker-color', function(){
-				var $this = $(this);
-				self._currentElement = $this.parent().find('.fl-color-picker-value');
+			this._wrapper
+				.on( 'click', '.fl-color-picker-color', function(){
+					var $this = $(this);
+					self._currentElement = $this.parent().find('.fl-color-picker-value');
 
-				self._ui.position({
-					my: 'left top',
-					at: 'left bottom',
-					of: $this,
-					collision: 'flipfit',
-					using: function( position, feedback ){
-						self._togglePicker( position );
-					}
-				})
-				
-			} );
+					self._ui.position({
+						my: 'left top',
+						at: 'left bottom',
+						of: $this,
+						collision: 'flipfit',
+						using: function( position, feedback ){
+							self._togglePicker( position );
+						}
+					})
+					
+				} )
+				.on( 'click', '.fl-color-picker-clear', function(){
+					var $this = $(this);
+					self._currentElement = $this.parent().find('.fl-color-picker-value');
 
-			this._wrapper.on( 'click', '.fl-color-picker-clear', function(){
-				var $this = $(this);
-				self._currentElement = $this.parent().find('.fl-color-picker-value');
+					$this
+						.prev( '.fl-color-picker-color' )
+						.css({ backgroundColor: 'transparent' })
+						.addClass('fl-color-picker-empty');
 
-				$this
-					.prev( '.fl-color-picker-color' )
-					.css({ backgroundColor: 'transparent' })
-					.addClass('fl-color-picker-empty');
-
-				self._setColor( '' );
-				self.element.val( '' );
-				self._currentElement
-					.val( '' )
-					.trigger( 'change' );
-			} );
+					self._setColor( '' );
+					self.element.val( '' );
+					self._currentElement
+						.val( '' )
+						.trigger( 'change' );
+				} );
 
 			// logic to hide picker when the user clicks outside it
 			$( document ).on( 'click', function( event ) {
-
 				if ( 0 === $( event.target ).closest( '.fl-color-picker-ui' ).length ) {
                     $( '.fl-color-picker-ui.fl-color-picker-active' ).removeClass( 'fl-color-picker-active' );
                 }
@@ -625,7 +721,7 @@ var FLBuilderColorPicker;
 		 * @see   _addPreset
 		 * @see   _removePreset
 		 * @since 1.6.4
-		 * @return void
+		 * @method _presetsControls
 		 */
 		_presetsControls: function(){
 			var self 		      = this,
@@ -636,9 +732,11 @@ var FLBuilderColorPicker;
 				presetsList 	  = presets.find( '.fl-color-picker-presets-list' );
 
 			// add preset
-			addPreset.on( 'click', function(){
-				self._addPreset( self.element.val() );
-			} );
+			addPreset
+				.off( 'click' )
+				.on( 'click', function(){
+					self._addPreset( self.element.val() );
+				} );
 
 			// presets toggle
 			presetsList
@@ -646,16 +744,16 @@ var FLBuilderColorPicker;
 				.hide();
 			
 			presets
+				.off( 'click' )
 				.on( 'click', '.fl-color-picker-presets-toggle', function(){
-
 					presetsOpenLabel.toggleClass('fl-color-picker-active');
 					presetsCloseLabel.toggleClass('fl-color-picker-active');
-
 					presetsList.slideToggle( 500 );
 				} )
 				// set preset as current color
 				.on( 'click', '.fl-color-picker-preset', function( e ){
 					var currentColor = new Color( $( this ).data( 'color' ).toString() );
+					
 					self._setColor( currentColor );
 					self._currentElement
 						.parent()
@@ -665,22 +763,21 @@ var FLBuilderColorPicker;
 
 					presetsOpenLabel.toggleClass('fl-color-picker-active');
 					presetsCloseLabel.toggleClass('fl-color-picker-active');
-
 					presetsList.slideToggle( 500 );
-				} )
+				})
 				// removes a preset
 				.on( 'click', '.fl-color-picker-preset-remove', function( e ){
 					e.stopPropagation();
 					self._removePreset( $( this ).parent().data( 'color' ) );
 				});
-
 		},
 
 		/**
 		 * Removes a color preset from the array of presets and from the UI.
 		 *
-		 * @param  {string} preset The respective hex value of the preset.
-		 * @return void
+		 * @since 1.6.4
+		 * @method _removePreset
+		 * @param  {String} preset The respective hex value of the preset.
 		 */
 		_removePreset: function( preset ){
 			if( confirm( this.options.labels.removePresetConfirm ) ){
@@ -714,9 +811,9 @@ var FLBuilderColorPicker;
 		 *
 		 * @see    _addPresetView
 		 * @see    _addPresetFeedback
-		 * @param  {string} preset The respective hex value of the preset.
+		 * @method _addPreset
+		 * @param  {String} preset The respective hex value of the preset.
 		 * @since  1.6.4
-		 * @return void
 		 */
 		_addPreset: function( preset ){
 			var color = preset.toString().replace( /^#/, '' );
@@ -744,10 +841,9 @@ var FLBuilderColorPicker;
 		/**
 		 * Logic for positioning of the color picker.
 		 *
-		 * 
-		 * @param  {Object} position An object containing x and y location for positioning.
-		 * @since  1.6.4
-		 * @return void
+		 * @since 1.6.4
+		 * @method _togglePicker
+		 * @param {Object} position An object containing x and y location for positioning.
 		 */
 		_togglePicker: function( position ){
 			var self = this;
@@ -778,6 +874,10 @@ var FLBuilderColorPicker;
 
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _paint
+		 */
 		_paint: function() {
 			var self = this;
 			self._paintDimension( 'right', 'strip' );
@@ -785,6 +885,12 @@ var FLBuilderColorPicker;
 			self._paintDimension( 'left', 'horiz' );
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _paintDimension
+		 * @param {String} origin
+		 * @param {String} control
+		 */
 		_paintDimension: function( origin, control ) {
 			var self = this,
 				c = self._color,
@@ -866,6 +972,11 @@ var FLBuilderColorPicker;
 			}
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _getHSpaceColor
+		 * @return {Boolean}
+		 */
 		_getHSpaceColor: function() {
 			return ( this.options.mode === 'hsv' ) ? this._color.toHsv() : this._color.toHsl();
 		},
@@ -874,8 +985,9 @@ var FLBuilderColorPicker;
 		 * Logic to listen to events from the main color input and to bind it to the current color field.
 		 *
 		 * @see _setColor
-		 * @since  1.6.4
-		 * @return void
+		 * @since 1.6.4
+		 * @method _addInputListeners
+		 * @param {Object} input
 		 */
 		_addInputListeners: function( input ) {
 			var self = this,
@@ -937,14 +1049,12 @@ var FLBuilderColorPicker;
 
 			input.on( 'change', callback ).on( 'keyup', self._debounce( callback, debounceTimeout ) );
 
-			// If we initialized hidden, show on first focus. The rest is up to you.
-			if ( self.options.hide ) {
-				input.one( 'focus', function() {
-					self.show();
-				});
-			}
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _initControls
+		 */
 		_initControls: function() {
 			var self = this,
 				controls = self.controls,
@@ -1043,13 +1153,14 @@ var FLBuilderColorPicker;
 				event.target = self.controls.squareDrag.get(0);
 				self.controls.squareDrag.css( pos ).trigger( event );
 			});
-
-			// palettes
-			if ( self.options.palettes ) {
-				self._paletteListeners();
-			}
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _squareDrag
+		 * @param {Object} event
+		 * @param {Object} ui
+		 */
 		_squareDrag: function( event, ui ) {
 			var self = this,
 				controlOpts = self.options.controls,
@@ -1063,6 +1174,11 @@ var FLBuilderColorPicker;
 			self._change.apply( self, arguments );
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _setColor
+		 * @param {String} value
+		 */
 		_setColor: function( value ) {
 			var self = this,
 				oldValue = self.options.color,
@@ -1085,9 +1201,14 @@ var FLBuilderColorPicker;
 				self.active = 'external';
 				self._change();
 			}
-
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _squareDimensions
+		 * @param {Boolean} forceRefresh
+		 * @return {Object}
+		 */
 		_squareDimensions: function( forceRefresh ) {
 			var square = this.controls.square,
 				dimensions,
@@ -1106,6 +1227,13 @@ var FLBuilderColorPicker;
 			return dimensions;
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _isNonHueControl
+		 * @param {String} active
+		 * @param {String} type
+		 * @return {Boolean}
+		 */
 		_isNonHueControl: function( active, type ) {
 			if ( active === 'square' && this.options.controls.strip === 'h' ) {
 				return true;
@@ -1116,6 +1244,10 @@ var FLBuilderColorPicker;
 			return true;
 		},
 
+		/**
+		 * @since 1.6.4
+		 * @method _change
+		 */
 		_change: function() {
 			var self = this,
 				controls = self.controls,
@@ -1162,28 +1294,22 @@ var FLBuilderColorPicker;
 
 			// store hue for repeating above check next time
 			self.hue = self._color.h();
-
 			self.options.color = self._color.toString();
-
-			// only run after the first time
-			// if ( self._inited ) {
-			// 	self.trigger( 'change', { type: self.active }, { color: self._color } );
-			// }
 
 			if ( self.element.is( ':input' ) && ! self._color.error ) {
 				self.element.removeClass( 'iris-error' );
 				if ( self.element.val() !== self._color.toString() ) {
 					self.element.val( self._color.toString() );
 
-					if( self._currentElement ){
-						self._currentElement
+					if( this._currentElement ){
+						this._currentElement
 							.val( self._color.toString().replace( /^#/, '' ) )
 							.parent()
 							.find( '.fl-color-picker-color' )
 							.css({ backgroundColor: self._color.toString() })
 							.removeClass( 'fl-color-picker-empty' );
 						
-						self._currentElement.trigger( 'change' );
+						this._currentElement.trigger( 'change' );
 					}
 
 				}
@@ -1194,7 +1320,12 @@ var FLBuilderColorPicker;
 			self.active = false;
 		},
 
-		// taken from underscore.js _.debounce method
+		/**
+		 * Taken from underscore.js _.debounce method
+		 *
+		 * @since 1.6.4
+		 * @method _debounce
+		 */
 		_debounce: function( func, wait, immediate ) {
 			var timeout, result;
 			return function() {
@@ -1222,9 +1353,14 @@ var FLBuilderColorPicker;
 	};
 
 }( jQuery ));
-/*! Color.js - v0.9.11 - 2013-08-09
-* https://github.com/Automattic/Color.js
-* Copyright (c) 2013 Matt Wiebe; Licensed GPLv2 */
+
+/**
+ * Color.js is included for Iris support.
+ *
+ * Color.js - v0.9.11 - 2013-08-09
+ * https://github.com/Automattic/Color.js
+ * Copyright (c) 2013 Matt Wiebe; Licensed GPLv2 
+*/
 (function(global, undef) {
 
 	var Color = function( color, type ) {

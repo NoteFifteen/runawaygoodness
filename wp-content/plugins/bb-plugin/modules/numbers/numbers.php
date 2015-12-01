@@ -101,6 +101,7 @@ FLBuilder::register_module('FLNumbersModule', array(
 						'label'         => __('Number', 'fl-builder'),
 						'size'          => '5',
 						'default'		=> '100',
+						'placeholder'	=> '100'
 					),
 					'max_number' => array(
 						'type'          => 'text',
@@ -137,6 +138,7 @@ FLBuilder::register_module('FLNumbersModule', array(
 						'label'         => __('Animation Speed', 'fl-builder'),
 						'size'          => '5',
 						'default'		=> '1',
+						'placeholder'	=> '1',
 						'description'	=> __( 'second(s)', 'fl-builder' ),
 						'help'			=> __( 'Number of seconds to complete the animation.', 'fl-builder' )
 					),
@@ -145,7 +147,8 @@ FLBuilder::register_module('FLNumbersModule', array(
 						'label'         => __('Animation Delay', 'fl-builder'),
 						'size'          => '5',
 						'default'		=> '1',
-						'description'	=> __( 'second(s)', 'fl-builder' ),
+						'placeholder'	=> '1',
+						'description'	=> __( 'second(s)', 'fl-builder' )
 					),
 				)
 			)

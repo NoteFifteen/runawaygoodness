@@ -28,6 +28,15 @@ Step 3: Sync your masterpiece to wordpress with one click.
 
 == Changelog ==
 
+= 2.21 =
+- Fixed: problems with replacing wp-admin page with landing page
+- Fixed: landing pages displaying instead of Wordpress post preview
+- Added: additional input data validation
+- Added: additional notifications
+- Added: Message about non unique pages in Instapage plugin
+- Removed: "move to trash" action
+- Fixed: invalid pages
+
 = 2.12 =
 - Fixed: WP search doesn't works if landing page is set to homepage
 - Fixed: publishing bug

@@ -32,7 +32,7 @@ FLBuilderModel::default_settings($settings, array(
 			'author'        => __('Author', 'fl-builder'),
 			'comment_count' => __('Comment Count', 'fl-builder'),
 			'menu_order'    => __('Menu Order', 'fl-builder'),
-			'random'        => __('Random', 'fl-builder'),
+			'rand'        	=> __('Random', 'fl-builder'),
 		)
 	), $settings); 
 	

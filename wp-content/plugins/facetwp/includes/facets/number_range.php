@@ -33,15 +33,28 @@ class FacetWP_Facet_Number_Range
         global $wpdb;
 
         $facet = $params['facet'];
-        $numbers = $params['selected_values'];
+        $values = $params['selected_values'];
         $where = '';
 
-        if ( '' != $numbers[0] ) {
-            $where .= " AND (facet_value + 0) >= '" . $numbers[0] . "'";
+        // For dual ranges, find any overlap
+        if ( ! empty( $facet['source_other'] ) ) {
+            $start = empty( $values[0] ) ? -999999999999 : $values[0];
+            $end = empty( $values[1] ) ? 999999999999 : $values[1];
+
+            // http://stackoverflow.com/a/325964
+            $where .= " AND (facet_value + 0) <= '$end')";
+            $where .= " AND (facet_display_value + 0) >= '$start')";
         }
-        if ( '' != $numbers[1] ) {
-            $where .= " AND (facet_display_value + 0) <= '" . $numbers[1] . "'";
+        // Otherwise, do a basic comparison
+        else {
+            if ( '' != $values[0] ) {
+                $where .= " AND (facet_value + 0) >= '{$values[0]}'";
+            }
+            if ( '' != $values[1] ) {
+                $where .= " AND (facet_display_value + 0) <= '{$values[1]}'";
+            }
         }
+
         $sql = "
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
         WHERE facet_name = '{$facet['name']}' $where";
@@ -136,6 +149,10 @@ class FacetWP_Facet_Number_Range
      * @since 2.1.1
      */
     function index_row( $params, $class ) {
+        if ( $class->is_overridden ) {
+            return $params;
+        }
+
         $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
 
         if ( 'number_range' == $facet['type'] && ! empty( $facet['source_other'] ) ) {

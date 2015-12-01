@@ -37,13 +37,13 @@ class FacetWP_Facet_Date_Range
         global $wpdb;
 
         $facet = $params['facet'];
-        $dates = $params['selected_values'];
+        $values = $params['selected_values'];
         $where = '';
 
         // For dual ranges, find any overlap
         if ( ! empty( $facet['source_other'] ) ) {
-            $start = empty( $dates[0] ) ? '0000-01-01' : $dates[0];
-            $end = empty( $dates[1] ) ? '3000-12-31' : $dates[1];
+            $start = empty( $values[0] ) ? '0000-00-00' : $values[0];
+            $end = empty( $values[1] ) ? '3000-12-31' : $values[1];
 
             // http://stackoverflow.com/a/325964
             $where .= " AND (LEFT(facet_value, 10) <= '$end')";
@@ -51,11 +51,11 @@ class FacetWP_Facet_Date_Range
         }
         // Otherwise, do a basic comparison
         else {
-            if ( '' != $dates[0] ) {
-                $where .= " AND LEFT(facet_value, 10) >= '" . $dates[0] . "'";
+            if ( '' != $values[0] ) {
+                $where .= " AND LEFT(facet_value, 10) >= '{$values[0]}'";
             }
-            if ( '' != $dates[1] ) {
-                $where .= " AND LEFT(facet_display_value, 10) <= '" . $dates[1] . "'";
+            if ( '' != $values[1] ) {
+                $where .= " AND LEFT(facet_display_value, 10) <= '{$values[1]}'";
             }
         }
 
@@ -173,6 +173,10 @@ class FacetWP_Facet_Date_Range
      * @since 2.1.1
      */
     function index_row( $params, $class ) {
+        if ( $class->is_overridden ) {
+            return $params;
+        }
+
         $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
 
         if ( 'date_range' == $facet['type'] && ! empty( $facet['source_other'] ) ) {

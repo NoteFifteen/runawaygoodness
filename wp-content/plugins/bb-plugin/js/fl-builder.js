@@ -670,6 +670,7 @@
 			$('body').delegate('.fl-photo-field .fl-photo-select', 'click', FLBuilder._selectSinglePhoto);
 			$('body').delegate('.fl-photo-field .fl-photo-edit', 'click', FLBuilder._selectSinglePhoto);
 			$('body').delegate('.fl-photo-field .fl-photo-replace', 'click', FLBuilder._selectSinglePhoto);
+			$('body').delegate('.fl-photo-field .fl-photo-remove', 'click', FLBuilder._singlePhotoRemoved);
 			
 			/* Multiple Photo Fields */
 			$('body').delegate('.fl-multiple-photos-field .fl-multiple-photos-select', 'click', FLBuilder._selectMultiplePhotos);
@@ -4916,6 +4917,27 @@
 			wrap.find('label.error').remove();
 			srcSelect.show();
 			srcSelect.html(FLBuilder._getPhotoSizeOptions(photo));
+			srcSelect.trigger('change');
+		},
+		
+		/**
+		 * Clears a photo that has been selected in a single photo field.
+		 *
+		 * @since 1.6.4.3
+		 * @access private
+		 * @method _singlePhotoRemoved
+		 */ 
+		_singlePhotoRemoved: function()
+		{
+			var selection   = FLBuilder._singlePhotoSelector.state().get('selection'),
+				wrap        = $(this).closest('.fl-photo-field'),
+				photoField  = wrap.find('input[type=hidden]'),
+				srcSelect   = wrap.find('select');
+				
+			selection.reset();
+			wrap.addClass('fl-photo-empty');
+			photoField.val('');
+			srcSelect.html('');
 			srcSelect.trigger('change');
 		},
 		

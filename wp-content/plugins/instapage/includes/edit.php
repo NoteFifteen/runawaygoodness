@@ -2,12 +2,103 @@
 
 class InstapageEdit extends instapage
 {
+	const UPDATE_OK = 1;
+	const UPDATE_FAILED = 2;
+
 	public function init()
 	{
 		add_action( 'add_meta_boxes', array( &$this, 'addCustomMetaBox' ) );
-		add_action( 'save_post', array( &$this, 'saveCustomMeta' ), 10, 2 );
+		add_action( 'save_post', array( &$this, 'saveCustomMeta' ), 1, 2 );
 		add_action( 'save_post', array( &$this, 'validateCustomMeta' ), 20, 2 );
 		add_action( 'wp_trash_post', array( &$this, 'trashInstapagePost' ) );
+		add_filter( 'post_updated_messages', array( &$this, 'instapagePostUpdatedMessage' ), 1, 1 );
+		add_action( 'load-edit.php', array( &$this, 'instapageCleanup') );
+		add_action( 'init', array( &$this, 'registerInvalidPosttype' ) );
+		add_filter( 'bulk_actions-edit-instapage_post', array(&$this, 'removeBulkActions' ) );
+	}
+
+	public function removeBulkActions( $actions )
+	{
+		unset( $actions[ 'untrash'] );
+		unset( $actions[ 'edit'] );
+		unset( $actions[ 'trash'] );
+
+		return $actions;
+	}
+
+	public  function registerInvalidPosttype()
+	{
+		$args = array(
+			'label' => __( 'Instapage invalid' ),
+			'public' => false,
+			'exclude_from_search' => true,
+			'show_in_admin_all_list' => false,
+			'show_in_admin_status_list' => false
+		);
+
+		register_post_status( 'instapage_invalid', $args );
+	}
+
+	public function instapageCleanup()
+	{
+		$post_type = InstapageIO::getVar( 'post_type', 'post', 'request' );
+
+		if( $post_type != 'instapage_post' )
+		{
+			return;
+		}
+
+		global $wpdb;
+
+		$sql = "SELECT ID FROM $wpdb->posts WHERE post_type = 'instapage_post' AND post_status = 'instapage_invalid'";
+		$results = $wpdb->get_results( $sql, OBJECT );
+
+		foreach( $results as $result )
+		{
+			wp_delete_post( $result->ID, true );
+		}
+	}
+
+	public function instapagePostUpdatedMessage( $messages )
+	{
+		global $post;
+
+		$post_url = self::getInstance()->includes[ 'page' ]->getPageUrl( $post->ID );
+
+		if( $this->getUpdateStatus() != self::UPDATE_OK )
+		{
+			$messages[ 'instapage_post' ] = array(
+				0 => '',
+				1 => '',
+				2 => '',
+				3 => '',
+				4 => '',
+				5 => '',
+				6 => '',
+				7 => '',
+				8 => '',
+				9 => '',
+				10 => '',
+			);
+		}
+		else
+		{
+			$messages[ 'instapage_post' ] = array(
+				0 => '',
+				1 => sprintf( __( 'Page updated. <a target="_blank"href="%s">View page</a>' ), esc_url( $post_url ) ),
+				2 => '',
+				3 => '',
+				4 => __( 'Page updated.' ),
+				5 => '',
+				6 => sprintf( __( 'Page published. <a target="_blank" href="%s">View page</a>' ), esc_url( $post_url ) ),
+				7 => __( 'Page saved.' ),
+				8 => sprintf( __( 'Page submitted. <a target="_blank" href="%s">Preview page</a>' ), esc_url( add_query_arg( 'preview', 'true', $post_url ) ) ),
+				9 => '',
+				10 => '',
+			);
+		}
+
+		return $messages;
 	}
 
 	public function trashInstapagePost( $post_id )
@@ -63,7 +154,7 @@ class InstapageEdit extends instapage
 
 		if( !self::getInstance()->includes[ 'main' ]->getUserId() )
 		{
-			self::getInstance()->includes[ 'admin' ]->error_message = 'You haven\'t connected Instapage account yet. Please go to: <a href="' . INSTAPAGE_PLUGIN_SETTINGS_URI . '">Instapage Settings</a>';
+			self::getInstance()->includes[ 'admin' ]->error_message = __( sprintf( 'You haven\'t connected Instapage account yet. Please go to: <a href="%s">Instapage Settings</a>', INSTAPAGE_PLUGIN_SETTINGS_URI ) );
 			self::getInstance()->includes[ 'admin' ]->getErrorMessageHTML();
 			self::getInstance()->includes[ 'admin' ]->removeEditPage();
 			return false;
@@ -93,13 +184,13 @@ class InstapageEdit extends instapage
 
 		if ( !$pages )
 		{
-			echo 'N1o pages pushed to your wordpress. Please go to your <a href="http://app.instapage.com/dashboard" target="_blank">Instapage</a> and push some pages.';
+			echo __( 'No pages pushed to your wordpress. Please go to your <a href="http://app.instapage.com/dashboard" target="_blank">Instapage</a> and push some pages.' );
 			return;
 		}
 
 		if ( $pages === false )
 		{
-			self::getInstance()->includes[ 'admin' ]->error_message = 'You haven\'t published any Instapage page to Wordpress yet';
+			self::getInstance()->includes[ 'admin' ]->error_message = __( 'You haven\'t published any Instapage page to Wordpress yet' );
 			self::getInstance()->includes[ 'admin' ]->getErrorMessageHTML();
 			self::getInstance()->includes[ 'admin' ]->removeEditPage();
 			return false;
@@ -179,71 +270,40 @@ class InstapageEdit extends instapage
 		}
 
 		$old = get_post_meta( $post_id, 'instapage_my_selected_page', true );
-		$new = $_POST[ 'instapage_my_selected_page' ];
+		$new = InstapageIO::getVar( 'instapage_my_selected_page', 0, 'post' );
 		$instapage_page_id = $new;
-		$instapage_name = $_POST[ 'instapage_name' ];
+		$instapage_name = InstapageIO::getVar( 'instapage_name', '', 'post' );
+		$instapage_post_type = InstapageIO::getVar( 'post-type', '', 'post' );
+		$instapage_slug = InstapageIO::getVar( 'instapage_slug', '', 'post' );
 
 		$front_page = false;
 		$not_found_page = false;
 
-		switch ( $_POST[ 'post-type' ] )
+		switch ( $instapage_post_type )
 		{
 			case '':
 			break;
 
 			case 'home':
 				$front_page = true;
+				$instapage_slug = $_POST[ 'instapage_slug' ] = '';
 			break;
 
 			case '404':
 				$not_found_page = true;
+				$instapage_slug = $_POST[ 'instapage_slug' ] = self::getInstance()->includes[ 'page' ]->getRandomSlug();
 			break;
 
+			default:
 			break;
 		}
 
-		// HOME PAGE
-		$old_front = self::getInstance()->includes[ 'page' ]->getFrontInstapage();
-
-		if ( $front_page )
+		if( !$this->checkPageData() )
 		{
-			$this->setFrontInstapage( $post_id );
+			$this->setUpdateStatus( self::UPDATE_FAILED );
+
+			return $post_id;
 		}
-		elseif ( $old_front == $post_id )
-		{
-			$this->setFrontInstapage( false );
-		}
-
-		// 404 PAGE
-		$old_nf = self::getInstance()->includes[ 'page' ]->get404Instapage();
-
-		if ( $not_found_page )
-		{
-			$this->set404Instapage( $post_id );
-		}
-		elseif ( $old_nf == $post_id )
-		{
-			$this->set404Instapage( false );
-		}
-
-		if ( $new && $new != $old )
-		{
-			update_post_meta( $post_id, 'instapage_my_selected_page', $new );
-			update_post_meta( $post_id, 'instapage_name', $instapage_name );
-		}
-
-		$this->setPageScreenshot( $instapage_page_id );
-
-		// Custom URL
-		$old = get_post_meta( $post_id, 'instapage_slug', true );
-		$new = trim( strip_tags( rtrim( $_POST[ 'instapage_slug' ], '/' ) ) );
-
-		if ( $new && $new != $old )
-		{
-			update_post_meta( $post_id, 'instapage_slug', $new );
-		}
-
-		delete_site_transient( 'instapage_page_html_cache_' . $new );
 
 		try
 		{
@@ -258,9 +318,55 @@ class InstapageEdit extends instapage
 					'secure' => is_ssl()
 				)
 			);
+
+			// HOME PAGE
+			$old_front = self::getInstance()->includes[ 'page' ]->getFrontInstapage();
+
+			if ( $front_page )
+			{
+				$this->setFrontInstapage( $post_id );
+			}
+			elseif ( $old_front == $post_id )
+			{
+				$this->setFrontInstapage( false );
+			}
+
+			// 404 PAGE
+			$old_nf = self::getInstance()->includes[ 'page' ]->get404Instapage();
+
+			if ( $not_found_page )
+			{
+				$this->set404Instapage( $post_id );
+			}
+			elseif ( $old_nf == $post_id )
+			{
+				$this->set404Instapage( false );
+			}
+
+			if ( $new && $new != $old )
+			{
+				update_post_meta( $post_id, 'instapage_my_selected_page', $new );
+				update_post_meta( $post_id, 'instapage_name', $instapage_name );
+			}
+
+			$this->setPageScreenshot( $instapage_page_id );
+
+			// Custom URL
+			$old = get_post_meta( $post_id, 'instapage_slug', true );
+			$new = trim( strip_tags( rtrim( $instapage_slug, '/' ) ) );
+
+			if ( $new != $old )
+			{
+				update_post_meta( $post_id, 'instapage_slug', $new );
+			}
+
+			delete_site_transient( 'instapage_page_html_cache_' . $new );
+			$this->setUpdateStatus( self::UPDATE_OK );
 		}
 		catch( InstapageApiCallException $e )
 		{
+			$this->setUpdateStatus( self::UPDATE_FAILED );
+			InstapageIO::addNotice( __( 'Page could not be updated. ' ), 'error' );
 		}
 	}
 
@@ -315,31 +421,38 @@ class InstapageEdit extends instapage
 
 
 		$slug = get_post_meta( $post_id, 'instapage_slug' );
-
 		$isFrontPage = self::getInstance()->includes[ 'page' ]->isFrontPage( $post_id );
-
 		$invalid_url = empty( $slug ) && !$isFrontPage;
+		$post_status = InstapageIO::getVar( 'post_status', null, 'post' );
 
 		// on attempting to publish - check for completion and intervene if necessary
-		if ( ( isset( $_POST[ 'publish' ] ) || isset( $_POST[ 'save' ] ) ) && $_POST[ 'post_status' ] == 'publish' )
+		if ( ( isset( $_POST[ 'publish' ] ) || isset( $_POST[ 'save' ] ) ) && ( $post_status == 'publish' || $post_status == 'instapage_invalid' ) )
 		{
 			// don't allow publishing while any of these are incomplete
-			if ( $invalid_url )
+			$status = null;
+			if ( $invalid_url || $this->getUpdateStatus() != self::UPDATE_OK )
 			{
-				global $wpdb;
-				$wpdb->update
-				(
-					$wpdb->posts,
-					array
-					(
-						'post_status' => 'pending'
-					),
-					array
-					(
-						'ID' => $pid
-					)
-				);
+				$status = 'instapage_invalid';
 			}
+			else
+			{
+				$status = 'publish';
+			}
+
+			global $wpdb;
+
+			$wpdb->update
+			(
+				$wpdb->posts,
+				array
+				(
+					'post_status' => $status
+				),
+				array
+				(
+					'ID' => $post_id
+				)
+			);
 		}
 	}
 
@@ -382,6 +495,182 @@ class InstapageEdit extends instapage
 		}
 
 		$this->updateMetaValueByInstapagePageId( $instapage_page_id, 'instapage_page_screenshot_url', $page_configuration->screenshot );
+	}
+
+	public function checkPageData( $on_save_only = true, $add_notices = true )
+	{
+
+		if ( !$this->isSavePerformed() && $on_save_only )
+		{
+			return true;
+		}
+
+		global $post;
+
+		$instapage_page_id = InstapageIO::getVar( 'instapage_my_selected_page', 0, 'post' );
+		$instapage_name = InstapageIO::getVar( 'instapage_name', '', 'post' );
+		$instapage_post_type = InstapageIO::getVar( 'post-type', '', 'post' );
+		$instapage_slug = InstapageIO::getVar( 'instapage_slug', '', 'post' );
+		$success = true;
+
+		switch( $instapage_post_type )
+		{
+			//Normal Page
+			case '':
+				//check if url is correct
+				$page_url = self::getInstance()->includes[ 'page' ]->getPageUrl( false, $instapage_slug );
+
+				if( filter_var( $page_url, FILTER_VALIDATE_URL ) === false )
+				{
+					if( $add_notices )
+					{
+						InstapageIO::addNotice( '<strong>' . __( 'Custom URL' ) . '</strong>' . __( ' is incorrect, please use valid URL for that field.' ), 'error' );
+					}
+
+					$success = false;
+				}
+
+				//check if no ditectory exists
+				$test_path = get_home_path() . $instapage_slug;
+
+				if( is_dir( $test_path ) )
+				{
+					if( $add_notices )
+					{
+						InstapageIO::addNotice( sprintf( '<strong>' . __( 'Custom URL' ) . '</strong>' . __( ' is incorrect, it leads to an existing directory (%s).' ), $test_path ), 'error' );
+					}
+
+					$success = false;
+				}
+
+				//check if url is avalible
+				$wp_post_id = $this->getPostIdByUrl( $page_url );
+
+				if( $wp_post_id && $wp_post_id != $post->ID )
+				{
+					if( $add_notices )
+					{
+						$wp_post_edit_url = get_edit_post_link( $wp_post_id );
+						InstapageIO::addNotice( sprintf( __( 'Selected <strong>Custom URL</strong> (%s) is already in use. You can <a href="%s">edit the post</a> and change permalink or change custom Instapage URL.' ), $page_url, $wp_post_edit_url ), 'error' );
+					}
+
+					$success = false;
+				}
+
+				if( $success )
+				{
+					$result = wp_remote_head( $page_url );
+
+					if( !is_wp_error( $result ) )
+					{
+						$response_code = wp_remote_retrieve_response_code( $result );
+
+						if( $response_code >= 300 && $response_code < 400 && isset( $result[ 'headers' ][ 'location' ] ) )
+						{
+							$result = wp_remote_head( $result[ 'headers' ][ 'location' ] );
+
+							if( !is_wp_error( $result ) )
+							{
+								$response_code = wp_remote_retrieve_response_code( $result );
+							}
+						}
+
+						if( $response_code != 404 )
+						{
+							InstapageIO::addNotice( '<strong>' . __( 'Custom URL' ) . '</strong>' . __( ' is incorrect, it leads to an existing page.' ), 'error' );
+							$success = false;
+						}
+					}
+				}
+
+			break;
+
+			case '404':
+				//check if url is avalible
+				$page_url = self::getInstance()->includes[ 'page' ]->getPageUrl( false, $instapage_slug );
+				$wp_post_id = $this->getPostIdByUrl( $page_url );
+
+				if( $wp_post_id && $wp_post_id != $post->ID )
+				{
+					if( $add_notices )
+					{
+						InstapageIO::addNotice( __( 'Instapage plugin has generated random page slug during save process, but it appears to be taken. Please try publishing the page once again to generate another page slug.' ), 'error' );
+					}
+
+					$success = false;
+				}
+
+			break;
+
+			case 'home':
+
+				if( $instapage_slug != '' )
+				{
+					if( $add_notices )
+					{
+						InstapageIO::addNotice( __( 'There was a problem during update. Please make sure that you have JavaScript enabled and try again.' ), 'error' );
+					}
+
+					$success = false;
+				}
+
+			break;
+		}
+
+		return $success;
+	}
+
+	public function setUpdateStatus( $status = self::UPDATE_OK )
+	{
+		update_option( 'instapage_last_save_status', $status );
+	}
+
+	public function getUpdateStatus()
+	{
+		return get_option( 'instapage_last_save_status' , 'undefined' );
+	}
+
+	private function isSavePerformed()
+	{
+		if ( ( isset( $_POST[ 'publish' ] ) || isset( $_POST[ 'save' ] ) ) && InstapageIO::getVar( 'post_status', '', 'post' ) == 'publish' )
+		{
+			return true;
+		}
+	}
+
+	public function getPostIdByUrl( $url, $post_id = null, &$is_post = null)
+	{
+		//check if page or post with the same URL exist in WP
+		$wp_post_id = url_to_postid( $url );
+
+		if( $wp_post_id )
+		{
+			if( isset( $is_post ) )
+			{
+				$is_post = true;
+			}
+
+			return $wp_post_id;
+		}
+
+		//check if page with the same URL exist in Instapage plugin
+		global $wpdb;
+
+		$instapage_slug = trim( str_replace( site_url(), '', $url ), '/' );
+		$sql = $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = 'instapage_slug' AND meta_value = '%s'", $instapage_slug );
+		$results = $wpdb->get_results( $sql, ARRAY_A );
+
+		if( !empty( $results ) )
+		{
+			if( isset( $is_post ) )
+			{
+				$is_post = false;
+			}
+
+			return isset( $results[ 0 ][ 'post_id' ] ) ? $results[ 0 ][ 'post_id' ] : 0;
+		}
+
+		return 0;
 	}
 
 	public static function setFrontInstapage( $id )

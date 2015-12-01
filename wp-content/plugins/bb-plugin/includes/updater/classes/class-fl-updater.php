@@ -93,7 +93,10 @@ final class FLUpdater {
 				$plugin   = self::get_plugin_file($this->settings['slug']);
 				$new_ver  = $response->new_version;
 				$curr_ver = $this->settings['version'];
-
+				
+				if ( empty( $response->package ) ) {
+					$response->upgrade_notice = FLUpdater::get_update_error_message();
+				}
 				if(version_compare($new_ver, $curr_ver, '>')) {
 					$transient->response[$plugin] = $response;
 				}
@@ -128,14 +131,7 @@ final class FLUpdater {
 	public function update_message( $plugin_data, $response )
 	{
 		if ( empty( $response->package ) ) {
-			echo '<p style="padding:10px 20px; margin-top: 10px; background: #d54e21; color: #fff;">';
-			echo __( '<strong>UPDATE UNAVAILABLE!</strong>', 'fl-builder' );
-			echo '&nbsp;&nbsp;&nbsp;';
-			echo __('Please subscribe to enable automatic updates for this plugin.', 'fl-builder');
-			echo ' <a href="' . $plugin_data['PluginURI'] . '" target="_blank" style="color: #fff; text-decoration: underline;">';
-			echo __('Subscribe Now', 'fl-builder');
-			echo ' &raquo;</a>';
-			echo '</p>';
+			echo FLUpdater::get_update_error_message( $plugin_data );
 		}
 	}
 
@@ -281,6 +277,33 @@ final class FLUpdater {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Returns an update message for if an update
+	 * is available but there is no active subscription.
+	 *
+	 * @since 1.6.4.3
+	 * @param array $plugin_data An array of data for this plugin.
+	 * @return string
+	 */
+	static private function get_update_error_message( $plugin_data = null )
+	{
+		$message  = '';
+		$message .= '<p style="padding:10px 20px; margin-top: 10px; background: #d54e21; color: #fff;">';
+		$message .= __( '<strong>UPDATE UNAVAILABLE!</strong>', 'fl-builder' );
+		$message .= '&nbsp;&nbsp;&nbsp;';
+		$message .= __('Please subscribe to enable automatic updates for this plugin.', 'fl-builder');
+		
+		if ( $plugin_data && isset( $plugin_data['PluginURI'] ) ) {
+			$message .= ' <a href="' . $plugin_data['PluginURI'] . '" target="_blank" style="color: #fff; text-decoration: underline;">';
+			$message .= __('Subscribe Now', 'fl-builder');
+			$message .= ' &raquo;</a>';
+		}
+		
+		$message .= '</p>';
+		
+		return $message;
 	}
 
 	/**

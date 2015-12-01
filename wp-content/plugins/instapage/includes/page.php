@@ -2,6 +2,10 @@
 
 class InstapagePage extends instapage
 {
+	const RANDOM_PREFIX = 'random-url-';
+	const RANDOM_SUFIX_SET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	const RANDOM_SUFIX_LENGTH = 10;
+
 	var $page_stats;
 
 	public function init()
@@ -87,6 +91,13 @@ class InstapagePage extends instapage
 		return ( $id == $not_found && $not_found !== false );
 	}
 
+	public function isLoginPage()
+	{
+		$pagenow = InstapageIO::getVar( 'pagenow', 'undefined', 'globals' );
+
+		return in_array( $pagenow, array( 'wp-login.php', 'wp-register.php' ) );
+	}
+
 	public function getMyPosts()
 	{
 		global $wpdb;
@@ -141,7 +152,7 @@ class InstapagePage extends instapage
 	{
 		global $post, $wpdb;
 
-		if( is_admin() )
+		if( is_admin() || $this->isLoginPage() )
 		{
 			return $posts;
 		}
@@ -272,7 +283,7 @@ class InstapagePage extends instapage
 	public function checkRoot()
 	{
 
-		if( is_admin() )
+		if( is_admin() || $this->isLoginPage() )
 		{
 			return;
 		}
@@ -285,8 +296,11 @@ class InstapagePage extends instapage
 			return;
 		}
 
-		// check if WP search results page should be displayed instead of landing page
-		if( isset( $_GET[ 's' ] ) )
+		// check if WP search results page OR praview page should be displayed instead of landing page
+		if(
+			isset( $_GET[ 's' ] ) ||
+			( isset( $_GET[ 'preview' ] ) && $_GET[ 'preview' ] == 'true' )
+		)
 		{
 			return;
 		}
@@ -378,50 +392,38 @@ class InstapagePage extends instapage
 			return;
 		}
 
-		if( is_404() )
+		if( is_404() && !is_admin() && !$this->isLoginPage() )
 		{
 			$id = $this->get404Instapage();
 			$this->displayCustom404( $id );
 		}
 	}
 
-	public function getPageUrl( $post_id )
+	public function getPageUrl( $post_id, $instapage_slug = null )
 	{
-		$path = esc_html( get_post_meta( $post_id, 'instapage_slug', true ) );
-		$isFrontPage = $this->isFrontPage( $post_id );
-		$is_not_found_page = $this->is404Page( $post_id );
-		$url = false;
-
-		if ( $isFrontPage )
+		if( !$post_id && $instapage_slug !== null )
 		{
-			$url = site_url() . '/';
-		}
-		elseif ( $is_not_found_page )
-		{
-			$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-			$randomString = '';
-			$length = 10;
-
-			for ( $i = 0; $i < $length; $i++ )
-			{
-				$randomString .= $characters[ rand( 0, strlen( $characters ) - 1 ) ];
-			}
-
-			$url = site_url() . '/random-url-' . $randomString;
+			$path = esc_html( $instapage_slug );
 		}
 		else
 		{
-			if ( $path == '' )
-			{
-				return false;
-			}
-			else
-			{
-				$url = site_url() . '/' . $path;
-			}
+			$path = esc_html( get_post_meta( $post_id, 'instapage_slug', true ) );
 		}
 
-		return $url;
+		return site_url() . '/' . $path;
+	}
+
+	public function getRandomSlug( $add_prefix = true )
+	{
+		$randomString = '';
+		$random_sufix_set = self::RANDOM_SUFIX_SET;
+
+		for ( $i = 0; $i < self::RANDOM_SUFIX_LENGTH; $i++ )
+		{
+			$randomString .= $random_sufix_set[ rand( 0, strlen( $random_sufix_set ) - 1 ) ];
+		}
+
+		return $add_prefix ? self::RANDOM_PREFIX . $randomString : $randomString;
 	}
 
 	public function getPageEditUrl( $post_id )

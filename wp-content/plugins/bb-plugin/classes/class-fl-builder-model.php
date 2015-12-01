@@ -4284,6 +4284,26 @@ final class FLBuilderModel {
 	}
 
 	/**
+	 * Returns the custom branding data for the builder theme.
+	 *
+	 * @since 1.6.4.3
+	 * @return array
+	 */
+	static public function get_theme_branding()
+	{
+		$value = self::get_admin_settings_option( '_fl_builder_theme_branding', false );
+		$defaults = array(
+			'name' 				=> '',
+			'description' 		=> '',
+			'company_name' 		=> '',
+			'company_url' 		=> '',
+			'screenshot_url' 	=> '',
+		);
+		
+		return ! $value ? $defaults : $value;
+	}
+
+	/**
 	 * Returns an array of slugs for all enabled icon sets.
 	 *
 	 * @since 1.4.6
@@ -4506,6 +4526,7 @@ final class FLBuilderModel {
 			delete_option('_fl_builder_enabled_icons');
 			delete_option('_fl_builder_branding');
 			delete_option('_fl_builder_branding_icon');
+			delete_option('_fl_builder_theme_branding');
 			delete_option('_fl_builder_editing_capability');
 			delete_option('_fl_builder_global_templates_editing_capability');
 			delete_option('_fl_builder_help_button');

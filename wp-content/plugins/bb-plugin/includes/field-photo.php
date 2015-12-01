@@ -10,7 +10,11 @@
 		</select>
 		<br />
 		<a class="fl-photo-edit" href="javascript:void(0);" onclick="return false;"><?php _e('Edit', 'fl-builder'); ?></a>
+		<?php if(isset($field['show_remove']) && $field['show_remove']) : ?>
+		<a class="fl-photo-remove" href="javascript:void(0);" onclick="return false;"><?php _e('Remove', 'fl-builder'); ?></a>
+		<?php else : ?>
 		<a class="fl-photo-replace" href="javascript:void(0);" onclick="return false;"><?php _e('Replace', 'fl-builder'); ?></a>
+		<?php endif; ?>
 		<div class="fl-clear"></div>
 	</div>
 	<input name="<?php echo $name; ?>" type="hidden" value='<?php echo $value; ?>' />

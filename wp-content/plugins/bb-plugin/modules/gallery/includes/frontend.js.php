@@ -3,7 +3,11 @@
 	$(function() {
 		
 		<?php if($settings->layout == 'collage') : ?>
-		$('.fl-node-<?php echo $id; ?> .fl-mosaicflow-content').mosaicflow({
+		$('.fl-node-<?php echo $id; ?> .fl-mosaicflow-content').one( 'filled', function(){
+			if ( 'undefined' != typeof $.waypoints ) {
+				$.waypoints( 'refresh' );
+			}
+		}).mosaicflow({
 			itemSelector: '.fl-mosaicflow-item',
 			columnClass: 'fl-mosaicflow-col',
 			minItemWidth: <?php echo $settings->photo_size; ?>

@@ -36,11 +36,23 @@ class FacetWP_Facet_Slider
         $values = $params['selected_values'];
         $where = '';
 
-        if ( !empty( $values[0] ) ) {
-            $where .= " AND CAST(facet_value AS DECIMAL(10,2)) >= '{$values[0]}'";
+        // For dual ranges, find any overlap
+        if ( ! empty( $facet['source_other'] ) ) {
+            $start = empty( $values[0] ) ? -999999999999 : $values[0];
+            $end = empty( $values[1] ) ? 999999999999 : $values[1];
+
+            // http://stackoverflow.com/a/325964
+            $where .= " AND (facet_value + 0) <= '$end'";
+            $where .= " AND (facet_display_value + 0) >= '$start'";
         }
-        if ( !empty( $values[1] ) ) {
-            $where .= " AND CAST(facet_display_value AS DECIMAL(10,2)) <= '{$values[1]}'";
+        // Otherwise, do a basic comparison
+        else {
+            if ( '' != $values[0] ) {
+                $where .= " AND CAST(facet_value AS DECIMAL(10,2)) >= '{$values[0]}'";
+            }
+            if ( '' != $values[1] ) {
+                $where .= " AND CAST(facet_display_value AS DECIMAL(10,2)) <= '{$values[1]}'";
+            }
         }
 
         $sql = "
@@ -344,6 +356,10 @@ FWP.used_facets = {};
      * @since 2.1.1
      */
     function index_row( $params, $class ) {
+        if ( $class->is_overridden ) {
+            return $params;
+        }
+
         $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
 
         if ( 'slider' == $facet['type'] && ! empty( $facet['source_other'] ) ) {

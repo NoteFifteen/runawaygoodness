@@ -1,6 +1,22 @@
+.hidden
+{
+	display: none;
+}
+
 #instapage_meta_box.postbox
 {
 	margin-top: -20px;
+}
+
+.instapage_post_name a.submitdelete,
+.instapage_post_name a.submitdelete:visited
+{
+	color: #FF5151;
+}
+
+.instapage_post_name .submitdelete:hover
+{
+	color: #FF5E5B;
 }
 
 .post-type-instapage_post #submitdiv #minor-publishing-actions
@@ -175,4 +191,10 @@ th.manage-column a.instapage-hide-stats:visited
 {
 	padding-left: 226px;
 	width: 650px;
+}
+
+.column-instapage_post_name .instapage-warning strong a,
+.column-instapage_post_name .instapage-warning strong a:visited
+{
+	color: #DD3D36;
 }

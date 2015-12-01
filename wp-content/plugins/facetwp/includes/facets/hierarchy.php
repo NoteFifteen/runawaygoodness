@@ -90,7 +90,6 @@ class FacetWP_Facet_Hierarchy
             }
         }
 
-
         $sql = "
         SELECT f.facet_value, f.facet_display_value, COUNT(*) AS counter
         FROM {$wpdb->prefix}facetwp_index f
@@ -102,11 +101,11 @@ class FacetWP_Facet_Hierarchy
 
         $key = 0;
 
-        if ( !empty( $prev_links ) ) {
+        if ( ! empty( $prev_links ) ) {
             $output .= '<div class="facetwp-depth">';
         }
 
-        if ( !empty( $results ) ) {
+        if ( ! empty( $results ) ) {
             foreach ( $results as $key => $result ) {
                 if ( $key == (int) $num_visible ) {
                     $output .= '<div class="facetwp-collapsed facetwp-hidden">';
@@ -127,7 +126,7 @@ class FacetWP_Facet_Hierarchy
             $output .= '</div>';
         }
 
-        if ( !empty( $prev_links ) ) {
+        if ( ! empty( $prev_links ) ) {
             $output .= '</div>';
         }
 

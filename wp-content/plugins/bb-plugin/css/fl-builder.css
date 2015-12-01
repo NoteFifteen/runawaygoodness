@@ -1028,6 +1028,9 @@ form.fl-builder-settings {
 	border: none;
 	width: 100%;
 }
+.fl-form-table tbody {
+	border: none;
+}
 .fl-form-table th {
 	border: none !important;
 	background: #fff !important;
@@ -1147,6 +1150,63 @@ form.fl-builder-settings {
 	margin-bottom: 15px;
 }
 
+/* Core WordPress UI */
+.wp-core-ui h1,
+.wp-core-ui h2,
+.wp-core-ui h3,
+.wp-core-ui h4,
+.wp-core-ui h5,
+.wp-core-ui h6 {
+	color: #333;
+}
+.wp-core-ui .submitbox .submitdelete {
+	color: #a00;
+}
+.wp-core-ui button {
+	font-weight: normal;
+	text-transform: capitalize;
+}
+.wp-core-ui textarea, 
+.wp-core-ui input[type=text], 
+.wp-core-ui input[type=password], 
+.wp-core-ui input[type=file], 
+.wp-core-ui input[type=email], 
+.wp-core-ui input[type=number], 
+.wp-core-ui input[type=search], 
+.wp-core-ui input[type=tel], 
+.wp-core-ui input[type=url],
+.wp-core-ui select {
+	background-color: #fff; 
+	border-color: #dfdfdf;
+	border-style: solid;
+	border-width: 1px; 
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	box-shadow: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	color: #333;
+	font-weight: normal;
+}
+.wp-core-ui textarea:focus, 
+.wp-core-ui input[type=text]:focus, 
+.wp-core-ui input[type=password]:focus, 
+.wp-core-ui input[type=file]:focus, 
+.wp-core-ui input[type=email]:focus, 
+.wp-core-ui input[type=number]:focus, 
+.wp-core-ui input[type=search]:focus, 
+.wp-core-ui input[type=tel]:focus, 
+.wp-core-ui input[type=url]:focus, 
+.wp-core-ui select:focus {
+	background: transparent;
+	border-color: #aaa;
+}
+.wp-core-ui input[type=search] {
+    background-image: none;
+	padding: 6px;
+}
+
 /* Text Field */
 .fl-builder-settings-fields input.text-full {
 	width: 97%;
@@ -1160,8 +1220,6 @@ form.fl-builder-settings {
 /* Color Picker */
 .fl-color-picker {
 	cursor: pointer;
-	/*height: 30px;*/
-	/*width: 48px;*/
 }
 .fl-color-picker .fl-color-picker-clear:hover {
 	background-color: #ededed;
@@ -1219,11 +1277,15 @@ form.fl-builder-settings {
 .fl-photo-field .fl-photo-edit {
 	margin: 0 0 0 11px;
 }
-.fl-photo-field .fl-photo-replace {
+.fl-photo-field .fl-photo-replace,
+.fl-photo-field .fl-photo-remove {
 	margin: 0 0 0 8px;
 }
 
 /* Media Uploader */
+.fl-builder-edit .media-frame {
+	-webkit-backface-visibility: hidden;
+}
 .fl-builder-edit .media-modal-content .thumbnail {
 	padding: 0;
 	border: none;

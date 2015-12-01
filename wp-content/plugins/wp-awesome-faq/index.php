@@ -3,7 +3,7 @@
 Plugin Name: WP Awesome FAQ
 Plugin URI: http://jeweltheme.com/product/wp-awesome-faq-pro/
 Description: Accordion based Awesome WordPress FAQ Plugin
-Version: 3.0.2
+Version: 3.0.4
 Author: Liton Arefin
 Author URI: http://www.jeweltheme.com
 License: GPL2
@@ -168,7 +168,7 @@ function jeweltheme_wp_awesome_faq_admin_notice() {
         $user_id = $current_user->ID;
     if ( ! get_user_meta($user_id, 'jeweltheme_ignore_notice') ) {
         echo '<div class="updated"><p>'; 
-        printf(__('Check out Premium Features of <a href="http://jeweltheme.com/product/wp-awesome-faq-pro/" target="_blank">WP Awesome FAQ</a> Plugin.  Why this Plugin is really awesome !!! | Check out other Awesome stuffs <a href="http://jeweltheme.com" target="_blank">here</a> <a style="float: right;" href="%1$s">X</a>'), '?jeweltheme_ignore=0');
+        printf(__('Check out Premium Features of <a href="http://jeweltheme.com/product/wp-awesome-faq-pro/" target="_blank">WP Awesome FAQ</a> Plugin. Compare Why this Plugin is really awesome !!! | Download <a href="http://jeweltheme.com/product/polmo-lite/" target="_blank">Polmo Lite</a> absolutely Free WordPress Theme'), '?jeweltheme_ignore=0');
         echo "</p></div>";
     }
 }

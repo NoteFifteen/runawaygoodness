@@ -12,7 +12,8 @@ class FacetWP_Integration_ACF
 
         if ( version_compare( $this->acf_version, '4.0', '>=' ) ) {
             add_filter( 'facetwp_facet_sources', array( $this, 'facet_sources' ) );
-            add_filter( 'facetwp_indexer_post_facet', array( $this, 'indexer_post_facet' ), 10, 2 );
+            add_filter( 'facetwp_indexer_post_facet', array( $this, 'indexer_post_facet' ), 1, 2 );
+            add_filter( 'facetwp_acf_display_value', array( $this, 'index_source_other' ), 1, 2 );
         }
     }
 
@@ -38,7 +39,7 @@ class FacetWP_Integration_ACF
 
         foreach ( $fields as $field ) {
             $field_id = $field['hierarchy'];
-            $field_label = $field['group_title'] . ': ' . $field['label'];
+            $field_label = '[' . $field['group_title'] . '] ' . $field['parents'] . $field['label'];
             $sources['acf']['choices'][ "acf/$field_id" ] = $field_label;
         }
 
@@ -59,8 +60,7 @@ class FacetWP_Integration_ACF
             // get the field properties
             $field = get_field_object( $hierarchy[0], $defaults['post_id'], array( 'load_value' => false ) );
 
-            // get the field values
-            // for repeater sub-fields, get the parent repeater field
+            // get values (for sub-fields, use the parent repeater)
             $value = get_field( $hierarchy[0], $defaults['post_id'], false );
 
             // handle repeater values
@@ -194,9 +194,32 @@ class FacetWP_Integration_ACF
         // text
         else {
             $params['facet_value'] = $value;
-            $params['facet_display_value'] = $value;
+            $params['facet_display_value'] = apply_filters( 'facetwp_acf_display_value', $value, $params );
             FWP()->indexer->index_row( $params );
         }
+    }
+
+
+    /**
+     * Handle "source_other" setting
+     */
+    function index_source_other( $value, $params ) {
+        $facet = FWP()->helper->get_facet_by_name( $params['facet_name'] );
+
+        if ( ! empty( $facet['source_other'] ) ) {
+            $hierarchy = explode( '/', substr( $facet['source_other'], 4 ) );
+            $value = get_field( $hierarchy[0], $params['post_id'], false );
+
+            // handle repeater values
+            if ( 1 < count( $hierarchy ) ) {
+
+                array_shift( $hierarchy );
+                $value = $this->process_field_value( $value, $hierarchy );
+                return reset( $value ); // return first element
+            }
+        }
+
+        return $value;
     }
 
 
@@ -208,7 +231,7 @@ class FacetWP_Integration_ACF
         $field_groups = acf_get_field_groups();
         foreach ( $field_groups as $field_group ) {
             $fields = acf_get_fields( $field_group );
-            $this->recursive_get_fields( $fields, $field_group, $hierarchy = '' );
+            $this->recursive_get_fields( $fields, $field_group );
         }
 
         return $this->fields;
@@ -227,7 +250,7 @@ class FacetWP_Integration_ACF
         $field_groups = $class->get_field_groups( array() );
         foreach ( $field_groups as $field_group ) {
             $fields = $class->get_fields( array(), $field_group['id'] );
-            $this->recursive_get_fields( $fields, $field_group, $hierarchy = '' );
+            $this->recursive_get_fields( $fields, $field_group );
         }
 
         return $this->fields;
@@ -240,7 +263,7 @@ class FacetWP_Integration_ACF
      * We're storing a "hierarchy" string to figure out what
      * values we need via get_field()
      */
-    function recursive_get_fields( $fields, $field_group, $hierarchy ) {
+    function recursive_get_fields( $fields, $field_group, $hierarchy = '', $parents = '' ) {
         foreach ( $fields as $field ) {
 
             // append the hierarchy string
@@ -248,7 +271,8 @@ class FacetWP_Integration_ACF
 
             // loop again for repeater fields
             if ( 'repeater' == $field['type'] ) {
-                $this->recursive_get_fields( $field['sub_fields'], $field_group, $new_hierarchy );
+                $new_parents = $parents . $field['label'] . ' &rarr; ';
+                $this->recursive_get_fields( $field['sub_fields'], $field_group, $new_hierarchy, $new_parents );
             }
             else {
                 $this->fields[] = array(
@@ -256,6 +280,7 @@ class FacetWP_Integration_ACF
                     'name'          => $field['name'],
                     'label'         => $field['label'],
                     'hierarchy'     => trim( $new_hierarchy, '/' ),
+                    'parents'       => $parents,
                     'group_title'   => $field_group['title'],
                 );
             }

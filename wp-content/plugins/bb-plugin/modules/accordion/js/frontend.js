@@ -18,9 +18,8 @@
 				content     = button.siblings('.fl-accordion-content'),
 				icon        = button.find('i.fl-accordion-button-icon');
 				
-			accordion.find( '.fl-accordion-item-active' ).removeClass( 'fl-accordion-item-active' );
-		
 			if(accordion.hasClass('fl-accordion-collapse')) {
+				accordion.find( '.fl-accordion-item-active' ).removeClass( 'fl-accordion-item-active' );
 				allContent.slideUp('normal');   
 				allIcons.removeClass('fa-minus');
 				allIcons.addClass('fa-plus');
@@ -33,6 +32,7 @@
 				icon.removeClass('fa-plus');
 			}
 			else {
+				item.removeClass( 'fl-accordion-item-active' );
 				content.slideUp('normal');
 				icon.addClass('fa-plus');
 				icon.removeClass('fa-minus');

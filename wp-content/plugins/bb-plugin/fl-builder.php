@@ -3,7 +3,7 @@
  * Plugin Name: Beaver Builder Plugin (Pro Version)
  * Plugin URI: https://www.wpbeaverbuilder.com/?utm_source=external&utm_medium=builder&utm_campaign=plugins-page
  * Description: A drag and drop frontend WordPress page builder plugin that works with almost any theme!
- * Version: 1.6.4.2
+ * Version: 1.6.4.3
  * Author: The Beaver Builder Team
  * Author URI: https://www.wpbeaverbuilder.com/?utm_source=external&utm_medium=builder&utm_campaign=plugins-page
  * Copyright: (c) 2014 Beaver Builder
@@ -11,7 +11,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: fl-builder
  */
-define('FL_BUILDER_VERSION', '1.6.4.2');
+define('FL_BUILDER_VERSION', '1.6.4.3');
 define('FL_BUILDER_FILE', __FILE__);
 define('FL_BUILDER_DIR', plugin_dir_path(FL_BUILDER_FILE));
 define('FL_BUILDER_URL', plugins_url('/', FL_BUILDER_FILE));
@@ -71,6 +71,7 @@ add_filter('page_row_actions',                                 'FLBuilderAdminPo
 add_filter('post_row_actions',                                 'FLBuilderAdminPosts::render_row_actions_link');
 add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'FLBuilderAdmin::render_plugin_action_links');
 add_filter('all_plugins',                                      'FLBuilderAdmin::white_label_plugins_page');
+add_filter('wp_prepare_themes_for_js',                         'FLBuilderAdmin::white_label_themes_page');
 
 /* AJAX Actions */
 add_action('fl_ajax_fl_builder_save',                          'FLBuilderModel::update');

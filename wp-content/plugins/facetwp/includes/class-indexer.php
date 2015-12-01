@@ -145,6 +145,7 @@ class FacetWP_Indexer
                 'posts_per_page'    => -1,
                 'fields'            => 'ids',
                 'orderby'           => 'ID',
+                'cache_results'     => false,
             );
         }
         // Index a single post
@@ -227,12 +228,16 @@ class FacetWP_Indexer
                     'depth'                 => 0,
                 );
 
+                // Set flag for custom facet indexing
+                $this->is_overridden = true;
 
                 // Support custom facet indexing
                 if ( apply_filters( 'facetwp_indexer_post_facet', false,
                     array( 'defaults' => $defaults, 'facet' => $facet ) ) ) {
                     continue;
                 }
+
+                $this->is_overridden = false;
 
                 // Get rows to insert
                 $insert_data = $this->get_row_data( $defaults );

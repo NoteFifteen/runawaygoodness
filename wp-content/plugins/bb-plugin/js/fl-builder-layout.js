@@ -320,7 +320,14 @@
 		 */ 
 		_resizeBgVideos: function()
 		{
-			$('.fl-bg-video').each(FLBuilderLayout._resizeBgVideo);
+			$('.fl-bg-video').each( function() {
+				
+				FLBuilderLayout._resizeBgVideo.apply( this );
+				
+				if ( $( this ).parent().find( 'img' ).length > 0 ) {
+					$( this ).parent().imagesLoaded( $.proxy( FLBuilderLayout._resizeBgVideo, this ) );
+				}
+			} );
 		},
 		
 		/**

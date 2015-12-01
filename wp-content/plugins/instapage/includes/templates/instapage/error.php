@@ -1,3 +1,3 @@
-<div id="message" class="<?php echo $error_class; ?>">
-	<p><strong><?php echo $msg; ?></strong></p>
+<div class="<?php echo $error_class; ?>">
+	<p><?php echo $msg; ?></p>
 </div>

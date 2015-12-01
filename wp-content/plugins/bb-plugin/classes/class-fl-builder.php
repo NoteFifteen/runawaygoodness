@@ -332,6 +332,7 @@ final class FLBuilder {
 		wp_register_script('jquery-bxslider',       $js_url . 'jquery.bxslider.min.js', array('jquery-easing', 'jquery-fitvids'), $ver, true);
 		wp_register_script('jquery-easing',         $js_url . 'jquery.easing.1.3.js', array('jquery'), '1.3', true);
 		wp_register_script('jquery-fitvids',        $js_url . 'jquery.fitvids.js', array('jquery'), $ver, true);
+		wp_register_script('jquery-imagesloaded', 	$js_url . 'jquery.imagesloaded.js', array('jquery'), $ver, true);
 		wp_register_script('jquery-infinitescroll', $js_url . 'jquery.infinitescroll.js', array('jquery'), $ver, true);
 		wp_register_script('jquery-magnificpopup',  $js_url . 'jquery.magnificpopup.min.js', array('jquery'), $ver, true);
 		wp_register_script('jquery-mosaicflow',     $js_url . 'jquery.mosaicflow.min.js', array('jquery'), $ver, true);
@@ -360,10 +361,10 @@ final class FLBuilder {
 
 			$posts = get_posts(array(
 				'post__in' 			=> $post_ids, 
-				'post_type' 		=> 'any',
+				'post_type' 		=> get_post_types(),
 				'posts_per_page'	=> -1
 			));
-
+			
 			foreach($posts as $post) {
 				self::enqueue_layout_styles_scripts($post->ID);
 			}
@@ -394,6 +395,9 @@ final class FLBuilder {
 					wp_enqueue_script('yui3');
 					wp_enqueue_script('fl-slideshow');
 					wp_enqueue_style('fl-slideshow');
+				}
+				else if($row->settings->bg_type == 'video') {
+					wp_enqueue_script('jquery-imagesloaded');
 				}
 			}
 
