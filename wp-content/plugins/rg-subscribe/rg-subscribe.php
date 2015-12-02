@@ -113,4 +113,3 @@ add_action('widgets_init',
 		create_function('', 'return register_widget("RG_Subscribe_Widget");')
 );
 
-add_action( 'wp_loaded', 'widget_css_classes_frontend_hook' );
