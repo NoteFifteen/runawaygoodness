@@ -18,6 +18,17 @@ if(function_exists("register_field_group"))
 				'formatting' => 'html',
 				'maxlength' => '',
 			),
+			array (
+				'key' => 'field_8ehounthounth',
+				'label' => 'Use Affiliate Links on Free Books',
+				'name' => 'use_affiliate_links',
+				'type' => 'checkbox',
+				'choices' => array (
+					'Yes' => 'Yes',
+				),
+				'default_value' => '',
+				'layout' => 'vertical',
+			),
 		),
 		'location' => array (
 			array (

@@ -240,11 +240,11 @@ genesis_register_sidebar(array(
 function rg_set_ref_cookie() {
 	if( isset( $_GET["ref"] ) ) {
 		// set cookie
-		setcookie( "rgref", esc_attr( $_GET["ref"] ), time() + 604800, "/" );
+		setcookie( "rgref", esc_attr( $_GET["ref"] ), time() + 2592000, "/" );
 	}
 
 	if( isset( $_GET["c"] ) ) {
-		setcookie( "rgfirstcat", esc_attr( $_GET["c"] ), time() + 604800, "/" );	
+		setcookie( "rgfirstcat", esc_attr( $_GET["c"] ), time() + 2592000, "/" );	
 	}
 }
 

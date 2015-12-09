@@ -4,6 +4,14 @@ remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 remove_action( 'genesis_entry_header', 'genesis_post_info', 12 );
 
 function rg_display_newsletter() {
+
+	if( get_field( 'use_affiliate_links' )[0] == 'Yes' ) {
+		$aff_link = '?tag=runawaygoodness-20';
+	} else {
+		$aff_link = '';
+	}
+	
+
 	if( have_rows('book') ) {
 		echo '<body style="background-color:#AB8BAA;">';
 			$html = '<p id="top-newsletter-links" style="text-align:center;font-size:11px;">Were you forwarded this email? <a href="https://runawaygoodness.com/?ref=emailforward">Click here to subscribe</a><br />';
@@ -98,8 +106,8 @@ function rg_display_newsletter() {
 																						$html .= '<td class="col" valign="top" style="padding:0;width:100%">';
 																							if( get_sub_field( 'amazon_asin' ) ) {
 																								if( get_sub_field( 'book_price' ) == '0' ) {
-																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin' ) . '/"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
-																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/';
+																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin' ) . '/'. $aff_link.'"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
+																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/'. $aff_link;
 																								} else {
 																									$html .= '<a href="http://www.amazon.com/dp/' . get_sub_field( 'amazon_asin') . '/?tag=runawaygoodness-20"><img src="' . $thumb . '"  alt="' . get_sub_field( 'book_title' ) . '" style="max-width:120px;min-width:120px;margin-bottom:10px;" align="left"></a>';
 																									$amazon_url = 'http://www.amazon.com/dp/'. get_sub_field( 'amazon_asin' ) . '/?tag=runawaygoodness-20';

@@ -432,14 +432,22 @@ function rg_prefunk_description() {
 }
 
 // display shareasale tracking pixel
-add_action( 'wp_footer', 'rg_shareasale_pixel' );
+add_filter( 'the_content', 'rg_shareasale_pixel' );
 
-function rg_shareasale_pixel() {
+// https://runawaygoodness.com/?ref=sas
+function rg_shareasale_pixel( $content ) {
+	global $_POST;
 	if( is_page( '2991' ) ) {
 		if( isset( $_POST['lp-source']) && $_POST['lp-source'] == 'sas' ) {
-			echo '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='. $_POST['lp-email'] .'&transtype=lead&merchantID=62529" width="1" height="1">';
+			$autovoid = '';
+		} else {
+			$autovoid = '&autovoid=1';
 		}
 	}
+
+	$html .= '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='. md5( $_POST['lp-email'] ) .'&transtype=lead&merchantID=62532'. $autovoid .'" width="1" height="1">';
+
+	return $content . $html;
 }
 
 

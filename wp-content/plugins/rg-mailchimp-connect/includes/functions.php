@@ -30,7 +30,7 @@ function rg_signup_form( $hidegenre = false, $button_text ) {
 		$genre_options .= '<option value="' . $genre->id . ':' . $genre->name . '" '. $preselect .'>' . $genre->name . '</option>';
 	}
 
-   	echo '<form id="rgsignupform" action="' . get_site_url() . '/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
+   	echo '<form id="rgsignupform" action="/' . get_page_uri( get_option( 'almost_done_page' ) ) . '/" method="post">';
 
    	if( !isset( $hidegenre ) || $hidegenre != true ) {
 	   	echo '<p>';
