@@ -443,9 +443,13 @@ function rg_shareasale_pixel( $content ) {
 		} else {
 			$autovoid = '&autovoid=1';
 		}
+
+		$html .= '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='. md5( $_POST['lp-email'] ) .'&transtype=lead&merchantID=62532'. $autovoid .'" width="1" height="1">';
+	} else {
+		$html = '';
 	}
 
-	$html .= '<img src="https://shareasale.com/sale.cfm?amount=0.00&tracking='. md5( $_POST['lp-email'] ) .'&transtype=lead&merchantID=62532'. $autovoid .'" width="1" height="1">';
+	
 
 	return $content . $html;
 }
