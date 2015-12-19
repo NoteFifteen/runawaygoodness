@@ -62,7 +62,17 @@ function rg_signup_form( $hidegenre = false, $button_text ) {
     	$source_id = 'rg-home';
     }
 
+    if( isset( $_GET["affid"] ) ) {
+    	$aff_id = sanitize_text_field( $_GET["affid"] );
+    } elseif ( isset( $_COOKIE["affid"] ) ) {
+    	$aff_id = $_COOKIE["affid"];
+    } else {
+    	$aff_id = '';
+    }
+
+// https://runawaygoodness.com/?ref=sas&affid=143450
    	echo '<input type="hidden" name="lp-source" value="' . $source_id . '" />';
+   	echo '<input type="hidden" name="AFFID" value="' . $aff_id . '" />';
    	echo '<p class="subformwrapper"><input id="rgsignupbutton" type="submit" name="lp-submitted" value="'. $button_text .'"/></p>';
    	echo '</form>';
 }
@@ -74,6 +84,7 @@ function process_rg_signup() {
 
         // sanitize form values
         $email   = sanitize_email( $_POST["lp-email"] );
+        $aff_id = sanitize_text_field( $_POST["AFFID"] );
         $genre = explode(":", sanitize_text_field( $_POST["lp-genre"] ));
 		$genre_code = $genre[0]; // category interest for the genre
 		$genre_name = $genre[1]; // text name of tbe genre
@@ -91,7 +102,8 @@ function process_rg_signup() {
 			$request->status = 'subscribed';
 			$request->merge_fields = [
 				'SOURCE' => $source,
-				'FIRSTCAT' => $genre_name
+				'FIRSTCAT' => $genre_name,
+				'AFFID' => $aff_id
 			];
 			$request->interests = [
 				$genre_code => true
@@ -206,7 +218,8 @@ function process_rg_signup() {
 			$request->status = 'subscribed';
 			$request->merge_fields = [
 					'SOURCE' => $source,
-					'FIRSTCAT' => $first_cat
+					'FIRSTCAT' => $first_cat,
+					'AFFID' => $aff_id
 			];
 
 			$response = \Httpful\Request::post($url)		// Build a POST request...
@@ -265,6 +278,12 @@ function rg_mailchimp_genres_form() {
    		$eplus = str_replace(' ', '+', $_GET["e"] );
     	$emailmd5 = md5( strtolower( sanitize_email( $eplus )));
     	$email  = strtolower( sanitize_email( $eplus ) );
+   	}
+
+   	if( isset( $_GET['affid'] ) ) {
+   		$aff_id = sanitize_text_field( $_GET["affid"] );
+   	} elseif( isset( $_COOKIE['affid'] ) ) {
+   		$aff_id = sanitize_text_field( $_COOKIE["affid"] );
    	}
 
    	if( isset( $_POST["resetemail"] ) ) {
@@ -330,8 +349,11 @@ function rg_mailchimp_genres_form() {
 
 			$output .= '<div class="genreinput"><input type="checkbox" id="'. $genre->id .'" name="lp-genres[]" value="' . $genre->id . '" '. $checkinterest .' /> <label for="'. $genre->id .'">' . $genre->name . '</label></div>';
 		}
+		wp_die(' found it !! ');
 		$output .= '<input type="hidden" name="frompage" value="' . $slug .'" />';
 		$output .= '<input type="hidden" name="lp-email" value="' . $email . '" />';
+		$output .= '<input type="hidden" name="aff_id" value="' . $aff_id . '" />';
+
 		$output .= '<div class="genresubmit"><input type="submit" name="lp-genres-submitted" value="Send"/></div>
 	        </fieldset></form>';
 		

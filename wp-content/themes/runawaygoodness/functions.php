@@ -246,6 +246,11 @@ function rg_set_ref_cookie() {
 	if( isset( $_GET["c"] ) ) {
 		setcookie( "rgfirstcat", esc_attr( $_GET["c"] ), time() + 2592000, "/" );	
 	}
+
+	if( isset( $_GET["affid"] ) ) {
+		setcookie( "affid", esc_attr( $_GET["affid"] ), time() + 2592000, "/" );	
+	}
+
 }
 
 add_action( 'init', 'rg_set_ref_cookie' );
