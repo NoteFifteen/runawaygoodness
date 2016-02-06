@@ -282,6 +282,7 @@ register_field_group(array (
 						'formatting' => 'html',
 						'maxlength' => '',
 					),
+					*/
 					array (
 						'key' => 'field_55543685db573',
 						'label' => 'iBook URL',
@@ -295,8 +296,6 @@ register_field_group(array (
 						'formatting' => 'html',
 						'maxlength' => '',
 					),
-					*/
-				
 					array (
 						'key' => 'field_86234598673jej',
 						'label' => 'H/T Site Name',

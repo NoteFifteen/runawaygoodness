@@ -184,7 +184,7 @@ if ( have_posts() ) {
 																											*/
 
 																											// iBook
-																											/*
+																											
 																											if( get_sub_field( 'ibook_url' ) ) {
 																												$html .= '<td style="height:65px;width:180px;max-width:180px;background-color:#008000;border-radius:5px;text-align:center" bgcolor="#008000">';
 																													$html .= '<a href="'. get_sub_field( 'ibook_url') .'" style="font-family:Trebuchet MS;color:#ffffff;display:inline-block;font-size:20px;text-align:center;text-decoration:none;white-space:nowrap;width:100%" target="_blank">iBook</a>';
@@ -206,7 +206,7 @@ if ( have_posts() ) {
 																												$html .= '<!-- line 192 -->';
 																												$buttons = 0;
 																											}
-																											*/
+																											
 
 																											// Amazon
 																											/*
